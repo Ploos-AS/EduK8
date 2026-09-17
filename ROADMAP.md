@@ -30,6 +30,7 @@
 - [x] Implement instruction execution (core ISA)
 - [x] Implement deterministic stepping
 - [x] Implement initial instruction/micro-operation trace model
+- [x] Define control-unit microstep model and logical control signals
 - [ ] Implement save/load state
 - [x] Add emulator and portable conformance tests
 
