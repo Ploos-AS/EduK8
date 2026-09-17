@@ -7,10 +7,9 @@ The K8 emulator exposes two related views of execution:
 
 A micro-operation is a small data movement or control action such as:
 
-    PC -> address bus
-    memory -> data bus
-    data bus -> IR
-    PC++
+    T0: PC -> MAR
+    T1: MEM[MAR] -> MDR
+    T2: MDR -> IR; PC++
 
 For an immediate load, execution can then continue as:
 
@@ -40,3 +39,8 @@ This allows a learner to start with assembly and progressively reveal lower laye
 ## M2 scope
 
 M2 establishes the representation and detailed examples for representative instructions. Full per-opcode microcode is completed alongside control-unit design so that software does not accidentally invent hardware behaviour that cannot be built simply.
+
+
+## Control-unit specification
+
+The canonical internal registers, buses, microstep model and logical control signals are documented in `docs/CONTROL_UNIT.md` and `spec/control-signals.json`.
