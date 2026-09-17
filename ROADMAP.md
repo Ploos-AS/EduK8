@@ -18,9 +18,9 @@
 - [x] Define I/O model
 - [x] Define reset/vector behaviour
 - [x] Produce architecture reference documents
-- [ ] Evaluate opcode allocation
-- [ ] Freeze instruction encoding
-- [ ] Freeze calling convention
+- [x] Evaluate opcode allocation
+- [x] Freeze initial instruction encoding
+- [x] Freeze initial calling convention
 - [ ] Generate initial conformance vectors
 - [ ] Complete architecture review and M1 freeze
 
