@@ -7,17 +7,22 @@
 - [x] Define repository layout
 - [x] Define emulator as the reference model
 - [x] Define cross-layer conformance as a core requirement
-- [ ] Freeze initial K8 architectural specification
+- [x] Freeze initial project direction
 
 ## M1 — K8 Architecture
-- [ ] Define registers and programmer-visible state
-- [ ] Define ALU operations and flags
-- [ ] Define instruction encoding
-- [ ] Define addressing modes
-- [ ] Define memory map
-- [ ] Define I/O model
-- [ ] Define reset and clock behaviour
-- [ ] Produce architecture reference document
+- [x] Define registers and programmer-visible state
+- [x] Define ALU operations and flags
+- [x] Define candidate instruction groups
+- [x] Define addressing modes
+- [x] Define candidate memory map
+- [x] Define I/O model
+- [x] Define reset/vector behaviour
+- [x] Produce architecture reference documents
+- [ ] Evaluate opcode allocation
+- [ ] Freeze instruction encoding
+- [ ] Freeze calling convention
+- [ ] Generate initial conformance vectors
+- [ ] Complete architecture review and M1 freeze
 
 ## M2 — Reference Emulator
 - [ ] Implement CPU state model
@@ -25,6 +30,7 @@
 - [ ] Implement instruction execution
 - [ ] Implement deterministic stepping
 - [ ] Implement trace output
+- [ ] Implement save/load state
 - [ ] Add conformance tests
 
 ## M3 — Assembler
