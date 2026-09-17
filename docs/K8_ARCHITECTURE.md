@@ -27,7 +27,7 @@ Status flags:
 | 3 | V | Signed overflow |
 | 4 | I | Interrupt mask |
 | 5 | B | Software break |
-| 6 | - | Reserved, reads as 0 |
+| 6 | D | Decimal-mode flag |
 | 7 | - | Reserved, reads as 0 |
 
 ## Data and address widths
