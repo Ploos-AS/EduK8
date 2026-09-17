@@ -1,0 +1,193 @@
+{
+  "version": 1,
+  "architecture": "K8",
+  "description": "Machine-readable architectural conformance vectors",
+  "vectors": [
+    {
+      "name": "reset-vector",
+      "setup": {
+        "memory": {
+          "FFFC": "34",
+          "FFFD": "12"
+        }
+      },
+      "action": {
+        "reset": true,
+        "steps": 0
+      },
+      "expect": {
+        "pc": "1234",
+        "sp": "FF",
+        "f": "00",
+        "halted": false
+      }
+    },
+    {
+      "name": "lda-immediate",
+      "setup": {
+        "pc": "0000",
+        "memory": {
+          "0000": "10",
+          "0001": "42"
+        }
+      },
+      "action": {
+        "steps": 1
+      },
+      "expect": {
+        "a": "42",
+        "pc": "0002",
+        "z": false,
+        "n": false
+      }
+    },
+    {
+      "name": "lda-zero",
+      "setup": {
+        "pc": "0000",
+        "memory": {
+          "0000": "10",
+          "0001": "00"
+        }
+      },
+      "action": {
+        "steps": 1
+      },
+      "expect": {
+        "a": "00",
+        "z": true,
+        "n": false
+      }
+    },
+    {
+      "name": "lda-negative",
+      "setup": {
+        "pc": "0000",
+        "memory": {
+          "0000": "10",
+          "0001": "80"
+        }
+      },
+      "action": {
+        "steps": 1
+      },
+      "expect": {
+        "a": "80",
+        "z": false,
+        "n": true
+      }
+    },
+    {
+      "name": "store-absolute",
+      "setup": {
+        "pc": "0000",
+        "a": "5A",
+        "memory": {
+          "0000": "29",
+          "0001": "00",
+          "0002": "20"
+        }
+      },
+      "action": {
+        "steps": 1
+      },
+      "expect": {
+        "pc": "0003",
+        "memory": {
+          "2000": "5A"
+        }
+      }
+    },
+    {
+      "name": "add-carry",
+      "setup": {
+        "pc": "0000",
+        "a": "FF",
+        "f": "01",
+        "memory": {
+          "0000": "40",
+          "0001": "00"
+        }
+      },
+      "action": {
+        "steps": 1
+      },
+      "expect": {
+        "a": "00",
+        "c": true,
+        "z": true,
+        "n": false
+      }
+    },
+    {
+      "name": "branch-eq-taken",
+      "setup": {
+        "pc": "0000",
+        "f": "02",
+        "memory": {
+          "0000": "88",
+          "0001": "02"
+        }
+      },
+      "action": {
+        "steps": 1
+      },
+      "expect": {
+        "pc": "0004"
+      }
+    },
+    {
+      "name": "branch-eq-not-taken",
+      "setup": {
+        "pc": "0000",
+        "f": "00",
+        "memory": {
+          "0000": "88",
+          "0001": "02"
+        }
+      },
+      "action": {
+        "steps": 1
+      },
+      "expect": {
+        "pc": "0002"
+      }
+    },
+    {
+      "name": "pha-pla",
+      "setup": {
+        "pc": "0000",
+        "a": "A5",
+        "memory": {
+          "0000": "90",
+          "0001": "10",
+          "0002": "00",
+          "0003": "91"
+        }
+      },
+      "action": {
+        "steps": 3
+      },
+      "expect": {
+        "a": "A5",
+        "sp": "FF"
+      }
+    },
+    {
+      "name": "halt",
+      "setup": {
+        "pc": "0000",
+        "memory": {
+          "0000": "01"
+        }
+      },
+      "action": {
+        "steps": 1
+      },
+      "expect": {
+        "halted": true,
+        "pc": "0001"
+      }
+    }
+  ]
+}
