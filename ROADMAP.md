@@ -29,7 +29,7 @@
 - [x] Implement memory and I/O
 - [x] Implement instruction execution (core ISA)
 - [x] Implement deterministic stepping
-- [ ] Implement trace output
+- [x] Implement initial instruction/micro-operation trace model
 - [ ] Implement save/load state
 - [x] Add emulator and portable conformance tests
 
