@@ -19,6 +19,8 @@ class CPU:
     sp: int = 0xFF
     f: int = 0
     halted: bool = False
+    trace_enabled: bool = False
+    trace: list = field(default_factory=list)
     memory: bytearray = field(default_factory=lambda: bytearray(65536))
 
     def reset(self, pc=None):
@@ -26,6 +28,7 @@ class CPU:
         self.sp = 0xFF
         self.f = 0
         self.halted = False
+        self.trace.clear()
         self.pc = ((self.memory[0xFFFC] | self.memory[0xFFFD] << 8)
                    if pc is None else pc) & 0xFFFF
 
@@ -119,6 +122,8 @@ class CPU:
             return
         pc_before = self.pc
         opcode = self._fetch8()
+        if self.trace_enabled:
+            self.trace.append({"phase": "FETCH", "pc": pc_before, "opcode": opcode, "micro_ops": ["PC -> address bus", "memory -> data bus", "data bus -> IR", "PC++"]})
 
         if opcode == 0x00: return
         if opcode == 0x01:
