@@ -21,7 +21,7 @@
 - [x] Evaluate opcode allocation
 - [x] Freeze initial instruction encoding
 - [x] Freeze initial calling convention
-- [ ] Generate initial conformance vectors
+- [x] Generate initial conformance vectors
 - [ ] Complete architecture review and M1 freeze
 
 ## M2 — Reference Emulator
@@ -31,7 +31,7 @@
 - [x] Implement deterministic stepping
 - [ ] Implement trace output
 - [ ] Implement save/load state
-- [x] Add initial emulator tests
+- [x] Add emulator and portable conformance tests
 
 ## M3 — Assembler
 - [ ] Define K8 assembly syntax
