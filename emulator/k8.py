@@ -306,7 +306,7 @@ class CPU:
         if opcode == 0x90: self._push8(self.a); return
         if opcode == 0x91: self.a = self._pop8(); self._set_zn(self.a); return
         if opcode == 0x92: self._push8(self.f); return
-        if opcode == 0x93: self.f = self._pop8() & 0x3F; return
+        if opcode == 0x93: self.f = self._pop8() & 0x7F; return
         if opcode == 0x94: self.x = self.a; self._set_zn(self.x); return
         if opcode == 0x95: self.y = self.a; self._set_zn(self.y); return
         if opcode == 0x96: self.a = self.x; self._set_zn(self.a); return
