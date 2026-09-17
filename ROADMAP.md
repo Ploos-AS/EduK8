@@ -25,13 +25,13 @@
 - [ ] Complete architecture review and M1 freeze
 
 ## M2 — Reference Emulator
-- [ ] Implement CPU state model
-- [ ] Implement memory and I/O
-- [ ] Implement instruction execution
-- [ ] Implement deterministic stepping
+- [x] Implement CPU state model
+- [x] Implement memory and I/O
+- [x] Implement instruction execution (core ISA)
+- [x] Implement deterministic stepping
 - [ ] Implement trace output
 - [ ] Implement save/load state
-- [ ] Add conformance tests
+- [x] Add initial emulator tests
 
 ## M3 — Assembler
 - [ ] Define K8 assembly syntax
