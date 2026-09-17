@@ -1,0 +1,94 @@
+{
+  "version": 1,
+  "architecture": "K8",
+  "microstep_model": "T0..Tn",
+  "internal_registers": [
+    {
+      "name": "IR",
+      "bits": 8
+    },
+    {
+      "name": "MAR",
+      "bits": 16
+    },
+    {
+      "name": "MDR",
+      "bits": 8
+    },
+    {
+      "name": "TMP",
+      "bits": 8
+    }
+  ],
+  "buses": [
+    {
+      "name": "DB",
+      "bits": 8
+    },
+    {
+      "name": "AB",
+      "bits": 16
+    }
+  ],
+  "signals": [
+    "A_OUT",
+    "A_IN",
+    "X_OUT",
+    "X_IN",
+    "Y_OUT",
+    "Y_IN",
+    "PC_OUT",
+    "PC_IN",
+    "PC_INC",
+    "SP_OUT",
+    "SP_IN",
+    "SP_INC",
+    "SP_DEC",
+    "IR_IN",
+    "MAR_IN_LO",
+    "MAR_IN_HI",
+    "MDR_OUT",
+    "MDR_IN",
+    "TMP_OUT",
+    "TMP_IN",
+    "F_IN",
+    "MEM_READ",
+    "MEM_WRITE",
+    "ALU_ADD",
+    "ALU_SUB",
+    "ALU_AND",
+    "ALU_OR",
+    "ALU_XOR",
+    "ALU_NOT",
+    "ALU_SHL",
+    "ALU_SHR",
+    "ALU_ROL",
+    "ALU_ROR",
+    "ALU_FLAGS",
+    "STEP_RESET",
+    "INSTR_DONE",
+    "HALT",
+    "IRQ_ACK"
+  ],
+  "fetch": [
+    {
+      "step": "T0",
+      "ops": [
+        "PC -> MAR"
+      ]
+    },
+    {
+      "step": "T1",
+      "ops": [
+        "MEM[MAR] -> MDR"
+      ]
+    },
+    {
+      "step": "T2",
+      "ops": [
+        "MDR -> IR",
+        "PC++"
+      ]
+    }
+  ]
+}
