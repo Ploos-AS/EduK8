@@ -50,7 +50,13 @@ Bits are assigned permanently once the first hardware control board is frozen.
 | 35 | INSTR_DONE |
 | 36 | HALT |
 | 37 | IRQ_ACK |
-| 38-47 | reserved |
+| 38 | IDX_X |
+| 39 | IDX_Y |
+| 40 | AGU_ADD_LO |
+| 41 | AGU_ADD_HI |
+| 42 | AGUC_IN |
+| 43 | AGUC_CLR |
+| 44-47 | reserved |
 
 Reserved bits must be zero in M2-generated images.
 
@@ -78,6 +84,8 @@ The generator must reject impossible or dangerous combinations, including:
 - MEM_READ and MEM_WRITE together
 - conflicting ALU operations
 - HALT combined with an unrelated write
+- IDX_X and IDX_Y together
+- conflicting AGU phases
 - reserved bits set
 
 These checks become part of the hardware design contract.
