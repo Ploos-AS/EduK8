@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "address_format": "opcode[7:0]:step[4:0]:condition[1:0]",
+  "entries": [
+    {
+      "opcode": "0x00",
+      "step": 0,
+      "condition": 0,
+      "signals": [],
+      "note": "placeholder safe NOP entry; full microprogram follows"
+    }
+  ]
+}
