@@ -98,6 +98,10 @@ tools/         development utilities
 
 The repository currently establishes the project identity, architecture direction and development roadmap. No hardware or software implementation is considered complete yet.
 
+## Manufacturing
+
+For fabrication files, release-package conventions, manufacturer choices, and funding/affiliate disclosure, see [MANUFACTURING.md](MANUFACTURING.md). Released hardware remains vendor-neutral and may be manufactured by any suitable PCB manufacturer.
+
 ## License
 
 Hardware design materials — including schematics, PCB layouts, manufacturing files, and HDL/RTL that describes hardware — are licensed under the **CERN Open Hardware Licence Version 2 - Permissive (CERN-OHL-P-2.0)**. See [LICENSE-HARDWARE](LICENSE-HARDWARE).
