@@ -1,13 +1,339 @@
 {
   "version": 1,
   "address_format": "opcode[7:0]:step[4:0]:condition[1:0]",
+  "note": "First executable microprogram slice. Fetch is repeated per implemented opcode because opcode participates in the microaddress.",
   "entries": [
     {
       "opcode": "0x00",
       "step": 0,
       "condition": 0,
-      "signals": [],
-      "note": "placeholder safe NOP entry; full microprogram follows"
+      "signals": [
+        "PC_OUT",
+        "MAR_IN_LO"
+      ],
+      "note": "FETCH: begin PC to MAR transfer (logical control contract)"
+    },
+    {
+      "opcode": "0x00",
+      "step": 0,
+      "condition": 1,
+      "signals": [
+        "PC_OUT",
+        "MAR_IN_LO"
+      ],
+      "note": "FETCH: begin PC to MAR transfer (logical control contract)"
+    },
+    {
+      "opcode": "0x00",
+      "step": 0,
+      "condition": 2,
+      "signals": [
+        "PC_OUT",
+        "MAR_IN_LO"
+      ],
+      "note": "FETCH: begin PC to MAR transfer (logical control contract)"
+    },
+    {
+      "opcode": "0x00",
+      "step": 0,
+      "condition": 3,
+      "signals": [
+        "PC_OUT",
+        "MAR_IN_LO"
+      ],
+      "note": "FETCH: begin PC to MAR transfer (logical control contract)"
+    },
+    {
+      "opcode": "0x00",
+      "step": 1,
+      "condition": 0,
+      "signals": [
+        "MEM_READ",
+        "MDR_IN"
+      ],
+      "note": "FETCH: memory at MAR into MDR"
+    },
+    {
+      "opcode": "0x00",
+      "step": 1,
+      "condition": 1,
+      "signals": [
+        "MEM_READ",
+        "MDR_IN"
+      ],
+      "note": "FETCH: memory at MAR into MDR"
+    },
+    {
+      "opcode": "0x00",
+      "step": 1,
+      "condition": 2,
+      "signals": [
+        "MEM_READ",
+        "MDR_IN"
+      ],
+      "note": "FETCH: memory at MAR into MDR"
+    },
+    {
+      "opcode": "0x00",
+      "step": 1,
+      "condition": 3,
+      "signals": [
+        "MEM_READ",
+        "MDR_IN"
+      ],
+      "note": "FETCH: memory at MAR into MDR"
+    },
+    {
+      "opcode": "0x00",
+      "step": 2,
+      "condition": 0,
+      "signals": [
+        "MDR_OUT",
+        "IR_IN",
+        "PC_INC"
+      ],
+      "note": "FETCH: MDR to IR and increment PC"
+    },
+    {
+      "opcode": "0x00",
+      "step": 2,
+      "condition": 1,
+      "signals": [
+        "MDR_OUT",
+        "IR_IN",
+        "PC_INC"
+      ],
+      "note": "FETCH: MDR to IR and increment PC"
+    },
+    {
+      "opcode": "0x00",
+      "step": 2,
+      "condition": 2,
+      "signals": [
+        "MDR_OUT",
+        "IR_IN",
+        "PC_INC"
+      ],
+      "note": "FETCH: MDR to IR and increment PC"
+    },
+    {
+      "opcode": "0x00",
+      "step": 2,
+      "condition": 3,
+      "signals": [
+        "MDR_OUT",
+        "IR_IN",
+        "PC_INC"
+      ],
+      "note": "FETCH: MDR to IR and increment PC"
+    },
+    {
+      "opcode": "0x01",
+      "step": 0,
+      "condition": 0,
+      "signals": [
+        "PC_OUT",
+        "MAR_IN_LO"
+      ],
+      "note": "FETCH: begin PC to MAR transfer (logical control contract)"
+    },
+    {
+      "opcode": "0x01",
+      "step": 0,
+      "condition": 1,
+      "signals": [
+        "PC_OUT",
+        "MAR_IN_LO"
+      ],
+      "note": "FETCH: begin PC to MAR transfer (logical control contract)"
+    },
+    {
+      "opcode": "0x01",
+      "step": 0,
+      "condition": 2,
+      "signals": [
+        "PC_OUT",
+        "MAR_IN_LO"
+      ],
+      "note": "FETCH: begin PC to MAR transfer (logical control contract)"
+    },
+    {
+      "opcode": "0x01",
+      "step": 0,
+      "condition": 3,
+      "signals": [
+        "PC_OUT",
+        "MAR_IN_LO"
+      ],
+      "note": "FETCH: begin PC to MAR transfer (logical control contract)"
+    },
+    {
+      "opcode": "0x01",
+      "step": 1,
+      "condition": 0,
+      "signals": [
+        "MEM_READ",
+        "MDR_IN"
+      ],
+      "note": "FETCH: memory at MAR into MDR"
+    },
+    {
+      "opcode": "0x01",
+      "step": 1,
+      "condition": 1,
+      "signals": [
+        "MEM_READ",
+        "MDR_IN"
+      ],
+      "note": "FETCH: memory at MAR into MDR"
+    },
+    {
+      "opcode": "0x01",
+      "step": 1,
+      "condition": 2,
+      "signals": [
+        "MEM_READ",
+        "MDR_IN"
+      ],
+      "note": "FETCH: memory at MAR into MDR"
+    },
+    {
+      "opcode": "0x01",
+      "step": 1,
+      "condition": 3,
+      "signals": [
+        "MEM_READ",
+        "MDR_IN"
+      ],
+      "note": "FETCH: memory at MAR into MDR"
+    },
+    {
+      "opcode": "0x01",
+      "step": 2,
+      "condition": 0,
+      "signals": [
+        "MDR_OUT",
+        "IR_IN",
+        "PC_INC"
+      ],
+      "note": "FETCH: MDR to IR and increment PC"
+    },
+    {
+      "opcode": "0x01",
+      "step": 2,
+      "condition": 1,
+      "signals": [
+        "MDR_OUT",
+        "IR_IN",
+        "PC_INC"
+      ],
+      "note": "FETCH: MDR to IR and increment PC"
+    },
+    {
+      "opcode": "0x01",
+      "step": 2,
+      "condition": 2,
+      "signals": [
+        "MDR_OUT",
+        "IR_IN",
+        "PC_INC"
+      ],
+      "note": "FETCH: MDR to IR and increment PC"
+    },
+    {
+      "opcode": "0x01",
+      "step": 2,
+      "condition": 3,
+      "signals": [
+        "MDR_OUT",
+        "IR_IN",
+        "PC_INC"
+      ],
+      "note": "FETCH: MDR to IR and increment PC"
+    },
+    {
+      "opcode": "0x00",
+      "step": 3,
+      "condition": 0,
+      "signals": [
+        "INSTR_DONE",
+        "STEP_RESET"
+      ],
+      "note": "NOP completes and returns sequencer to T0"
+    },
+    {
+      "opcode": "0x00",
+      "step": 3,
+      "condition": 1,
+      "signals": [
+        "INSTR_DONE",
+        "STEP_RESET"
+      ],
+      "note": "NOP completes and returns sequencer to T0"
+    },
+    {
+      "opcode": "0x00",
+      "step": 3,
+      "condition": 2,
+      "signals": [
+        "INSTR_DONE",
+        "STEP_RESET"
+      ],
+      "note": "NOP completes and returns sequencer to T0"
+    },
+    {
+      "opcode": "0x00",
+      "step": 3,
+      "condition": 3,
+      "signals": [
+        "INSTR_DONE",
+        "STEP_RESET"
+      ],
+      "note": "NOP completes and returns sequencer to T0"
+    },
+    {
+      "opcode": "0x01",
+      "step": 3,
+      "condition": 0,
+      "signals": [
+        "HALT",
+        "INSTR_DONE",
+        "STEP_RESET"
+      ],
+      "note": "HALT enters halted state after completed fetch"
+    },
+    {
+      "opcode": "0x01",
+      "step": 3,
+      "condition": 1,
+      "signals": [
+        "HALT",
+        "INSTR_DONE",
+        "STEP_RESET"
+      ],
+      "note": "HALT enters halted state after completed fetch"
+    },
+    {
+      "opcode": "0x01",
+      "step": 3,
+      "condition": 2,
+      "signals": [
+        "HALT",
+        "INSTR_DONE",
+        "STEP_RESET"
+      ],
+      "note": "HALT enters halted state after completed fetch"
+    },
+    {
+      "opcode": "0x01",
+      "step": 3,
+      "condition": 3,
+      "signals": [
+        "HALT",
+        "INSTR_DONE",
+        "STEP_RESET"
+      ],
+      "note": "HALT enters halted state after completed fetch"
     }
   ]
 }
