@@ -1,0 +1,9 @@
+Ref,Qty,Part class,Function,Status
+U60-U65,6,32Kx8 EEPROM/ROM,48-bit microcode control store,baseline 28C256-class
+U66-U67,2,74HCT163-class,5-bit microstep sequencer,baseline
+U68-U70,3,74HCT151/153-class,Condition selection/decode,estimate
+U71-U72,2,74HCT138-class,Control/decode glue,estimate
+U73,1,74HCT245-class,Debug/control buffering,candidate
+JPROG,1,0.1in header,Control-store programming,planned
+JDBG_CTRL,1+,0.1in headers,Microaddress/control debug,selected
+C60-C73,14,100nF,Local decoupling,planned
