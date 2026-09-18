@@ -1,0 +1,213 @@
+{
+  "version": 1,
+  "architecture": "K8",
+  "notes": "Initial executable control-store source. Fetch is shared by every opcode.",
+  "fetch": [
+    {
+      "step": 0,
+      "signals": [
+        "PC_OUT",
+        "MAR_IN_LO",
+        "MAR_IN_HI"
+      ]
+    },
+    {
+      "step": 1,
+      "signals": [
+        "MEM_READ",
+        "MDR_IN"
+      ]
+    },
+    {
+      "step": 2,
+      "signals": [
+        "MDR_OUT",
+        "IR_IN",
+        "PC_INC"
+      ]
+    }
+  ],
+  "opcodes": {
+    "10": [
+      {
+        "step": 3,
+        "signals": [
+          "PC_OUT",
+          "MAR_IN_LO",
+          "MAR_IN_HI"
+        ]
+      },
+      {
+        "step": 4,
+        "signals": [
+          "MEM_READ",
+          "MDR_IN"
+        ]
+      },
+      {
+        "step": 5,
+        "signals": [
+          "MDR_OUT",
+          "A_IN",
+          "PC_INC",
+          "ALU_FLAGS",
+          "INSTR_DONE"
+        ]
+      }
+    ],
+    "18": [
+      {
+        "step": 3,
+        "signals": [
+          "PC_OUT",
+          "MAR_IN_LO",
+          "MAR_IN_HI"
+        ]
+      },
+      {
+        "step": 4,
+        "signals": [
+          "MEM_READ",
+          "MDR_IN"
+        ]
+      },
+      {
+        "step": 5,
+        "signals": [
+          "MDR_OUT",
+          "X_IN",
+          "PC_INC",
+          "ALU_FLAGS",
+          "INSTR_DONE"
+        ]
+      }
+    ],
+    "20": [
+      {
+        "step": 3,
+        "signals": [
+          "PC_OUT",
+          "MAR_IN_LO",
+          "MAR_IN_HI"
+        ]
+      },
+      {
+        "step": 4,
+        "signals": [
+          "MEM_READ",
+          "MDR_IN"
+        ]
+      },
+      {
+        "step": 5,
+        "signals": [
+          "MDR_OUT",
+          "Y_IN",
+          "PC_INC",
+          "ALU_FLAGS",
+          "INSTR_DONE"
+        ]
+      }
+    ],
+    "40": [
+      {
+        "step": 3,
+        "signals": [
+          "PC_OUT",
+          "MAR_IN_LO",
+          "MAR_IN_HI"
+        ]
+      },
+      {
+        "step": 4,
+        "signals": [
+          "MEM_READ",
+          "MDR_IN"
+        ]
+      },
+      {
+        "step": 5,
+        "signals": [
+          "MDR_OUT",
+          "ALU_ADD",
+          "A_IN",
+          "F_IN",
+          "ALU_FLAGS",
+          "PC_INC",
+          "INSTR_DONE"
+        ]
+      }
+    ],
+    "90": [
+      {
+        "step": 3,
+        "signals": [
+          "SP_OUT",
+          "MAR_IN_LO"
+        ]
+      },
+      {
+        "step": 4,
+        "signals": [
+          "A_OUT",
+          "MDR_IN"
+        ]
+      },
+      {
+        "step": 5,
+        "signals": [
+          "MEM_WRITE",
+          "SP_DEC",
+          "INSTR_DONE"
+        ]
+      }
+    ],
+    "91": [
+      {
+        "step": 3,
+        "signals": [
+          "SP_INC"
+        ]
+      },
+      {
+        "step": 4,
+        "signals": [
+          "SP_OUT",
+          "MAR_IN_LO"
+        ]
+      },
+      {
+        "step": 5,
+        "signals": [
+          "MEM_READ",
+          "MDR_IN"
+        ]
+      },
+      {
+        "step": 6,
+        "signals": [
+          "MDR_OUT",
+          "A_IN",
+          "ALU_FLAGS",
+          "INSTR_DONE"
+        ]
+      }
+    ],
+    "00": [
+      {
+        "step": 3,
+        "signals": [
+          "INSTR_DONE"
+        ]
+      }
+    ],
+    "01": [
+      {
+        "step": 3,
+        "signals": [
+          "HALT"
+        ]
+      }
+    ]
+  }
+}
