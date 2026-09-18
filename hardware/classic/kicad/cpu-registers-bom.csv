@@ -1,0 +1,12 @@
+Ref,Qty,Part class,Function,Status
+U10,1,74HCT574,A register,selected
+U11,1,74HCT245,A to DB buffer,selected
+U12,1,74HCT574,X register,selected
+U13,1,74HCT245,X to DB buffer,selected
+U14,1,74HCT574,Y register,selected
+U15,1,74HCT245,Y to DB buffer,selected
+U16,1,74HCT574,IR register,selected
+U17,1,74HCT574,TMP register,selected
+U18,1,74HCT245,TMP to DB buffer,selected
+JDBG_REG,1+,0.1in headers,Register/data-bus debug,selected
+C10-C18,9,100nF,Local decoupling,selected
