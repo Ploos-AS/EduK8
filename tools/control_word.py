@@ -9,6 +9,7 @@ WIDTH = SPEC["width_bits"]
 
 DB_SOURCES = {"A_OUT","X_OUT","Y_OUT","PC_OUT","SP_OUT","MDR_OUT","TMP_OUT"}
 ALU = {"ALU_ADD","ALU_SUB","ALU_AND","ALU_OR","ALU_XOR","ALU_NOT","ALU_SHL","ALU_SHR","ALU_ROL","ALU_ROR"}
+AGU = {"AGU_ADD_LO","AGU_ADD_HI"}
 
 def encode(signals):
     signals = set(signals)
@@ -21,6 +22,10 @@ def encode(signals):
         raise ValueError("MEM_READ and MEM_WRITE conflict")
     if len(signals & ALU) > 1:
         raise ValueError("multiple ALU operations")
+    if {"IDX_X","IDX_Y"} <= signals:
+        raise ValueError("multiple index sources")
+    if len(signals & AGU) > 1:
+        raise ValueError("multiple AGU phases")
     if "HALT" in signals and len(signals - {"HALT","INSTR_DONE"}) > 0:
         raise ValueError("HALT conflicts with active controls")
     value = 0
