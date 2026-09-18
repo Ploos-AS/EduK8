@@ -1,7 +1,7 @@
 {
   "version": 1,
   "architecture": "K8",
-  "microstep_model": "T0..Tn",
+  "microstep_model": "T0..T31",
   "internal_registers": [
     {
       "name": "IR",
@@ -36,26 +36,28 @@
   ],
   "signals": [
     "A_OUT",
-    "A_IN",
+    "A_LOAD",
     "X_OUT",
-    "X_IN",
+    "X_LOAD",
     "Y_OUT",
-    "Y_IN",
-    "PC_OUT",
-    "PC_IN",
+    "Y_LOAD",
     "PC_INC",
+    "PC_LOAD_LO",
+    "PC_LOAD_HI",
+    "PC_TO_MAR",
     "SP_OUT",
-    "SP_IN",
+    "SP_LOAD",
     "SP_INC",
     "SP_DEC",
-    "IR_IN",
-    "MAR_IN_LO",
-    "MAR_IN_HI",
+    "SP_TO_MAR",
+    "IR_LOAD",
+    "MAR_LOAD_LO",
+    "MAR_LOAD_HI",
     "MDR_OUT",
-    "MDR_IN",
+    "MDR_LOAD",
     "TMP_OUT",
-    "TMP_IN",
-    "F_IN",
+    "TMP_LOAD",
+    "FLAGS_LATCH",
     "MEM_READ",
     "MEM_WRITE",
     "ALU_ADD",
@@ -68,7 +70,7 @@
     "ALU_SHR",
     "ALU_ROL",
     "ALU_ROR",
-    "ALU_FLAGS",
+    "ALU_OUT_ENABLE",
     "STEP_RESET",
     "INSTR_DONE",
     "HALT",
@@ -77,28 +79,38 @@
     "IDX_Y",
     "AGU_ADD_LO",
     "AGU_ADD_HI",
-    "AGUC_IN",
-    "AGUC_CLR"
+    "AGUC_LOAD",
+    "AGUC_CLEAR",
+    "MAR_FROM_AGU",
+    "MAR_STACK"
   ],
   "fetch": [
     {
       "step": "T0",
       "ops": [
-        "PC -> MAR"
+        "PC_TO_MAR"
       ]
     },
     {
       "step": "T1",
       "ops": [
-        "MEM[MAR] -> MDR"
+        "MEM_READ",
+        "MDR_LOAD"
       ]
     },
     {
       "step": "T2",
       "ops": [
-        "MDR -> IR",
-        "PC++"
+        "MDR_OUT",
+        "IR_LOAD",
+        "PC_INC"
       ]
     }
-  ]
+  ],
+  "address": {
+    "opcode_bits": 8,
+    "microstep_bits": 5,
+    "condition_bits": 2,
+    "total_bits": 15
+  }
 }
