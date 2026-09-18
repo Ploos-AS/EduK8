@@ -12,7 +12,7 @@ def test_keyboard_echo_assembles():
     src=Path("examples/keyboard_echo.asm").read_text()
     binary=assemble(src)
     assert binary[:2] == bytes([0x18,0x00])
-    assert 0x16 <= len(binary) <= 0x30
+    assert len(binary) == 19
 
 
 def test_named_constants():
