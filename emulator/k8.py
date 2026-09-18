@@ -153,8 +153,23 @@ class CPU:
         self.a = self._read8(address)
         self._set_zn(self.a)
 
+    irq_line: bool = False
+
+    def _enter_interrupt(self, break_marker=False):
+        self._push8((self.pc >> 8) & 0xFF)
+        self._push8(self.pc & 0xFF)
+        stacked_f = (self.f & (FLAG_C | FLAG_Z | FLAG_N | FLAG_V | FLAG_I))
+        if break_marker:
+            stacked_f |= FLAG_B
+        self._push8(stacked_f)
+        self.f = (self.f | FLAG_I) & ~FLAG_B
+        self.pc = self._read16(0xFFFE)
+
     def step(self):
         if self.halted:
+            return
+        if self.irq_line and not (self.f & FLAG_I):
+            self._enter_interrupt(False)
             return
         pc_before = self.pc
         opcode = self._fetch8()
@@ -166,8 +181,7 @@ class CPU:
             self.halted = True
             return
         if opcode == 0x02:
-            self.f |= FLAG_B
-            self.halted = True
+            self._enter_interrupt(True)
             return
         if opcode == 0x05:
             self.f &= ~FLAG_C
@@ -342,8 +356,8 @@ class CPU:
 
         if opcode == 0x90: self._push8(self.a); return
         if opcode == 0x91: self.a = self._pop8(); self._set_zn(self.a); return
-        if opcode == 0x92: self._push8(self.f); return
-        if opcode == 0x93: self.f = self._pop8() & 0x7F; return
+        if opcode == 0x92: self._push8(self.f & (FLAG_C | FLAG_Z | FLAG_N | FLAG_V | FLAG_I)); return
+        if opcode == 0x93: self.f = self._pop8() & (FLAG_C | FLAG_Z | FLAG_N | FLAG_V | FLAG_I); return
         if opcode == 0x94: self.x = self.a; self._set_zn(self.x); return
         if opcode == 0x95: self.y = self.a; self._set_zn(self.y); return
         if opcode == 0x96: self.a = self.x; self._set_zn(self.a); return
@@ -353,7 +367,7 @@ class CPU:
             self.pc = self._pop8() | (self._pop8() << 8)
             return
         if opcode == 0x03:
-            self.f = self._pop8() & 0x3F
+            self.f = self._pop8() & (FLAG_C | FLAG_Z | FLAG_N | FLAG_V | FLAG_I)
             self.pc = self._pop8() | (self._pop8() << 8)
             return
 
