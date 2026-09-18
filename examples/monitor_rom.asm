@@ -27,6 +27,27 @@ keyboard_wait:
     AND #$01
     BEQ keyboard_wait
     LDA KEY_DATA
+
+    ; First monitor command: '?' is a compact HELP command.
+    ; It avoids hidden parsing machinery while the monitor is still tiny.
+    CMP #$3F
+    BEQ help
+
+    STA VIDEO_RAM,X
+    INX
+    JMP keyboard_wait
+
+help:
+    LDA #$48       ; H
+    STA VIDEO_RAM,X
+    INX
+    LDA #$45       ; E
+    STA VIDEO_RAM,X
+    INX
+    LDA #$4C       ; L
+    STA VIDEO_RAM,X
+    INX
+    LDA #$50       ; P
     STA VIDEO_RAM,X
     INX
     JMP keyboard_wait
