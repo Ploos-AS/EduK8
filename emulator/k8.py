@@ -1,5 +1,7 @@
 from dataclasses import dataclass, field
 
+from emulator.io import IO
+
 FLAG_C = 1 << 0
 FLAG_Z = 1 << 1
 FLAG_N = 1 << 2
@@ -24,6 +26,7 @@ class CPU:
     trace_enabled: bool = False
     trace: list = field(default_factory=list)
     memory: bytearray = field(default_factory=lambda: bytearray(65536))
+    io: IO = field(default_factory=IO)
 
     def reset(self, pc=None):
         self.a = self.x = self.y = 0
@@ -49,8 +52,15 @@ class CPU:
     def _read16(self, address):
         return self.memory[address] | (self.memory[(address + 1) & 0xFFFF] << 8)
 
+    def _read8(self, address):
+        address &= 0xFFFF
+        value = self.io.read(address)
+        return self.memory[address] if value is None else value
+
     def _write8(self, address, value):
-        self.memory[address & 0xFFFF] = value & 0xFF
+        address &= 0xFFFF
+        if not self.io.write(address, value):
+            self.memory[address] = value & 0xFF
 
     def _push8(self, value):
         self.memory[0x0100 | self.sp] = value & 0xFF
@@ -140,7 +150,7 @@ class CPU:
         return self.memory[lo_addr] | (self.memory[hi_addr] << 8)
 
     def _load_a(self, address):
-        self.a = self.memory[address & 0xFFFF]
+        self.a = self._read8(address)
         self._set_zn(self.a)
 
     def step(self):
