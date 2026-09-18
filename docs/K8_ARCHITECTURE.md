@@ -26,8 +26,8 @@ Status flags:
 | 2 | N | Negative/sign |
 | 3 | V | Signed overflow |
 | 4 | I | Interrupt mask |
-| 5 | B | Software break |
-| 6 | D | Decimal-mode flag |
+| 5 | B | Break marker in stacked flag images; live value is 0 |
+| 6 | - | Reserved, reads as 0 |
 | 7 | - | Reserved, reads as 0 |
 
 ## Data and address widths
@@ -58,7 +58,7 @@ The stack occupies page $0100-$01FF. SP contains the low byte of the stack posit
 - $FFFC-$FFFD = reset vector
 - $FFFE-$FFFF = IRQ vector
 
-The reset sequence loads PC from $FFFC-$FFFD.
+The reset sequence loads PC from $FFFC-$FFFD. K8 v1 has one maskable IRQ vector at $FFFE-$FFFF and no NMI.
 
 ## Instruction encoding
 
@@ -109,7 +109,7 @@ JMP, JSR, RTS, BEQ, BNE, BCS, BCC, BMI, BPL, BVS, BVC
 PHA, PLA, PHP, PLP
 
 ### System/control
-NOP, BRK, RTI, CLI, SEI, CLC, SEC, CLV, CLD, SED, HALT
+NOP, BRK, RTI, CLI, SEI, CLC, SEC, CLV, HALT
 
 This list is an M1 architectural candidate, not yet a frozen binary opcode table.
 
