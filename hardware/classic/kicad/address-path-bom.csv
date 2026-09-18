@@ -1,0 +1,9 @@
+Ref,Qty,Part class,Function,Status
+U20-U23,4,74HCT163-class,16-bit PC and carry chain,baseline
+U24-U25,2,74HCT574-class,MAR low/high storage,baseline
+U26-U29,4,74HCT157-class,Address source multiplexing,baseline
+U30,1,74HCT193-class,Stack pointer up/down counter,candidate
+U31,1,74HCT74-class,AGUC latch,candidate
+U32-U33,2,74HCT245-class,Address bus buffering,candidate
+JDBG_ADDR,1+,0.1in headers,Address-path debug,selected
+C20-C33,14,100nF,Local decoupling,planned
