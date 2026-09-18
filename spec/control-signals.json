@@ -74,7 +74,6 @@
     "STEP_RESET",
     "INSTR_DONE",
     "HALT",
-    "IRQ_ACK",
     "IDX_X",
     "IDX_Y",
     "AGU_ADD_LO",
@@ -82,7 +81,8 @@
     "AGUC_LOAD",
     "AGUC_CLEAR",
     "MAR_FROM_AGU",
-    "MAR_STACK"
+    "C_SET",
+    "C_CLEAR"
   ],
   "fetch": [
     {
