@@ -1,0 +1,41 @@
+{
+  "schema": "eduk8-peripherals-v1",
+  "irq": {
+    "status": "0xC000",
+    "mask": "0xC001",
+    "sources": {
+      "keyboard": 0,
+      "timer": 1
+    },
+    "status_read_clears": false
+  },
+  "timer": {
+    "width": 16,
+    "registers": {
+      "lo": "0xC030",
+      "hi": "0xC031",
+      "control": "0xC032",
+      "status": "0xC033"
+    },
+    "control_bits": {
+      "enable": 0,
+      "periodic": 1,
+      "irq_enable": 2
+    },
+    "status_bits": {
+      "expired": 0
+    }
+  },
+  "gpio": {
+    "width": 8,
+    "registers": {
+      "data": "0xC040",
+      "dir": "0xC041",
+      "input": "0xC042"
+    },
+    "direction": {
+      "input": 0,
+      "output": 1
+    }
+  }
+}
