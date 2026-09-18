@@ -68,7 +68,7 @@ The conceptual control-store address is formed from:
 - microstep: 4 bits
 - condition page: 2 bits
 
-This yields a 14-bit logical address space. Condition pages allow branch/interrupt decisions without making the basic sequencer opaque.
+This yields a 15-bit logical address space. Condition pages allow branch/interrupt decisions without making the basic sequencer opaque.
 
 The initial generator may emit a sparse image. Physical EEPROM selection and banking are an M4 electrical decision.
 
@@ -89,3 +89,6 @@ The generator must reject impossible or dangerous combinations, including:
 - reserved bits set
 
 These checks become part of the hardware design contract.
+
+
+> K8 Classic v1 uses a 5-bit microstep counter (T0-T31). Earlier 4-bit/T0-T15 material was provisional.
