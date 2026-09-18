@@ -13,3 +13,13 @@ def test_keyboard_echo_assembles():
     binary=assemble(src)
     assert binary[:2] == bytes([0x18,0x00])
     assert 0x16 <= len(binary) <= 0x30
+
+
+def test_named_constants():
+    source="KEY_DATA = $C010\nLDA KEY_DATA"
+    assert assemble(source) == bytes([0x12,0x10,0xC0])
+
+
+def test_equ_constant():
+    source="PORT .equ $42\nLDA PORT"
+    assert assemble(source) == bytes([0x11,0x42])
