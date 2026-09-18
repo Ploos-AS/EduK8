@@ -19,6 +19,8 @@ class CPU:
     sp: int = 0xFF
     f: int = 0
     halted: bool = False
+    mar: int = 0
+    aguc: int = 0
     trace_enabled: bool = False
     trace: list = field(default_factory=list)
     memory: bytearray = field(default_factory=lambda: bytearray(65536))
@@ -28,6 +30,8 @@ class CPU:
         self.sp = 0xFF
         self.f = 0
         self.halted = False
+        self.mar = 0
+        self.aguc = 0
         self.trace.clear()
         self.pc = ((self.memory[0xFFFC] | self.memory[0xFFFD] << 8)
                    if pc is None else pc) & 0xFFFF
@@ -113,6 +117,28 @@ class CPU:
                 offset -= 0x100
             self.pc = (self.pc + offset) & 0xFFFF
 
+    def _agu_index(self, base, index, zero_page=False):
+        base &= 0xFFFF
+        index &= 0xFF
+        low_sum = (base & 0xFF) + index
+        carry = 1 if low_sum > 0xFF else 0
+        low = low_sum & 0xFF
+        if zero_page:
+            self.mar = low
+            self.aguc = 0
+        else:
+            self.aguc = carry
+            high = ((base >> 8) + carry) & 0xFF
+            self.mar = (high << 8) | low
+        if self.trace_enabled:
+            self.trace.append({"phase": "AGU", "base": base, "index": index, "zero_page": zero_page, "result": self.mar, "carry": carry})
+        return self.mar
+
+    def _read16_zp(self, address):
+        lo_addr = address & 0xFF
+        hi_addr = (lo_addr + 1) & 0xFF
+        return self.memory[lo_addr] | (self.memory[hi_addr] << 8)
+
     def _load_a(self, address):
         self.a = self.memory[address & 0xFFFF]
         self._set_zn(self.a)
@@ -162,13 +188,13 @@ class CPU:
         if opcode == 0x12:
             self._load_a(self._fetch16()); return
         if opcode == 0x13:
-            self._load_a((self._fetch16() + self.x) & 0xFFFF); return
+            self._load_a(self._agu_index(self._fetch16(), self.x)); return
         if opcode == 0x14:
-            self._load_a((self._fetch16() + self.y) & 0xFFFF); return
+            self._load_a(self._agu_index(self._fetch16(), self.y)); return
         if opcode == 0x15:
-            self._load_a(self._read16(self._fetch8())); return
+            self._load_a(self._read16_zp(self._fetch8())); return
         if opcode == 0x16:
-            self._load_a((self._fetch8() + self.x) & 0xFF); return
+            self._load_a(self._agu_index(self._fetch8(), self.x, zero_page=True)); return
 
         if opcode == 0x18:
             self.x = self._fetch8(); self._set_zn(self.x); return
@@ -177,9 +203,9 @@ class CPU:
         if opcode == 0x1A:
             self.x = self.memory[self._fetch16()]; self._set_zn(self.x); return
         if opcode == 0x1B:
-            self.x = self.memory[(self._fetch16() + self.y) & 0xFFFF]; self._set_zn(self.x); return
+            self.x = self.memory[self._agu_index(self._fetch16(), self.y)]; self._set_zn(self.x); return
         if opcode == 0x1C:
-            self.x = self.memory[(self._fetch8() + self.y) & 0xFF]; self._set_zn(self.x); return
+            self.x = self.memory[self._agu_index(self._fetch8(), self.y, zero_page=True)]; self._set_zn(self.x); return
 
         if opcode == 0x20:
             self.y = self._fetch8(); self._set_zn(self.y); return
@@ -188,9 +214,9 @@ class CPU:
         if opcode == 0x22:
             self.y = self.memory[self._fetch16()]; self._set_zn(self.y); return
         if opcode == 0x23:
-            self.y = self.memory[(self._fetch16() + self.x) & 0xFFFF]; self._set_zn(self.y); return
+            self.y = self.memory[self._agu_index(self._fetch16(), self.x)]; self._set_zn(self.y); return
         if opcode == 0x24:
-            self.y = self.memory[(self._fetch8() + self.x) & 0xFF]; self._set_zn(self.y); return
+            self.y = self.memory[self._agu_index(self._fetch8(), self.x, zero_page=True)]; self._set_zn(self.y); return
 
         if opcode == 0x28:
             self._write8(self._fetch8(), self.a); return
