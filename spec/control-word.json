@@ -4,8 +4,10 @@
   "storage_bytes": 6,
   "address": {
     "opcode_bits": 8,
-    "microstep_bits": 4,
-    "condition_bits": 2
+    "microstep_bits": 5,
+    "condition_bits": 2,
+    "total_bits": 15,
+    "depth": 32768
   },
   "bits": {
     "A_OUT": 0,
