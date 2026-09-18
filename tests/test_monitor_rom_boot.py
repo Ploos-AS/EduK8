@@ -33,3 +33,15 @@ def test_monitor_rom_echoes_keyboard_input():
             break
 
     assert bytes(cpu.memory[VRAM_START:VRAM_START+5]) == b"K8> A"
+
+
+def test_monitor_rom_help_command():
+    cpu=boot_monitor()
+    cpu.io.inject_key(ord("?"))
+
+    for _ in range(128):
+        cpu.step()
+        if bytes(cpu.memory[VRAM_START:VRAM_START+8]) == b"K8> HELP":
+            break
+
+    assert bytes(cpu.memory[VRAM_START:VRAM_START+8]) == b"K8> HELP"
