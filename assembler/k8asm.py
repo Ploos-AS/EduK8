@@ -20,6 +20,7 @@ def mode_for(mnemonic, operand, symbols=None):
     if not operand:return "imp"
     if operand.startswith("#"):return "imm"
     if mnemonic.startswith("B") and mnemonic not in ("BRK","BIT"):return "rel"
+    if mnemonic in ("JMP","JSR"):return "abs"
     if operand.startswith("("):return "(abs)" if mnemonic=="JMP" else "(zp)"
     suffix=""; base=operand
     if operand.upper().endswith(",X"):base=operand[:-2];suffix=",X"
