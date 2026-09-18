@@ -6,14 +6,13 @@ KEY_DATA   = $C010
 KEY_STATUS = $C011
 VRAM       = $7800
 
-; Current assembler v0 keeps constants literal until .equ support lands.
 start:
     LDX #$00
 wait:
-    LDA $C011
+    LDA KEY_STATUS
     AND #$01
     BEQ wait
-    LDA $C010
-    STA $7800,X
+    LDA KEY_DATA
+    STA VRAM,X
     INX
     JMP wait
