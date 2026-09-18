@@ -21,6 +21,7 @@ def validate(signals, context=""):
     if len(s & BUS)>1: errs.append(f"multiple DB sources: {sorted(s & BUS)}")
     if {"MEM_READ","MEM_WRITE"} <= s: errs.append("MEM_READ and MEM_WRITE together")
     if len(s & ALU)>1: errs.append(f"multiple ALU operations: {sorted(s & ALU)}")
+    if "INSTR_DONE" in s and "STEP_RESET" not in s: errs.append("INSTR_DONE without STEP_RESET")
     if any(BITS[x] in SPEC["reserved"] for x in s): errs.append("reserved control bit used")
     if errs: raise ValueError(f"{context}: " + "; ".join(errs))
     return word(s)
