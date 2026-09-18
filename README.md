@@ -108,4 +108,6 @@ Hardware design materials — including schematics, PCB layouts, manufacturing f
 
 Software — including firmware, drivers, host tools, emulators, assemblers, compilers, utilities, and other executable code unless explicitly stated otherwise — is licensed under the **MIT License**. See [LICENSE-SOFTWARE](LICENSE-SOFTWARE).
 
+Documentation, lessons, course material, tutorials, exercises, illustrations, and other educational content are licensed under the **Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)**. See [LICENSE-DOCUMENTATION](LICENSE-DOCUMENTATION).
+
 Files that incorporate third-party material remain subject to their respective licences and notices.
