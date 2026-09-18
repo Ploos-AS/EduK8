@@ -1,0 +1,72 @@
+{
+  "schema": "eduk8-memory-map-v1",
+  "address_width": 16,
+  "endian": "little",
+  "regions": [
+    {
+      "start": "0x0000",
+      "end": "0x00FF",
+      "name": "zero_page",
+      "kind": "ram"
+    },
+    {
+      "start": "0x0100",
+      "end": "0x01FF",
+      "name": "stack",
+      "kind": "ram"
+    },
+    {
+      "start": "0x0200",
+      "end": "0x77FF",
+      "name": "general_ram_0",
+      "kind": "ram"
+    },
+    {
+      "start": "0x7800",
+      "end": "0x7BFF",
+      "name": "text_vram",
+      "kind": "vram",
+      "visible_bytes": 1000
+    },
+    {
+      "start": "0x7C00",
+      "end": "0x7EFF",
+      "name": "general_ram_1",
+      "kind": "ram"
+    },
+    {
+      "start": "0x7F00",
+      "end": "0x7FFF",
+      "name": "reserved_0",
+      "kind": "reserved"
+    },
+    {
+      "start": "0x8000",
+      "end": "0xBFFF",
+      "name": "main_rom",
+      "kind": "rom"
+    },
+    {
+      "start": "0xC000",
+      "end": "0xC0FF",
+      "name": "io",
+      "kind": "io"
+    },
+    {
+      "start": "0xC100",
+      "end": "0xFEFF",
+      "name": "reserved_1",
+      "kind": "reserved"
+    },
+    {
+      "start": "0xFF00",
+      "end": "0xFFFF",
+      "name": "system_rom",
+      "kind": "rom_alias"
+    }
+  ],
+  "vectors": {
+    "reset": "0xFFFC",
+    "irq": "0xFFFE"
+  }
+}
