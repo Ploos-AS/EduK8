@@ -14,7 +14,9 @@ def number(s, labels):
     if s.startswith("%"): return int(s[1:],2)
     return int(s,0)
 
-def mode_for(mnemonic, operand):
+def mode_for(mnemonic, operand, symbols=None):
+    symbols = symbols or {}
+
     if not operand: return "imp"
     if operand.startswith("#"): return "imm"
     if mnemonic.startswith("B") and mnemonic not in ("BRK","BIT"): return "rel"
@@ -24,23 +26,30 @@ def mode_for(mnemonic, operand):
     base=operand
     if operand.upper().endswith(",X"): base=operand[:-2]; suffix=",X"
     elif operand.upper().endswith(",Y"): base=operand[:-2]; suffix=",Y"
-    if base.strip().startswith("$") and len(base.strip())<=3: return "zp"+suffix
+    b=base.strip()
+    if (b.startswith("$") and len(b)<=3) or (b in symbols and symbols[b] <= 0xFF): return "zp"+suffix
     return "abs"+suffix
 
 def assemble(source, origin=0):
     lines=[]
     labels={}
+    constants={}
     pc=origin
     for raw in source.splitlines():
         line=raw.split(";",1)[0].strip()
         if not line: continue
+        equ=re.match(r"^([A-Za-z_][A-Za-z0-9_]*)\\s+(?:=|\\.equ\\s+)\\s*(.+)$", line, re.I)
+        if equ:
+            name, value=equ.groups()
+            constants[name]=number(value, {**constants, **labels})
+            continue
         if ":" in line:
             label, line=line.split(":",1)
             labels[label.strip()]=pc
             line=line.strip()
             if not line: continue
         parts=line.split(None,1); m=parts[0].upper(); operand=parts[1].strip() if len(parts)>1 else ""
-        mode=mode_for(m,operand)
+        mode=mode_for(m,operand,{**constants, **labels})
         if (m,mode) not in OPS: raise ValueError(f"unsupported instruction: {m} {operand} ({mode})")
         op,size=OPS[(m,mode)]; lines.append((pc,m,operand,mode,op,size)); pc+=size
     out=bytearray()
@@ -49,7 +58,7 @@ def assemble(source, origin=0):
         if size==1: continue
         text=operand.replace("#","").replace("(","").replace(")","")
         text=re.sub(r",[XYxy]$","",text).strip()
-        value=number(text,labels)
+        value=number(text,{**constants, **labels})
         if mode=="rel": value=(value-(pc+2)) & 0xff
         out.append(value & 0xff)
         if size==3: out.append((value>>8)&0xff)
