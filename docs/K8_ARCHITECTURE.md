@@ -172,3 +172,8 @@ The first revision targets hand-solderable through-hole parts and an inexpensive
 M1 is complete only when programmer-visible state, memory map, addressing modes, instruction semantics, flags, reset/vector behaviour, I/O contract and calling-convention requirements are frozen; a complete opcode table exists; and emulator conformance vectors can be generated from the specification.
 
 Until then, PCB implementation remains provisional.
+
+
+## I/O architecture
+
+K8 v1 includes a self-contained PS/2 keyboard interface, 40x25 text display with dedicated video RAM and VGA output, timer and 8-bit GPIO. The normative register map is defined in `docs/IO_ARCHITECTURE.md` and `spec/io-map.json`.
