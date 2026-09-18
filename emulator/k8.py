@@ -184,12 +184,8 @@ class CPU:
         if opcode == 0x09:
             self.f &= ~FLAG_V
             return
-        if opcode == 0x0A:
-            self.f &= ~(1 << 6)
-            return
-        if opcode == 0x0B:
-            self.f |= 1 << 6
-            return
+        if opcode in (0x0A, 0x0B):
+            raise K8IllegalOpcode(f"illegal opcode {opcode:02X} at {pc_before:04X}")
 
         if opcode == 0x10:
             self.a = self._fetch8(); self._set_zn(self.a); return
