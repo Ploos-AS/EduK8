@@ -1186,6 +1186,334 @@
         "STEP_RESET"
       ],
       "note": "SUB #imm: complete"
+    },
+    {
+      "opcode": "0x05",
+      "step": 0,
+      "condition": 0,
+      "signals": [
+        "PC_TO_MAR"
+      ],
+      "note": "FETCH: PC to MAR"
+    },
+    {
+      "opcode": "0x05",
+      "step": 0,
+      "condition": 1,
+      "signals": [
+        "PC_TO_MAR"
+      ],
+      "note": "FETCH: PC to MAR"
+    },
+    {
+      "opcode": "0x05",
+      "step": 0,
+      "condition": 2,
+      "signals": [
+        "PC_TO_MAR"
+      ],
+      "note": "FETCH: PC to MAR"
+    },
+    {
+      "opcode": "0x05",
+      "step": 0,
+      "condition": 3,
+      "signals": [
+        "PC_TO_MAR"
+      ],
+      "note": "FETCH: PC to MAR"
+    },
+    {
+      "opcode": "0x05",
+      "step": 1,
+      "condition": 0,
+      "signals": [
+        "MEM_READ",
+        "MDR_LOAD"
+      ],
+      "note": "FETCH: opcode memory byte to MDR"
+    },
+    {
+      "opcode": "0x05",
+      "step": 1,
+      "condition": 1,
+      "signals": [
+        "MEM_READ",
+        "MDR_LOAD"
+      ],
+      "note": "FETCH: opcode memory byte to MDR"
+    },
+    {
+      "opcode": "0x05",
+      "step": 1,
+      "condition": 2,
+      "signals": [
+        "MEM_READ",
+        "MDR_LOAD"
+      ],
+      "note": "FETCH: opcode memory byte to MDR"
+    },
+    {
+      "opcode": "0x05",
+      "step": 1,
+      "condition": 3,
+      "signals": [
+        "MEM_READ",
+        "MDR_LOAD"
+      ],
+      "note": "FETCH: opcode memory byte to MDR"
+    },
+    {
+      "opcode": "0x05",
+      "step": 2,
+      "condition": 0,
+      "signals": [
+        "MDR_OUT",
+        "IR_LOAD",
+        "PC_INC"
+      ],
+      "note": "FETCH: opcode to IR and increment PC"
+    },
+    {
+      "opcode": "0x05",
+      "step": 2,
+      "condition": 1,
+      "signals": [
+        "MDR_OUT",
+        "IR_LOAD",
+        "PC_INC"
+      ],
+      "note": "FETCH: opcode to IR and increment PC"
+    },
+    {
+      "opcode": "0x05",
+      "step": 2,
+      "condition": 2,
+      "signals": [
+        "MDR_OUT",
+        "IR_LOAD",
+        "PC_INC"
+      ],
+      "note": "FETCH: opcode to IR and increment PC"
+    },
+    {
+      "opcode": "0x05",
+      "step": 2,
+      "condition": 3,
+      "signals": [
+        "MDR_OUT",
+        "IR_LOAD",
+        "PC_INC"
+      ],
+      "note": "FETCH: opcode to IR and increment PC"
+    },
+    {
+      "opcode": "0x06",
+      "step": 0,
+      "condition": 0,
+      "signals": [
+        "PC_TO_MAR"
+      ],
+      "note": "FETCH: PC to MAR"
+    },
+    {
+      "opcode": "0x06",
+      "step": 0,
+      "condition": 1,
+      "signals": [
+        "PC_TO_MAR"
+      ],
+      "note": "FETCH: PC to MAR"
+    },
+    {
+      "opcode": "0x06",
+      "step": 0,
+      "condition": 2,
+      "signals": [
+        "PC_TO_MAR"
+      ],
+      "note": "FETCH: PC to MAR"
+    },
+    {
+      "opcode": "0x06",
+      "step": 0,
+      "condition": 3,
+      "signals": [
+        "PC_TO_MAR"
+      ],
+      "note": "FETCH: PC to MAR"
+    },
+    {
+      "opcode": "0x06",
+      "step": 1,
+      "condition": 0,
+      "signals": [
+        "MEM_READ",
+        "MDR_LOAD"
+      ],
+      "note": "FETCH: opcode memory byte to MDR"
+    },
+    {
+      "opcode": "0x06",
+      "step": 1,
+      "condition": 1,
+      "signals": [
+        "MEM_READ",
+        "MDR_LOAD"
+      ],
+      "note": "FETCH: opcode memory byte to MDR"
+    },
+    {
+      "opcode": "0x06",
+      "step": 1,
+      "condition": 2,
+      "signals": [
+        "MEM_READ",
+        "MDR_LOAD"
+      ],
+      "note": "FETCH: opcode memory byte to MDR"
+    },
+    {
+      "opcode": "0x06",
+      "step": 1,
+      "condition": 3,
+      "signals": [
+        "MEM_READ",
+        "MDR_LOAD"
+      ],
+      "note": "FETCH: opcode memory byte to MDR"
+    },
+    {
+      "opcode": "0x06",
+      "step": 2,
+      "condition": 0,
+      "signals": [
+        "MDR_OUT",
+        "IR_LOAD",
+        "PC_INC"
+      ],
+      "note": "FETCH: opcode to IR and increment PC"
+    },
+    {
+      "opcode": "0x06",
+      "step": 2,
+      "condition": 1,
+      "signals": [
+        "MDR_OUT",
+        "IR_LOAD",
+        "PC_INC"
+      ],
+      "note": "FETCH: opcode to IR and increment PC"
+    },
+    {
+      "opcode": "0x06",
+      "step": 2,
+      "condition": 2,
+      "signals": [
+        "MDR_OUT",
+        "IR_LOAD",
+        "PC_INC"
+      ],
+      "note": "FETCH: opcode to IR and increment PC"
+    },
+    {
+      "opcode": "0x06",
+      "step": 2,
+      "condition": 3,
+      "signals": [
+        "MDR_OUT",
+        "IR_LOAD",
+        "PC_INC"
+      ],
+      "note": "FETCH: opcode to IR and increment PC"
+    },
+    {
+      "opcode": "0x05",
+      "step": 3,
+      "condition": 0,
+      "signals": [
+        "C_CLEAR",
+        "INSTR_DONE",
+        "STEP_RESET"
+      ],
+      "note": "CLC: clear architectural C and complete"
+    },
+    {
+      "opcode": "0x05",
+      "step": 3,
+      "condition": 1,
+      "signals": [
+        "C_CLEAR",
+        "INSTR_DONE",
+        "STEP_RESET"
+      ],
+      "note": "CLC: clear architectural C and complete"
+    },
+    {
+      "opcode": "0x05",
+      "step": 3,
+      "condition": 2,
+      "signals": [
+        "C_CLEAR",
+        "INSTR_DONE",
+        "STEP_RESET"
+      ],
+      "note": "CLC: clear architectural C and complete"
+    },
+    {
+      "opcode": "0x05",
+      "step": 3,
+      "condition": 3,
+      "signals": [
+        "C_CLEAR",
+        "INSTR_DONE",
+        "STEP_RESET"
+      ],
+      "note": "CLC: clear architectural C and complete"
+    },
+    {
+      "opcode": "0x06",
+      "step": 3,
+      "condition": 0,
+      "signals": [
+        "C_SET",
+        "INSTR_DONE",
+        "STEP_RESET"
+      ],
+      "note": "SEC: set architectural C and complete"
+    },
+    {
+      "opcode": "0x06",
+      "step": 3,
+      "condition": 1,
+      "signals": [
+        "C_SET",
+        "INSTR_DONE",
+        "STEP_RESET"
+      ],
+      "note": "SEC: set architectural C and complete"
+    },
+    {
+      "opcode": "0x06",
+      "step": 3,
+      "condition": 2,
+      "signals": [
+        "C_SET",
+        "INSTR_DONE",
+        "STEP_RESET"
+      ],
+      "note": "SEC: set architectural C and complete"
+    },
+    {
+      "opcode": "0x06",
+      "step": 3,
+      "condition": 3,
+      "signals": [
+        "C_SET",
+        "INSTR_DONE",
+        "STEP_RESET"
+      ],
+      "note": "SEC: set architectural C and complete"
     }
   ]
 }
