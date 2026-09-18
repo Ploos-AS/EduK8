@@ -1,0 +1,10 @@
+Ref,Qty,Part class,Function,Status
+U40-U41,2,74HCT283,8-bit arithmetic adder,selected
+U42-U43,2,74HCT86,B inversion/XOR logic,baseline
+U44-U45,2,74HCT08,AND/overflow logic,baseline
+U46-U47,2,74HCT32,OR/zero reduction,baseline
+U48,1,74HCT04,NOT/inversion,baseline
+U49-U54,6,74HCT157-class,Logic/shift/result/carry muxing,estimate
+U55,1,74HCT245,ALU result to DB,selected
+JDBG_ALU,1+,0.1in headers,ALU debug,selected
+C40-C55,16,100nF,Local decoupling,planned
