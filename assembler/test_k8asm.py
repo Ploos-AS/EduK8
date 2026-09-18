@@ -23,3 +23,15 @@ def test_named_constants():
 def test_equ_constant():
     source="PORT .equ $42\nLDA PORT"
     assert assemble(source) == bytes([0x11,0x42])
+
+
+def test_byte_and_word_directives():
+    assert assemble(".byte $12,$34\n.word $1234") == bytes([0x12,0x34,0x34,0x12])
+
+
+def test_rom_image_and_vectors():
+    src=".org $8000\nstart: HALT\n.org $FFFC\n.word start\n.word start"
+    image=assemble(src,image=True)
+    assert len(image)==65536
+    assert image[0x8000]==0x01
+    assert image[0xFFFC:0x10000]==bytes([0x00,0x80,0x00,0x80])
