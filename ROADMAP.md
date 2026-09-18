@@ -118,6 +118,7 @@
 - [x] Define K8 FPGA implementation
 - [x] Make emulator the architectural reference
 - [ ] Freeze Classic datapath schematic
+- [x] Define Clock/reset/single-step architecture
 - [ ] Create synthesizable FPGA top-level
 - [ ] Establish shared ISA/ROM verification vectors
 - [ ] Qualify FPGA against emulator
