@@ -45,3 +45,15 @@ def test_monitor_rom_help_command():
             break
 
     assert bytes(cpu.memory[VRAM_START:VRAM_START+8]) == b"K8> HELP"
+
+
+def test_monitor_rom_line_editor_help():
+    cpu=boot_monitor()
+    for ch in b"HELP\\r":
+        cpu.io.inject_key(ch)
+        for _ in range(64):
+            cpu.step()
+            if ch == 13 and bytes(cpu.memory[VRAM_START+40:VRAM_START+47]) == b"HELP OK":
+                break
+    assert bytes(cpu.memory[VRAM_START:VRAM_START+8]) == b"K8> HELP"
+    assert bytes(cpu.memory[VRAM_START+40:VRAM_START+47]) == b"HELP OK"
