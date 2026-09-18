@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "io_page": {
+    "start": "C000",
+    "end": "C0FF"
+  },
+  "devices": {
+    "system": {
+      "base": "C000",
+      "registers": {
+        "IRQ_STATUS": "C000",
+        "IRQ_MASK": "C001"
+      }
+    },
+    "keyboard": {
+      "base": "C010",
+      "interface": "PS/2",
+      "registers": {
+        "KEY_DATA": "C010",
+        "KEY_STATUS": "C011",
+        "KEY_CONTROL": "C012",
+        "KEY_RAW": "C013"
+      }
+    },
+    "video": {
+      "base": "C020",
+      "mode": "40x25 text, 8x8 glyphs",
+      "vram": {
+        "start": "7800",
+        "end": "7BFF",
+        "visible_bytes": 1000
+      },
+      "registers": {
+        "VIDEO_CONTROL": "C020",
+        "VIDEO_STATUS": "C021",
+        "CURSOR_X": "C022",
+        "CURSOR_Y": "C023",
+        "CURSOR_CONTROL": "C024",
+        "BORDER": "C025"
+      }
+    },
+    "timer": {
+      "base": "C030",
+      "registers": {
+        "TIMER_LO": "C030",
+        "TIMER_HI": "C031",
+        "TIMER_CONTROL": "C032",
+        "TIMER_STATUS": "C033"
+      }
+    },
+    "gpio": {
+      "base": "C040",
+      "width_bits": 8,
+      "registers": {
+        "GPIO_DATA": "C040",
+        "GPIO_DIR": "C041",
+        "GPIO_INPUT": "C042"
+      }
+    }
+  }
+}
