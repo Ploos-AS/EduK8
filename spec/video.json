@@ -1,0 +1,33 @@
+{
+  "schema": "eduk8-video-v1",
+  "mode": "text",
+  "columns": 40,
+  "rows": 25,
+  "glyph_width": 8,
+  "glyph_height": 8,
+  "active_width": 320,
+  "active_height": 200,
+  "charset_size": 256,
+  "font_bytes": 2048,
+  "vram": {
+    "base": "0x7800",
+    "size": 1024,
+    "visible_bytes": 1000
+  },
+  "registers": {
+    "control": "0xC020",
+    "status": "0xC021",
+    "cursor_x": "0xC022",
+    "cursor_y": "0xC023",
+    "cursor_control": "0xC024",
+    "border": "0xC025"
+  },
+  "output": {
+    "initial": "VGA",
+    "colour": "monochrome"
+  },
+  "requirements": {
+    "hidden_mcu": false,
+    "observable_arbitration": true
+  }
+}
