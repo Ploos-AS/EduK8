@@ -7,7 +7,7 @@ ROOT=Path(__file__).resolve().parents[1]
 SPEC=json.loads((ROOT/"spec/control-word.json").read_text())
 BITS=SPEC["bits"]; DEPTH=1 << (SPEC["address"]["opcode_bits"]+SPEC["address"]["microstep_bits"]+SPEC["address"]["condition_bits"])
 SAFE=0
-BUS={"A_OUT","X_OUT","Y_OUT","SP_OUT","MDR_OUT","TMP_OUT"}
+BUS={"A_OUT","X_OUT","Y_OUT","SP_OUT","MDR_OUT","TMP_OUT","ALU_OUT_ENABLE"}
 ALU={"ALU_ADD","ALU_SUB","ALU_AND","ALU_OR","ALU_XOR","ALU_NOT","ALU_SHL","ALU_SHR","ALU_ROL","ALU_ROR"}
 
 def word(signals):
