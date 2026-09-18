@@ -610,6 +610,294 @@
         "STEP_RESET"
       ],
       "note": "LDA #imm: latch Z/N from A and complete"
+    },
+    {
+      "opcode": "0x40",
+      "step": 0,
+      "condition": 0,
+      "signals": [
+        "PC_TO_MAR"
+      ],
+      "note": "FETCH: PC to MAR"
+    },
+    {
+      "opcode": "0x40",
+      "step": 0,
+      "condition": 1,
+      "signals": [
+        "PC_TO_MAR"
+      ],
+      "note": "FETCH: PC to MAR"
+    },
+    {
+      "opcode": "0x40",
+      "step": 0,
+      "condition": 2,
+      "signals": [
+        "PC_TO_MAR"
+      ],
+      "note": "FETCH: PC to MAR"
+    },
+    {
+      "opcode": "0x40",
+      "step": 0,
+      "condition": 3,
+      "signals": [
+        "PC_TO_MAR"
+      ],
+      "note": "FETCH: PC to MAR"
+    },
+    {
+      "opcode": "0x40",
+      "step": 1,
+      "condition": 0,
+      "signals": [
+        "MEM_READ",
+        "MDR_LOAD"
+      ],
+      "note": "FETCH: opcode memory byte to MDR"
+    },
+    {
+      "opcode": "0x40",
+      "step": 1,
+      "condition": 1,
+      "signals": [
+        "MEM_READ",
+        "MDR_LOAD"
+      ],
+      "note": "FETCH: opcode memory byte to MDR"
+    },
+    {
+      "opcode": "0x40",
+      "step": 1,
+      "condition": 2,
+      "signals": [
+        "MEM_READ",
+        "MDR_LOAD"
+      ],
+      "note": "FETCH: opcode memory byte to MDR"
+    },
+    {
+      "opcode": "0x40",
+      "step": 1,
+      "condition": 3,
+      "signals": [
+        "MEM_READ",
+        "MDR_LOAD"
+      ],
+      "note": "FETCH: opcode memory byte to MDR"
+    },
+    {
+      "opcode": "0x40",
+      "step": 2,
+      "condition": 0,
+      "signals": [
+        "MDR_OUT",
+        "IR_LOAD",
+        "PC_INC"
+      ],
+      "note": "FETCH: opcode to IR and increment PC"
+    },
+    {
+      "opcode": "0x40",
+      "step": 2,
+      "condition": 1,
+      "signals": [
+        "MDR_OUT",
+        "IR_LOAD",
+        "PC_INC"
+      ],
+      "note": "FETCH: opcode to IR and increment PC"
+    },
+    {
+      "opcode": "0x40",
+      "step": 2,
+      "condition": 2,
+      "signals": [
+        "MDR_OUT",
+        "IR_LOAD",
+        "PC_INC"
+      ],
+      "note": "FETCH: opcode to IR and increment PC"
+    },
+    {
+      "opcode": "0x40",
+      "step": 2,
+      "condition": 3,
+      "signals": [
+        "MDR_OUT",
+        "IR_LOAD",
+        "PC_INC"
+      ],
+      "note": "FETCH: opcode to IR and increment PC"
+    },
+    {
+      "opcode": "0x40",
+      "step": 3,
+      "condition": 0,
+      "signals": [
+        "PC_TO_MAR"
+      ],
+      "note": "ADD #imm: operand address to MAR"
+    },
+    {
+      "opcode": "0x40",
+      "step": 3,
+      "condition": 1,
+      "signals": [
+        "PC_TO_MAR"
+      ],
+      "note": "ADD #imm: operand address to MAR"
+    },
+    {
+      "opcode": "0x40",
+      "step": 3,
+      "condition": 2,
+      "signals": [
+        "PC_TO_MAR"
+      ],
+      "note": "ADD #imm: operand address to MAR"
+    },
+    {
+      "opcode": "0x40",
+      "step": 3,
+      "condition": 3,
+      "signals": [
+        "PC_TO_MAR"
+      ],
+      "note": "ADD #imm: operand address to MAR"
+    },
+    {
+      "opcode": "0x40",
+      "step": 4,
+      "condition": 0,
+      "signals": [
+        "MEM_READ",
+        "MDR_LOAD"
+      ],
+      "note": "ADD #imm: immediate byte to MDR"
+    },
+    {
+      "opcode": "0x40",
+      "step": 4,
+      "condition": 1,
+      "signals": [
+        "MEM_READ",
+        "MDR_LOAD"
+      ],
+      "note": "ADD #imm: immediate byte to MDR"
+    },
+    {
+      "opcode": "0x40",
+      "step": 4,
+      "condition": 2,
+      "signals": [
+        "MEM_READ",
+        "MDR_LOAD"
+      ],
+      "note": "ADD #imm: immediate byte to MDR"
+    },
+    {
+      "opcode": "0x40",
+      "step": 4,
+      "condition": 3,
+      "signals": [
+        "MEM_READ",
+        "MDR_LOAD"
+      ],
+      "note": "ADD #imm: immediate byte to MDR"
+    },
+    {
+      "opcode": "0x40",
+      "step": 5,
+      "condition": 0,
+      "signals": [
+        "ALU_ADD",
+        "ALU_OUT_ENABLE",
+        "A_LOAD",
+        "FLAGS_LATCH",
+        "PC_INC"
+      ],
+      "note": "ADD #imm: A + MDR + C through ALU, latch A and C/Z/N/V"
+    },
+    {
+      "opcode": "0x40",
+      "step": 5,
+      "condition": 1,
+      "signals": [
+        "ALU_ADD",
+        "ALU_OUT_ENABLE",
+        "A_LOAD",
+        "FLAGS_LATCH",
+        "PC_INC"
+      ],
+      "note": "ADD #imm: A + MDR + C through ALU, latch A and C/Z/N/V"
+    },
+    {
+      "opcode": "0x40",
+      "step": 5,
+      "condition": 2,
+      "signals": [
+        "ALU_ADD",
+        "ALU_OUT_ENABLE",
+        "A_LOAD",
+        "FLAGS_LATCH",
+        "PC_INC"
+      ],
+      "note": "ADD #imm: A + MDR + C through ALU, latch A and C/Z/N/V"
+    },
+    {
+      "opcode": "0x40",
+      "step": 5,
+      "condition": 3,
+      "signals": [
+        "ALU_ADD",
+        "ALU_OUT_ENABLE",
+        "A_LOAD",
+        "FLAGS_LATCH",
+        "PC_INC"
+      ],
+      "note": "ADD #imm: A + MDR + C through ALU, latch A and C/Z/N/V"
+    },
+    {
+      "opcode": "0x40",
+      "step": 6,
+      "condition": 0,
+      "signals": [
+        "INSTR_DONE",
+        "STEP_RESET"
+      ],
+      "note": "ADD #imm: complete"
+    },
+    {
+      "opcode": "0x40",
+      "step": 6,
+      "condition": 1,
+      "signals": [
+        "INSTR_DONE",
+        "STEP_RESET"
+      ],
+      "note": "ADD #imm: complete"
+    },
+    {
+      "opcode": "0x40",
+      "step": 6,
+      "condition": 2,
+      "signals": [
+        "INSTR_DONE",
+        "STEP_RESET"
+      ],
+      "note": "ADD #imm: complete"
+    },
+    {
+      "opcode": "0x40",
+      "step": 6,
+      "condition": 3,
+      "signals": [
+        "INSTR_DONE",
+        "STEP_RESET"
+      ],
+      "note": "ADD #imm: complete"
     }
   ]
 }
