@@ -31,6 +31,7 @@
 - [x] Implement deterministic stepping
 - [x] Implement initial instruction/micro-operation trace model
 - [x] Define control-unit microstep model and logical control signals
+- [x] Define 48-bit control-word layout and safety validator
 - [ ] Implement save/load state
 - [x] Add emulator and portable conformance tests
 
