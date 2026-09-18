@@ -49,7 +49,6 @@
     "STEP_RESET": 36,
     "INSTR_DONE": 37,
     "HALT": 38,
-    "IRQ_ACK": 39,
     "IDX_X": 40,
     "IDX_Y": 41,
     "AGU_ADD_LO": 42,
@@ -57,13 +56,16 @@
     "AGUC_LOAD": 44,
     "AGUC_CLEAR": 45,
     "MAR_FROM_AGU": 46,
-    "MAR_STACK": 47
+    "C_SET": 39,
+    "C_CLEAR": 47
   },
   "reserved": [],
   "notes": [
     "v2 physical control-word mapping reconciled with K8 Classic datapath",
     "PC reaches MAR through PC_TO_MAR, not the 8-bit DB",
-    "SP stack addressing uses SP_TO_MAR/MAR_STACK",
-    "ALU result reaches DB only through ALU_OUT_ENABLE"
+    "ALU result reaches DB only through ALU_OUT_ENABLE",
+    "C_SET/C_CLEAR directly control the architectural carry latch; they do not pass through the ALU",
+    "IRQ acceptance does not acknowledge/clear peripheral pending state; therefore no IRQ_ACK control bit is required",
+    "SP_TO_MAR is the complete stack-address transfer control; MAR_STACK was redundant"
   ]
 }
