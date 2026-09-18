@@ -84,3 +84,27 @@ def test_illegal_opcode():
         assert "illegal opcode FF" in str(exc)
     else:
         raise AssertionError("illegal opcode was accepted")
+
+def test_agu_page_crossing():
+    cpu = CPU()
+    assert cpu._agu_index(0x12F8, 0x10) == 0x1308
+    assert cpu.aguc == 1
+
+def test_agu_zero_page_wrap():
+    cpu = CPU()
+    assert cpu._agu_index(0x00F8, 0x10, zero_page=True) == 0x0008
+    assert cpu.aguc == 0
+
+def test_zero_page_pointer_wrap():
+    cpu = CPU()
+    cpu.memory[0x00FF] = 0x34
+    cpu.memory[0x0000] = 0x12
+    assert cpu._read16_zp(0xFF) == 0x1234
+
+def test_lda_absolute_x_uses_agu():
+    cpu = CPU(x=0x10)
+    cpu.memory[0:3] = bytes([0x13, 0xF8, 0x12])
+    cpu.memory[0x1308] = 0x5A
+    cpu.step()
+    assert cpu.a == 0x5A
+    assert cpu.mar == 0x1308
