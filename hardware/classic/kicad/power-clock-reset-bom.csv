@@ -1,0 +1,14 @@
+Ref,Qty,Value/Part class,Function,Status
+J1,1,2-pin power connector,Regulated 5V input,planned
+F1,1,PTC resettable fuse,Input protection,TBD value
+D1,1,Reverse-polarity protection,Input protection,TBD implementation
+C1,1,Bulk capacitor,Power entry,TBD value
+C2,1,Bulk capacitor,Logic rail,TBD value
+U1,1,74HCT14,Schmitt conditioning/oscillator,selected
+U2,1,5V oscillator module,RUN clock,TBD frequency
+U3,1,74HC4040,SLOW clock divider,selected
+U4,1,74HCT74 or 74HCT123,STEP pulse former,TBD
+SW1,1,Momentary switch,STEP,selected
+SW2,1,Momentary switch,RESET,selected
+SW3,1,3-position switch,STEP/SLOW/RUN,selected
+JDBG1,1,0.1in header,Clock/reset debug,selected
