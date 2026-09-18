@@ -45,15 +45,15 @@
     "STEP_RESET": 34,
     "INSTR_DONE": 35,
     "HALT": 36,
-    "IRQ_ACK": 37
+    "IRQ_ACK": 37,
+    "IDX_X": 38,
+    "IDX_Y": 39,
+    "AGU_ADD_LO": 40,
+    "AGU_ADD_HI": 41,
+    "AGUC_IN": 42,
+    "AGUC_CLR": 43
   },
   "reserved": [
-    38,
-    39,
-    40,
-    41,
-    42,
-    43,
     44,
     45,
     46,
