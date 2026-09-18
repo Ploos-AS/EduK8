@@ -1,0 +1,44 @@
+{
+  "schema": "eduk8-keyboard-v1",
+  "physical": "PS/2",
+  "direction": "receive-first",
+  "frame": {
+    "bits": 11,
+    "start": 0,
+    "data_bits": 8,
+    "data_order": "lsb-first",
+    "parity": "odd",
+    "stop": 1
+  },
+  "buffer": {
+    "depth": 1,
+    "overrun": "preserve-unread-byte"
+  },
+  "registers": {
+    "data": {
+      "address": "0xC010"
+    },
+    "status": {
+      "address": "0xC011",
+      "bits": {
+        "data_ready": 0,
+        "overrun": 1
+      }
+    },
+    "control": {
+      "address": "0xC012",
+      "bits": {
+        "irq_enable": 0
+      }
+    },
+    "raw": {
+      "address": "0xC013",
+      "bits": {
+        "data": 0,
+        "clock": 1
+      }
+    }
+  },
+  "translation": "software",
+  "hidden_mcu": false
+}
