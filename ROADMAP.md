@@ -109,3 +109,16 @@
 - [ ] Complete toolchain
 - [ ] Reproducible builds
 - [ ] Release package
+
+
+## Hardware implementations
+
+### M4 — Dual implementation architecture
+- [x] Define K8 Classic discrete-logic implementation
+- [x] Define K8 FPGA implementation
+- [x] Make emulator the architectural reference
+- [ ] Freeze Classic datapath schematic
+- [ ] Create synthesizable FPGA top-level
+- [ ] Establish shared ISA/ROM verification vectors
+- [ ] Qualify FPGA against emulator
+- [ ] Qualify Classic hardware against emulator
