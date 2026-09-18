@@ -17,4 +17,4 @@ jobs:
       - name: Generate control ROM
         run: python tools/generate_control_rom.py
       - name: Run emulator tests
-        run: python -m pytest -q emulator/test_k8.py emulator/test_microcode.py tests/conformance/test_vectors.py tests/test_control_word.py tests/test_control_rom.py
+        run: python -m pytest -q emulator/test_k8.py emulator/test_microcode.py tests/conformance/test_vectors.py tests/test_control_word.py tests/test_control_rom.py tests/test_microcode_patterns.py tests/test_microcode_coverage.py
