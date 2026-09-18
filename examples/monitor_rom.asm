@@ -6,6 +6,7 @@ VIDEO_RAM    = $7800
 CMD_BUFFER   = $0200
 CURSOR       = $00F0
 BUFFER_LEN   = $00F1
+ROW2         = $7828
 
 .org $8000
 reset:
@@ -73,7 +74,7 @@ help:
     ; A minimal response proves that line editing and dispatch work.
     LDX #$00
     LDA #$48
-    STA VIDEO_RAM+$28,X
+    STA ROW2,X
     INX
     LDA #$45
     STA VIDEO_RAM+$28,X
