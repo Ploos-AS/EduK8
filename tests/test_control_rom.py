@@ -10,7 +10,7 @@ def test_image_size():
 
 def test_nop_fetch_and_finish():
     image=build_image()
-    assert word(image,0x00,0) == bytes_le(encode(["PC_TO_MAR"]))
+    assert word(image,0x00,0) == bytes_le(encode(["PC_TO_MAR","MAR_LOAD_LO","MAR_LOAD_HI"]))
     assert word(image,0x00,3) == bytes_le(encode(["INSTR_DONE"]))
 
 def test_lda_immediate_execution():
