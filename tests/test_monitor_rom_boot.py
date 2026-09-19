@@ -49,7 +49,7 @@ def test_monitor_rom_help_command():
 
 def test_monitor_rom_line_editor_help():
     cpu=boot_monitor()
-    for ch in b"HELP\\r":
+    for ch in b"HELP\r":
         cpu.io.inject_key(ch)
         for _ in range(64):
             cpu.step()
