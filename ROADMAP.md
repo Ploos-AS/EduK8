@@ -22,7 +22,7 @@
 - [x] Freeze initial instruction encoding
 - [x] Freeze initial calling convention
 - [x] Generate initial conformance vectors
-- [ ] Complete architecture review and M1 freeze
+- [x] Complete architecture review and M1 freeze
 
 ## M2 — Reference Emulator
 - [x] Implement CPU state model
