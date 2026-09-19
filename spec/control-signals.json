@@ -74,15 +74,15 @@
     "STEP_RESET",
     "INSTR_DONE",
     "HALT",
-    "IDX_X",
-    "IDX_Y",
     "AGU_ADD_LO",
     "AGU_ADD_HI",
     "AGUC_LOAD",
     "AGUC_CLEAR",
-    "MAR_FROM_AGU",
     "C_SET",
-    "C_CLEAR"
+    "C_CLEAR",
+    "I_SET",
+    "I_CLEAR",
+    "V_CLEAR"
   ],
   "fetch": [
     {
