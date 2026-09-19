@@ -28,6 +28,40 @@ class CPU:
     memory: bytearray = field(default_factory=lambda: bytearray(65536))
     io: IO = field(default_factory=IO)
 
+    STATE_VERSION = 1
+
+    def save_state(self):
+        """Return a versioned, JSON-serialisable snapshot of the complete emulator state."""
+        return {
+            "version": self.STATE_VERSION,
+            "cpu": {
+                "a": self.a, "x": self.x, "y": self.y, "pc": self.pc,
+                "sp": self.sp, "f": self.f, "halted": self.halted,
+                "mar": self.mar, "aguc": self.aguc, "irq_line": self.irq_line,
+                "trace_enabled": self.trace_enabled,
+            },
+            "memory": self.memory.hex(),
+            "io": self.io.save_state(),
+            "trace": list(self.trace),
+        }
+
+    def load_state(self, state):
+        """Restore a snapshot produced by save_state()."""
+        if state.get("version") != self.STATE_VERSION:
+            raise ValueError(f"unsupported K8 state version: {state.get('version')!r}")
+        cpu = state["cpu"]
+        memory = bytearray.fromhex(state["memory"])
+        if len(memory) != 65536:
+            raise ValueError("K8 state memory image must contain exactly 65536 bytes")
+        for name in ("a", "x", "y", "pc", "sp", "f", "mar", "aguc"):
+            setattr(self, name, int(cpu[name]))
+        self.halted = bool(cpu["halted"])
+        self.irq_line = bool(cpu["irq_line"])
+        self.trace_enabled = bool(cpu["trace_enabled"])
+        self.memory[:] = memory
+        self.io.load_state(state["io"])
+        self.trace[:] = list(state.get("trace", []))
+
     def reset(self, pc=None):
         self.a = self.x = self.y = 0
         self.sp = 0xFF
