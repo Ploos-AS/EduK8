@@ -5,7 +5,7 @@ def test_encode_single_signal():
     assert encode(["A_OUT"]) == 1
 
 def test_encode_multiple_signals():
-    assert encode(["A_OUT","A_IN"]) == 3
+    assert encode(["A_OUT","A_LOAD"]) == 3
 
 def test_reject_multiple_bus_drivers():
     with pytest.raises(ValueError, match="multiple DB sources"):
