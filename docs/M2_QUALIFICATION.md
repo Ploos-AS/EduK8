@@ -2,7 +2,7 @@
 
 **Target:** K8 v1 reference emulator  
 **Architecture baseline:** M1 frozen  
-**Status:** qualification candidate
+**Status:** PASS — qualified
 
 ## Qualification scope
 
@@ -37,4 +37,4 @@ Implementation improvements remain allowed when they do not change frozen K8 v1 
 
 ## Result
 
-Pending CI result for the qualification commit.
+**PASS** — GitHub Actions workflow `K8 emulator` run **#195** (`35474798122`) completed successfully on commit `8c8ac97cefbd1335b16bf9e44ffaf1298b5eae60` on 2026-09-19 UTC. Both control-ROM generation and the complete selected emulator test suite passed.
