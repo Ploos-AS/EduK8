@@ -8,10 +8,21 @@ OPS={(m,mode):(int(op,16),size) for op,m,mode,size in ISA}
 
 def number(s, symbols):
     s=s.strip()
-    if s in symbols: return symbols[s]
-    if s.startswith("$"): return int(s[1:],16)
-    if s.startswith("%"): return int(s[1:],2)
-    return int(s,0)
+    # Deliberately small expression grammar: a primary optionally followed by
+    # left-to-right + or - primaries. This covers address constants such as
+    # VIDEO_RAM+$28 without turning the educational assembler into an eval.
+    parts=re.split(r"([+-])",s)
+    def primary(token):
+        token=token.strip()
+        if token in symbols: return symbols[token]
+        if token.startswith("$"): return int(token[1:],16)
+        if token.startswith("%"): return int(token[1:],2)
+        return int(token,0)
+    value=primary(parts[0])
+    for i in range(1,len(parts),2):
+        rhs=primary(parts[i+1])
+        value=value+rhs if parts[i]=="+" else value-rhs
+    return value
 
 def values(s): return [x.strip() for x in s.split(",") if x.strip()]
 
