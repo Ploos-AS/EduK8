@@ -14,6 +14,26 @@ class IO:
         self.cursor_y=0
         self.cursor_control=0
 
+    def save_state(self):
+        return {
+            "keyboard": list(self.keyboard),
+            "key_control": self.key_control,
+            "key_overrun": self.key_overrun,
+            "video_control": self.video_control,
+            "cursor_x": self.cursor_x,
+            "cursor_y": self.cursor_y,
+            "cursor_control": self.cursor_control,
+        }
+
+    def load_state(self, state):
+        self.keyboard = [int(v) & 0xFF for v in state["keyboard"]]
+        self.key_control = int(state["key_control"]) & 0xFF
+        self.key_overrun = bool(state["key_overrun"])
+        self.video_control = int(state["video_control"]) & 0xFF
+        self.cursor_x = int(state["cursor_x"]) % 40
+        self.cursor_y = int(state["cursor_y"]) % 25
+        self.cursor_control = int(state["cursor_control"]) & 0xFF
+
     def inject_key(self, value):
         if len(self.keyboard) >= 16:
             self.key_overrun=True
