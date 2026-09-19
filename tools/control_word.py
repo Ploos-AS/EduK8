@@ -7,7 +7,7 @@ SPEC = json.loads((ROOT / "spec/control-word.json").read_text())
 BITS = SPEC["bits"]
 WIDTH = SPEC["width_bits"]
 
-DB_SOURCES = {"A_OUT","X_OUT","Y_OUT","PC_OUT","SP_OUT","MDR_OUT","TMP_OUT"}
+DB_SOURCES = {"A_OUT","X_OUT","Y_OUT","SP_OUT","MDR_OUT","TMP_OUT","ALU_OUT_ENABLE"}
 ALU = {"ALU_ADD","ALU_SUB","ALU_AND","ALU_OR","ALU_XOR","ALU_NOT","ALU_SHL","ALU_SHR","ALU_ROL","ALU_ROR"}
 AGU = {"AGU_ADD_LO","AGU_ADD_HI"}
 
@@ -22,8 +22,6 @@ def encode(signals):
         raise ValueError("MEM_READ and MEM_WRITE conflict")
     if len(signals & ALU) > 1:
         raise ValueError("multiple ALU operations")
-    if {"IDX_X","IDX_Y"} <= signals:
-        raise ValueError("multiple index sources")
     if len(signals & AGU) > 1:
         raise ValueError("multiple AGU phases")
     if "HALT" in signals and len(signals - {"HALT","INSTR_DONE"}) > 0:
@@ -42,9 +40,9 @@ def describe(signals):
 
 if __name__ == "__main__":
     examples = {
-        "fetch_t0": ["PC_OUT","MAR_IN_LO","MAR_IN_HI"],
-        "fetch_t1": ["MEM_READ","MDR_IN"],
-        "fetch_t2": ["MDR_OUT","IR_IN","PC_INC"],
+        "fetch_t0": ["PC_TO_MAR"],
+        "fetch_t1": ["MEM_READ","MDR_LOAD"],
+        "fetch_t2": ["MDR_OUT","IR_LOAD","PC_INC"],
         "halt": ["HALT"],
     }
     for name, signals in examples.items():
