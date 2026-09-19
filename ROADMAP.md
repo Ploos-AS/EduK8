@@ -35,6 +35,21 @@
 - [x] Implement save/load state
 - [x] Add emulator and portable conformance tests
 
+## M2.5 — K8 Simulator
+- [ ] Define simulator scope and distinction from the reference emulator
+- [ ] Model CPU datapath components, buses and control signals
+- [ ] Model clock, reset and microstep/control-store sequencing
+- [ ] Simulate memory decode and memory-mapped I/O
+- [ ] Visualize registers, ALU, buses, flags and active control lines
+- [ ] Support clock-cycle and microstep execution
+- [ ] Support interactive switches, LEDs, keyboard, display and GPIO
+- [ ] Load K8 binaries and ROM images
+- [ ] Cross-check simulator state against reference emulator
+- [ ] Run shared architectural conformance vectors
+- [ ] Add deterministic simulator tests
+- [ ] Document simulator architecture and educational use
+- [ ] Qualify simulator against the frozen K8 v1 architecture
+
 ## M3 — Assembler
 - [ ] Define K8 assembly syntax
 - [ ] Implement lexer/parser
@@ -105,7 +120,8 @@
 - [ ] Assembly guide
 - [ ] User manual
 - [ ] Developer manual
-- [ ] Complete emulator
+- [ ] Complete reference emulator
+- [ ] Complete K8 hardware-level simulator
 - [ ] Complete toolchain
 - [ ] Reproducible builds
 - [ ] Release package
