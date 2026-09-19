@@ -39,7 +39,7 @@
 ## M2.5 — K8 Simulator
 - [x] Define simulator scope and distinction from the reference emulator
 - [x] Model CPU datapath components and buses
-- [ ] Apply frozen control signals to the datapath
+- [x] Apply frozen control signals to the datapath
 - [ ] Model clock, reset and microstep/control-store sequencing
 - [ ] Simulate memory decode and memory-mapped I/O
 - [ ] Visualize registers, ALU, buses, flags and active control lines
