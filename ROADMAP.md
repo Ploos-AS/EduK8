@@ -37,7 +37,7 @@
 - [x] Qualify reference emulator against frozen K8 v1 architecture
 
 ## M2.5 — K8 Simulator
-- [ ] Define simulator scope and distinction from the reference emulator
+- [x] Define simulator scope and distinction from the reference emulator
 - [ ] Model CPU datapath components, buses and control signals
 - [ ] Model clock, reset and microstep/control-store sequencing
 - [ ] Simulate memory decode and memory-mapped I/O
