@@ -48,7 +48,7 @@ wait:
     CPX #$20
     BCS wait
 
-    STA CMD_BUFFER,X
+    STA CMD_BUFFER-4,X
     STA VIDEO_RAM,X
     INX
     STX CURSOR
