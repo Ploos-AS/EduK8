@@ -34,6 +34,7 @@
 - [x] Define 48-bit control-word layout and safety validator
 - [x] Implement save/load state
 - [x] Add emulator and portable conformance tests
+- [x] Qualify reference emulator against frozen K8 v1 architecture
 
 ## M2.5 — K8 Simulator
 - [ ] Define simulator scope and distinction from the reference emulator
