@@ -34,9 +34,11 @@ wait:
     BEQ wait
     LDA KEY_DATA
 
-    ; CR terminates the command line.
+    ; CR terminates the command line. "?" is a HELP shortcut.
     CMP #$0D
     BEQ command
+    CMP #$3F
+    BEQ help_shortcut
 
     ; Backspace is reserved for the next line-editor revision.
     CMP #$08
@@ -51,6 +53,22 @@ wait:
     INX
     STX CURSOR
     JMP wait
+
+help_shortcut:
+    ; Expand the conventional ? shortcut visibly, then dispatch HELP.
+    LDX #$04
+    LDA #$48
+    STA VIDEO_RAM,X
+    INX
+    LDA #$45
+    STA VIDEO_RAM,X
+    INX
+    LDA #$4C
+    STA VIDEO_RAM,X
+    INX
+    LDA #$50
+    STA VIDEO_RAM,X
+    JMP help
 
 command:
     LDX #$00
