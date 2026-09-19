@@ -94,11 +94,11 @@ tools/         development utilities
 
 ## Status
 
-**M1 — K8 Architecture: complete and frozen**
+**M2 — K8 Reference Emulator: complete and qualified**
 
-The K8 v1 programmer-visible architecture is frozen. The reference emulator is substantially implemented, including deterministic execution, tracing, the microstep/control model and conformance tests. Hardware/control-unit development is also underway while M2 is completed.
+The K8 v1 programmer-visible architecture is frozen. The reference emulator is qualified against the repository's automated M2 gate, including deterministic execution, tracing, conformance tests, generated control-ROM validation, and save/load state.
 
-Current focus: finish the remaining M2 reference-emulator work, especially save/load state and qualification, then continue the assembler and hardware implementation. See [ROADMAP.md](ROADMAP.md) and [docs/M1_FREEZE.md](docs/M1_FREEZE.md).
+Current focus: M2.5 K8 hardware-level simulator, followed by continued assembler and physical hardware implementation. See [ROADMAP.md](ROADMAP.md), [docs/M1_FREEZE.md](docs/M1_FREEZE.md), and [docs/M2_QUALIFICATION.md](docs/M2_QUALIFICATION.md).
 
 ## Manufacturing
 
