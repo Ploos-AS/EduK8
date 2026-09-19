@@ -94,9 +94,11 @@ tools/         development utilities
 
 ## Status
 
-**M0 — Project foundation**
+**M1 — K8 Architecture: complete and frozen**
 
-The repository currently establishes the project identity, architecture direction and development roadmap. No hardware or software implementation is considered complete yet.
+The K8 v1 programmer-visible architecture is frozen. The reference emulator is substantially implemented, including deterministic execution, tracing, the microstep/control model and conformance tests. Hardware/control-unit development is also underway while M2 is completed.
+
+Current focus: finish the remaining M2 reference-emulator work, especially save/load state and qualification, then continue the assembler and hardware implementation. See [ROADMAP.md](ROADMAP.md) and [docs/M1_FREEZE.md](docs/M1_FREEZE.md).
 
 ## Manufacturing
 
