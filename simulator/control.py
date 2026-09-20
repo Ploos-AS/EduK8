@@ -35,7 +35,7 @@ class ControlError(ValueError):
     pass
 
 
-def apply_controls(dp: Datapath, signals) -> None:
+def apply_controls(dp: Datapath, signals, *, agu_index_select: int = 0) -> None:
     """Apply one validated logical control word to the datapath.
 
     Memory, AGU and sequencer effects are intentionally handled by their own
@@ -114,6 +114,29 @@ def apply_controls(dp: Datapath, signals) -> None:
             if dp.alu.overflow:
                 flags |= 0x08
         dp.flags.load(flags)
+
+    # Address-generation unit. Index selection is decoded from the opcode and
+    # supplied separately from the frozen 48-bit control word.
+    if agu_index_select not in (0, 1, 2):
+        raise ControlError("reserved AGU index selector")
+    dp.agu_index_select = agu_index_select
+    dp.agu_index_value = 0 if agu_index_select == 0 else (
+        dp.x.value if agu_index_select == 1 else dp.y.value
+    )
+    if "AGUC_CLEAR" in signals:
+        dp.aguc = 0
+    if "AGU_ADD_LO" in signals:
+        low = dp.mar.value & 0xFF
+        raw = low + dp.agu_index_value
+        dp.agu_low_input = low
+        dp.agu_low_result = raw & 0xFF
+        dp.mar.load_low(dp.agu_low_result)
+        if "AGUC_LOAD" in signals:
+            dp.aguc = int(raw > 0xFF)
+    elif "AGUC_LOAD" in signals:
+        raise ControlError("AGUC_LOAD requires AGU_ADD_LO")
+    if "AGU_ADD_HI" in signals:
+        dp.mar.load_high(((dp.mar.value >> 8) + dp.aguc) & 0xFF)
 
     # Direct architectural flag-latch controls.
     if "C_SET" in signals:
