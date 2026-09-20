@@ -128,3 +128,31 @@ def test_complete_lda_absolute_y_without_page_cross():
     assert sim.datapath.mar.value == 0x123F
     assert sim.datapath.agu_index_select == 2
     assert sim.datapath.aguc == 0
+
+
+import pytest
+
+
+@pytest.mark.parametrize(
+    "opcode,a,carry,result,expected_carry",
+    [
+        (0x5C, 0x55, 0, 0xAA, 0),  # NOT
+        (0x60, 0x81, 0, 0x02, 1),  # SHL
+        (0x61, 0x81, 0, 0x40, 1),  # SHR
+        (0x62, 0x80, 1, 0x01, 1),  # ROL
+        (0x63, 0x01, 1, 0x80, 1),  # ROR
+    ],
+)
+def test_unary_shift_instructions_end_to_end(opcode, a, carry, result, expected_carry):
+    sim = K8Simulator()
+    sim.datapath.pc.load(0x8000)
+    sim.datapath.a.load(a)
+    sim.datapath.flags.load(carry)
+    sim.load_image(0x8000, bytes([opcode]), force=True)
+    used = sim.instruction_step()
+    assert used == 4
+    assert sim.datapath.a.value == result
+    assert sim.datapath.pc.value == 0x8001
+    assert sim.datapath.microstep == 0
+    if opcode != 0x5C:
+        assert (sim.datapath.flags.value & 0x01) == expected_carry
