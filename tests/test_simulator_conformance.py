@@ -1,7 +1,10 @@
 """Cross-check programmer-visible state between emulator and simulator."""
 
+import pytest
+
 from emulator.k8 import CPU
 from simulator.core import K8Simulator
+from tests.conformance_vectors import VECTORS
 
 
 def states(cpu, sim):
@@ -22,7 +25,22 @@ def assert_architecture_matches(cpu, sim):
     assert mismatches == {}
 
 
-def run_one(image, pc=0x8000):
+def apply_initial(cpu, sim, initial):
+    mapping = {
+        "a": (cpu, "a", sim.datapath.a),
+        "x": (cpu, "x", sim.datapath.x),
+        "y": (cpu, "y", sim.datapath.y),
+        "sp": (cpu, "sp", sim.datapath.sp),
+        "f": (cpu, "f", sim.datapath.flags),
+    }
+    for name, value in initial.items():
+        target_cpu, attr, target_sim = mapping[name]
+        setattr(target_cpu, attr, value)
+        target_sim.load(value)
+
+
+def run_vector(vector, pc=0x8000):
+    image = bytes(vector["image"])
     cpu = CPU()
     cpu.memory[pc:pc + len(image)] = image
     cpu.reset(pc=pc)
@@ -31,16 +49,16 @@ def run_one(image, pc=0x8000):
     sim.datapath.pc.load(pc)
     sim.load_image(pc, image, force=True)
 
+    apply_initial(cpu, sim, vector.get("initial", {}))
     cpu.step()
     sim.instruction_step()
     assert_architecture_matches(cpu, sim)
-    return cpu, sim
+
+    for name, expected in vector.get("expected", {}).items():
+        actual = cpu.halted if name == "halted" else getattr(cpu, name)
+        assert actual == expected
 
 
-def test_nop_matches_reference_emulator():
-    run_one(bytes([0x00]))
-
-
-def test_lda_immediate_matches_reference_emulator():
-    cpu, sim = run_one(bytes([0x10, 0x42]))
-    assert cpu.a == sim.datapath.a.value == 0x42
+@pytest.mark.parametrize("vector", VECTORS, ids=lambda v: v["name"])
+def test_shared_architectural_vector(vector):
+    run_vector(vector)
