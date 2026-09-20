@@ -77,12 +77,18 @@
       {
         "step": 6,
         "signals": [
+          "MAR_LOAD_HI"
+        ]
+      },
+      {
+        "step": 7,
+        "signals": [
           "MEM_READ",
           "MDR_LOAD"
         ]
       },
       {
-        "step": 7,
+        "step": 8,
         "signals": [
           "MDR_OUT",
           "A_LOAD",
@@ -373,12 +379,18 @@
       {
         "step": 6,
         "signals": [
+          "MAR_LOAD_HI"
+        ]
+      },
+      {
+        "step": 7,
+        "signals": [
           "MEM_READ",
           "MDR_LOAD"
         ]
       },
       {
-        "step": 7,
+        "step": 8,
         "signals": [
           "MDR_OUT",
           "X_LOAD",
@@ -439,12 +451,18 @@
       {
         "step": 6,
         "signals": [
+          "MAR_LOAD_HI"
+        ]
+      },
+      {
+        "step": 7,
+        "signals": [
           "MEM_READ",
           "MDR_LOAD"
         ]
       },
       {
-        "step": 7,
+        "step": 8,
         "signals": [
           "MDR_OUT",
           "Y_LOAD",
