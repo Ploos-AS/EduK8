@@ -1,11 +1,19 @@
 """Integrated deterministic K8 hardware simulator core."""
 
 from dataclasses import dataclass, field
+import json
+from pathlib import Path
 
 from simulator.control import apply_controls
 from simulator.datapath import Datapath
 from simulator.memory import Memory, apply_memory_cycle
 from simulator.sequencer import ControlStore, Sequencer
+
+ROOT = Path(__file__).resolve().parents[1]
+ISA = json.loads((ROOT / "spec/isa.json").read_text())
+INDEX_SELECT = {}
+for opcode_hex, _mnemonic, mode, _size in ISA["instructions"]:
+    INDEX_SELECT[int(opcode_hex, 16)] = 1 if mode.endswith(",X") else (2 if mode.endswith(",Y") else 0)
 
 
 @dataclass
@@ -38,7 +46,11 @@ class K8Simulator:
             return ()
 
         signals = self.sequencer.current_signals()
-        apply_controls(self.datapath, signals)
+        apply_controls(
+            self.datapath,
+            signals,
+            agu_index_select=INDEX_SELECT.get(self.datapath.ir.value, 0),
+        )
         apply_memory_cycle(self.datapath, self.memory, signals)
         self.sequencer.advance(signals)
         return signals
