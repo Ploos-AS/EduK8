@@ -53,4 +53,9 @@ VECTORS = [
     {"name": "bpl_taken", "image": [0x8D, 0x03], "initial": {"f": 0x00}, "expected": {"pc": 0x8005}},
     {"name": "bvs_taken", "image": [0x8E, 0x03], "initial": {"f": 0x08}, "expected": {"pc": 0x8005}},
     {"name": "bvc_taken", "image": [0x8F, 0x03], "initial": {"f": 0x00}, "expected": {"pc": 0x8005}},
+    {"name": "clc", "image": [0x05], "initial": {"f": 0x0F}, "expected": {"f": 0x0E, "pc": 0x8001}},
+    {"name": "sec", "image": [0x06], "initial": {"f": 0x00}, "expected": {"f": 0x01, "pc": 0x8001}},
+    {"name": "cli", "image": [0x07], "initial": {"f": 0x1F}, "expected": {"f": 0x0F, "pc": 0x8001}},
+    {"name": "sei", "image": [0x08], "initial": {"f": 0x00}, "expected": {"f": 0x10, "pc": 0x8001}},
+    {"name": "clv", "image": [0x09], "initial": {"f": 0x0F}, "expected": {"f": 0x07, "pc": 0x8001}},
 ]
