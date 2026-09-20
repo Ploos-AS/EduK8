@@ -49,7 +49,7 @@ class K8Simulator:
         apply_controls(
             self.datapath,
             signals,
-            agu_index_select=(INDEX_SELECT.get(self.datapath.ir.value, 0) if any(s.startswith("AGU_") for s in signals) else 0),
+            agu_index_select=(INDEX_SELECT.get(self.datapath.ir.value, 0) if any(s.startswith("AGU_") or s.startswith("AGUC_") for s in signals) else 0),
         )
         apply_memory_cycle(self.datapath, self.memory, signals)
         # Relative branch address generation is selected by the frozen branch
