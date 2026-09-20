@@ -10,6 +10,27 @@ ROOT = Path(__file__).resolve().parents[1]
 CONTROL_SPEC = json.loads((ROOT / "spec/control-word.json").read_text())
 MAX_STEPS = 1 << CONTROL_SPEC["address"]["microstep_bits"]
 
+BRANCH_CONDITIONS = {
+    0x88: (0x02, True),   # BEQ Z=1
+    0x89: (0x02, False),  # BNE Z=0
+    0x8A: (0x01, True),   # BCS C=1
+    0x8B: (0x01, False),  # BCC C=0
+    0x8C: (0x04, True),   # BMI N=1
+    0x8D: (0x04, False),  # BPL N=0
+    0x8E: (0x08, True),   # BVS V=1
+    0x8F: (0x08, False),  # BVC V=0
+}
+
+
+def decode_condition(opcode: int, flags: int) -> int:
+    """Return frozen control-store condition encoding for the current opcode."""
+    branch = BRANCH_CONDITIONS.get(opcode & 0xFF)
+    if branch is None:
+        return 0
+    mask, required_set = branch
+    taken = bool(flags & mask) == required_set
+    return 2 if taken else 1
+
 
 @dataclass
 class ControlStore:
@@ -74,6 +95,7 @@ class Sequencer:
     def current_signals(self) -> tuple[str, ...]:
         if self.halted or self.datapath.reset:
             return ()
+        self.condition = decode_condition(self.datapath.ir.value, self.datapath.flags.value)
         return self.store.signals(
             self.datapath.ir.value, self.datapath.microstep, self.condition
         )
