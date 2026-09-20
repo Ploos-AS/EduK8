@@ -102,6 +102,8 @@ SHL, SHR, ROL, ROR
 ### Compare
 CMP, CPX, CPY
 
+Compare is defined as an ALU subtraction whose result is discarded. The selected register (A, X, or Y) is the left operand and the fetched operand is the right operand. Compare updates C/Z/N exactly as unsigned subtraction (`C=1` when register >= operand), preserves V/I and the compared register, and does not write the subtraction result back. The compare register source is decoded from the opcode, analogous to the encoded AGU index selector; it is not a new 48-bit control signal.
+
 ### Branch/control flow
 JMP, JSR, RTS, BEQ, BNE, BCS, BCC, BMI, BPL, BVS, BVC
 
