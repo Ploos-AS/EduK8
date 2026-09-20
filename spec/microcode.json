@@ -30,9 +30,7 @@
       {
         "step": 3,
         "signals": [
-          "PC_TO_MAR",
-          "MAR_LOAD_LO",
-          "MAR_LOAD_HI"
+          "PC_TO_MAR"
         ]
       },
       {
@@ -58,9 +56,7 @@
       {
         "step": 3,
         "signals": [
-          "PC_TO_MAR",
-          "MAR_LOAD_LO",
-          "MAR_LOAD_HI"
+          "PC_TO_MAR"
         ]
       },
       {
@@ -81,9 +77,7 @@
       {
         "step": 6,
         "signals": [
-          "PC_TO_MAR",
-          "MAR_LOAD_LO",
-          "MAR_LOAD_HI"
+          "PC_TO_MAR"
         ]
       },
       {
@@ -143,9 +137,7 @@
       {
         "step": 3,
         "signals": [
-          "PC_TO_MAR",
-          "MAR_LOAD_LO",
-          "MAR_LOAD_HI"
+          "PC_TO_MAR"
         ]
       },
       {
@@ -166,9 +158,7 @@
       {
         "step": 6,
         "signals": [
-          "PC_TO_MAR",
-          "MAR_LOAD_LO",
-          "MAR_LOAD_HI"
+          "PC_TO_MAR"
         ]
       },
       {
@@ -228,9 +218,7 @@
       {
         "step": 3,
         "signals": [
-          "PC_TO_MAR",
-          "MAR_LOAD_LO",
-          "MAR_LOAD_HI"
+          "PC_TO_MAR"
         ]
       },
       {
@@ -256,9 +244,7 @@
       {
         "step": 3,
         "signals": [
-          "PC_TO_MAR",
-          "MAR_LOAD_LO",
-          "MAR_LOAD_HI"
+          "PC_TO_MAR"
         ]
       },
       {
@@ -284,9 +270,7 @@
       {
         "step": 3,
         "signals": [
-          "PC_TO_MAR",
-          "MAR_LOAD_LO",
-          "MAR_LOAD_HI"
+          "PC_TO_MAR"
         ]
       },
       {
