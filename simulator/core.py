@@ -56,7 +56,6 @@ class K8Simulator:
             signals,
             agu_index_select=(INDEX_SELECT.get(self.datapath.ir.value, 0) if any(s.startswith("AGU_") or s.startswith("AGUC_") for s in signals) else 0),
         )
-        apply_memory_cycle(self.datapath, self.memory, signals)
         # Memory INC/DEC is a decoded read-modify-write datapath operation.
         # The fetched byte is held in TMP; the modified value is driven through MDR
         # immediately before the memory write, preserving A/X/Y and C/V/I.
@@ -70,6 +69,7 @@ class K8Simulator:
             if result & 0x80:
                 flags |= 0x04
             self.datapath.flags.load(flags)
+        apply_memory_cycle(self.datapath, self.memory, signals)
         # Register INC/DEC uses the ALU physically, but its architectural
         # operand is the selected X/Y register plus or minus one. Decode that
         # source from the opcode; the result is still latched by the control word.
