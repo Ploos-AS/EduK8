@@ -2167,6 +2167,266 @@
         ]
       }
     ],
+    "68": [
+      {
+        "step": 3,
+        "signals": [
+          "PC_TO_MAR"
+        ]
+      },
+      {
+        "step": 4,
+        "signals": [
+          "MEM_READ",
+          "MDR_LOAD",
+          "PC_INC"
+        ]
+      },
+      {
+        "step": 5,
+        "signals": [
+          "MDR_OUT",
+          "TMP_LOAD"
+        ]
+      },
+      {
+        "step": 6,
+        "signals": [
+          "ALU_SUB",
+          "FLAGS_LATCH",
+          "INSTR_DONE",
+          "STEP_RESET"
+        ]
+      }
+    ],
+    "69": [
+      {
+        "step": 3,
+        "signals": [
+          "PC_TO_MAR"
+        ]
+      },
+      {
+        "step": 4,
+        "signals": [
+          "MEM_READ",
+          "MDR_LOAD",
+          "PC_INC"
+        ]
+      },
+      {
+        "step": 5,
+        "signals": [
+          "MDR_OUT",
+          "MAR_LOAD_LO"
+        ]
+      },
+      {
+        "step": 6,
+        "signals": [
+          "A_OUT",
+          "TMP_LOAD"
+        ]
+      },
+      {
+        "step": 7,
+        "signals": [
+          "ALU_XOR",
+          "ALU_OUT_ENABLE",
+          "MAR_LOAD_HI"
+        ]
+      },
+      {
+        "step": 8,
+        "signals": [
+          "MEM_READ",
+          "MDR_LOAD"
+        ]
+      },
+      {
+        "step": 9,
+        "signals": [
+          "MDR_OUT",
+          "TMP_LOAD"
+        ]
+      },
+      {
+        "step": 10,
+        "signals": [
+          "ALU_SUB",
+          "FLAGS_LATCH",
+          "INSTR_DONE",
+          "STEP_RESET"
+        ]
+      }
+    ],
+    "70": [
+      {
+        "step": 3,
+        "signals": [
+          "PC_TO_MAR"
+        ]
+      },
+      {
+        "step": 4,
+        "signals": [
+          "MEM_READ",
+          "MDR_LOAD",
+          "PC_INC"
+        ]
+      },
+      {
+        "step": 5,
+        "signals": [
+          "MDR_OUT",
+          "TMP_LOAD"
+        ]
+      },
+      {
+        "step": 6,
+        "signals": [
+          "ALU_SUB",
+          "FLAGS_LATCH",
+          "INSTR_DONE",
+          "STEP_RESET"
+        ]
+      }
+    ],
+    "71": [
+      {
+        "step": 3,
+        "signals": [
+          "PC_TO_MAR"
+        ]
+      },
+      {
+        "step": 4,
+        "signals": [
+          "MEM_READ",
+          "MDR_LOAD",
+          "PC_INC"
+        ]
+      },
+      {
+        "step": 5,
+        "signals": [
+          "MDR_OUT",
+          "MAR_LOAD_LO"
+        ]
+      },
+      {
+        "step": 6,
+        "signals": [
+          "A_OUT",
+          "TMP_LOAD"
+        ]
+      },
+      {
+        "step": 7,
+        "signals": [
+          "ALU_XOR",
+          "ALU_OUT_ENABLE",
+          "MAR_LOAD_HI"
+        ]
+      },
+      {
+        "step": 8,
+        "signals": [
+          "MEM_READ",
+          "MDR_LOAD"
+        ]
+      },
+      {
+        "step": 9,
+        "signals": [
+          "MDR_OUT",
+          "TMP_LOAD"
+        ]
+      },
+      {
+        "step": 10,
+        "signals": [
+          "ALU_SUB",
+          "FLAGS_LATCH",
+          "INSTR_DONE",
+          "STEP_RESET"
+        ]
+      }
+    ],
+    "72": [
+      {
+        "step": 3,
+        "signals": [
+          "PC_TO_MAR"
+        ]
+      },
+      {
+        "step": 4,
+        "signals": [
+          "MEM_READ",
+          "MDR_LOAD",
+          "PC_INC"
+        ]
+      },
+      {
+        "step": 5,
+        "signals": [
+          "MDR_OUT",
+          "TMP_LOAD"
+        ]
+      },
+      {
+        "step": 6,
+        "signals": [
+          "PC_TO_MAR"
+        ]
+      },
+      {
+        "step": 7,
+        "signals": [
+          "MEM_READ",
+          "MDR_LOAD",
+          "PC_INC"
+        ]
+      },
+      {
+        "step": 8,
+        "signals": [
+          "TMP_OUT",
+          "MAR_LOAD_LO"
+        ]
+      },
+      {
+        "step": 9,
+        "signals": [
+          "MDR_OUT",
+          "MAR_LOAD_HI"
+        ]
+      },
+      {
+        "step": 10,
+        "signals": [
+          "MEM_READ",
+          "MDR_LOAD"
+        ]
+      },
+      {
+        "step": 11,
+        "signals": [
+          "MDR_OUT",
+          "TMP_LOAD"
+        ]
+      },
+      {
+        "step": 12,
+        "signals": [
+          "ALU_SUB",
+          "FLAGS_LATCH",
+          "INSTR_DONE",
+          "STEP_RESET"
+        ]
+      }
+    ],
     "88": [
       {
         "step": 3,
@@ -3389,6 +3649,247 @@
           "ALU_SUB",
           "ALU_OUT_ENABLE",
           "A_LOAD",
+          "FLAGS_LATCH",
+          "INSTR_DONE",
+          "STEP_RESET"
+        ]
+      }
+    ],
+    "6A": [
+      {
+        "step": 3,
+        "signals": [
+          "PC_TO_MAR"
+        ]
+      },
+      {
+        "step": 4,
+        "signals": [
+          "MEM_READ",
+          "MDR_LOAD",
+          "PC_INC"
+        ]
+      },
+      {
+        "step": 5,
+        "signals": [
+          "MDR_OUT",
+          "TMP_LOAD"
+        ]
+      },
+      {
+        "step": 6,
+        "signals": [
+          "PC_TO_MAR"
+        ]
+      },
+      {
+        "step": 7,
+        "signals": [
+          "MEM_READ",
+          "MDR_LOAD",
+          "PC_INC"
+        ]
+      },
+      {
+        "step": 8,
+        "signals": [
+          "TMP_OUT",
+          "MAR_LOAD_LO"
+        ]
+      },
+      {
+        "step": 9,
+        "signals": [
+          "MDR_OUT",
+          "MAR_LOAD_HI"
+        ]
+      },
+      {
+        "step": 10,
+        "signals": [
+          "MEM_READ",
+          "MDR_LOAD"
+        ]
+      },
+      {
+        "step": 11,
+        "signals": [
+          "MDR_OUT",
+          "TMP_LOAD"
+        ]
+      },
+      {
+        "step": 12,
+        "signals": [
+          "ALU_SUB",
+          "FLAGS_LATCH",
+          "INSTR_DONE",
+          "STEP_RESET"
+        ]
+      }
+    ],
+    "6C": [
+      {
+        "step": 3,
+        "signals": [
+          "PC_TO_MAR"
+        ]
+      },
+      {
+        "step": 4,
+        "signals": [
+          "MEM_READ",
+          "MDR_LOAD",
+          "PC_INC"
+        ]
+      },
+      {
+        "step": 5,
+        "signals": [
+          "MDR_OUT",
+          "TMP_LOAD"
+        ]
+      },
+      {
+        "step": 6,
+        "signals": [
+          "ALU_SUB",
+          "FLAGS_LATCH",
+          "INSTR_DONE",
+          "STEP_RESET"
+        ]
+      }
+    ],
+    "6D": [
+      {
+        "step": 3,
+        "signals": [
+          "PC_TO_MAR"
+        ]
+      },
+      {
+        "step": 4,
+        "signals": [
+          "MEM_READ",
+          "MDR_LOAD",
+          "PC_INC"
+        ]
+      },
+      {
+        "step": 5,
+        "signals": [
+          "MDR_OUT",
+          "MAR_LOAD_LO"
+        ]
+      },
+      {
+        "step": 6,
+        "signals": [
+          "A_OUT",
+          "TMP_LOAD"
+        ]
+      },
+      {
+        "step": 7,
+        "signals": [
+          "ALU_XOR",
+          "ALU_OUT_ENABLE",
+          "MAR_LOAD_HI"
+        ]
+      },
+      {
+        "step": 8,
+        "signals": [
+          "MEM_READ",
+          "MDR_LOAD"
+        ]
+      },
+      {
+        "step": 9,
+        "signals": [
+          "MDR_OUT",
+          "TMP_LOAD"
+        ]
+      },
+      {
+        "step": 10,
+        "signals": [
+          "ALU_SUB",
+          "FLAGS_LATCH",
+          "INSTR_DONE",
+          "STEP_RESET"
+        ]
+      }
+    ],
+    "6E": [
+      {
+        "step": 3,
+        "signals": [
+          "PC_TO_MAR"
+        ]
+      },
+      {
+        "step": 4,
+        "signals": [
+          "MEM_READ",
+          "MDR_LOAD",
+          "PC_INC"
+        ]
+      },
+      {
+        "step": 5,
+        "signals": [
+          "MDR_OUT",
+          "TMP_LOAD"
+        ]
+      },
+      {
+        "step": 6,
+        "signals": [
+          "PC_TO_MAR"
+        ]
+      },
+      {
+        "step": 7,
+        "signals": [
+          "MEM_READ",
+          "MDR_LOAD",
+          "PC_INC"
+        ]
+      },
+      {
+        "step": 8,
+        "signals": [
+          "TMP_OUT",
+          "MAR_LOAD_LO"
+        ]
+      },
+      {
+        "step": 9,
+        "signals": [
+          "MDR_OUT",
+          "MAR_LOAD_HI"
+        ]
+      },
+      {
+        "step": 10,
+        "signals": [
+          "MEM_READ",
+          "MDR_LOAD"
+        ]
+      },
+      {
+        "step": 11,
+        "signals": [
+          "MDR_OUT",
+          "TMP_LOAD"
+        ]
+      },
+      {
+        "step": 12,
+        "signals": [
+          "ALU_SUB",
           "FLAGS_LATCH",
           "INSTR_DONE",
           "STEP_RESET"
