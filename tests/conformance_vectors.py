@@ -29,4 +29,9 @@ VECTORS = [
     {"name":"tay","image":[0x95],"initial":{"a":0x31},"expected":{"y":0x31,"pc":0x8001}},
     {"name":"txa","image":[0x96],"initial":{"x":0x77},"expected":{"a":0x77,"pc":0x8001}},
     {"name":"tya","image":[0x97],"initial":{"y":0x55},"expected":{"a":0x55,"pc":0x8001}},
+    {"name": "not_a", "image": [0x5C], "initial": {"a": 0x55}, "expected": {"a": 0xAA, "pc": 0x8001}},
+    {"name": "shl_carry", "image": [0x60], "initial": {"a": 0x81}, "expected": {"a": 0x02, "pc": 0x8001}},
+    {"name": "shr_carry", "image": [0x61], "initial": {"a": 0x81}, "expected": {"a": 0x40, "pc": 0x8001}},
+    {"name": "rol_through_carry", "image": [0x62], "initial": {"a": 0x80, "f": 0x01}, "expected": {"a": 0x01, "pc": 0x8001}},
+    {"name": "ror_through_carry", "image": [0x63], "initial": {"a": 0x01, "f": 0x01}, "expected": {"a": 0x80, "pc": 0x8001}},
 ]
