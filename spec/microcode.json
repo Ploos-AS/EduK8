@@ -3913,23 +3913,6 @@
       {
         "step": 3,
         "signals": [
-          "X_OUT",
-          "TMP_LOAD"
-        ]
-      },
-      {
-        "step": 4,
-        "signals": [
-          "A_OUT",
-          "MDR_LOAD"
-        ]
-      },
-      {
-        "step": 5,
-        "signals": [
-          "ALU_ADD",
-          "ALU_OUT_ENABLE",
-          "X_LOAD",
           "FLAGS_LATCH",
           "INSTR_DONE",
           "STEP_RESET"
@@ -3940,23 +3923,6 @@
       {
         "step": 3,
         "signals": [
-          "X_OUT",
-          "TMP_LOAD"
-        ]
-      },
-      {
-        "step": 4,
-        "signals": [
-          "A_OUT",
-          "MDR_LOAD"
-        ]
-      },
-      {
-        "step": 5,
-        "signals": [
-          "ALU_SUB",
-          "ALU_OUT_ENABLE",
-          "X_LOAD",
           "FLAGS_LATCH",
           "INSTR_DONE",
           "STEP_RESET"
@@ -3967,23 +3933,6 @@
       {
         "step": 3,
         "signals": [
-          "Y_OUT",
-          "TMP_LOAD"
-        ]
-      },
-      {
-        "step": 4,
-        "signals": [
-          "A_OUT",
-          "MDR_LOAD"
-        ]
-      },
-      {
-        "step": 5,
-        "signals": [
-          "ALU_ADD",
-          "ALU_OUT_ENABLE",
-          "Y_LOAD",
           "FLAGS_LATCH",
           "INSTR_DONE",
           "STEP_RESET"
@@ -3994,23 +3943,6 @@
       {
         "step": 3,
         "signals": [
-          "Y_OUT",
-          "TMP_LOAD"
-        ]
-      },
-      {
-        "step": 4,
-        "signals": [
-          "A_OUT",
-          "MDR_LOAD"
-        ]
-      },
-      {
-        "step": 5,
-        "signals": [
-          "ALU_SUB",
-          "ALU_OUT_ENABLE",
-          "Y_LOAD",
           "FLAGS_LATCH",
           "INSTR_DONE",
           "STEP_RESET"
