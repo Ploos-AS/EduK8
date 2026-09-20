@@ -97,3 +97,34 @@ def test_isa_index_decoder_covers_x_y_and_nonindexed_modes():
     assert INDEX_SELECT[0x14] == 2  # LDA abs,Y
     assert INDEX_SELECT[0x10] == 0  # LDA immediate
     assert INDEX_SELECT[0x1B] == 2  # LDX abs,Y
+
+
+def test_complete_lda_absolute_x_with_page_cross():
+    sim = K8Simulator()
+    sim.datapath.pc.load(0x8000)
+    sim.datapath.x.load(0x20)
+    sim.load_image(0x8000, bytes([0x13, 0xF0, 0x12]), force=True)
+    sim.load_image(0x1310, bytes([0xA5]), force=True)
+    used = sim.instruction_step()
+    assert used == 14
+    assert sim.datapath.a.value == 0xA5
+    assert sim.datapath.pc.value == 0x8003
+    assert sim.datapath.mar.value == 0x1310
+    assert sim.datapath.agu_index_select == 1
+    assert sim.datapath.aguc == 1
+    assert sim.datapath.microstep == 0
+
+
+def test_complete_lda_absolute_y_without_page_cross():
+    sim = K8Simulator()
+    sim.datapath.pc.load(0x8000)
+    sim.datapath.y.load(0x0F)
+    sim.load_image(0x8000, bytes([0x14, 0x30, 0x12]), force=True)
+    sim.load_image(0x123F, bytes([0x5A]), force=True)
+    used = sim.instruction_step()
+    assert used == 14
+    assert sim.datapath.a.value == 0x5A
+    assert sim.datapath.pc.value == 0x8003
+    assert sim.datapath.mar.value == 0x123F
+    assert sim.datapath.agu_index_select == 2
+    assert sim.datapath.aguc == 0
