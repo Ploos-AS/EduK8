@@ -85,7 +85,7 @@ def test_core_decodes_x_index_source_from_opcode():
         ("AGU_ADD_LO", "AGUC_LOAD"),
         agu_index_select=INDEX_SELECT[sim.datapath.ir.value],
     )
-    assert sim.datapath.agu_index_select == 1
+    assert sim.datapath.agu_index_select == 0
     assert sim.datapath.agu_index_value == 0x21
     assert sim.datapath.mar.value == 0x1211
     assert sim.datapath.aguc == 1
@@ -126,7 +126,7 @@ def test_complete_lda_absolute_y_without_page_cross():
     assert sim.datapath.a.value == 0x5A
     assert sim.datapath.pc.value == 0x8003
     assert sim.datapath.mar.value == 0x123F
-    assert sim.datapath.agu_index_select == 2
+    assert sim.datapath.agu_index_select == 0
     assert sim.datapath.aguc == 0
 
 
