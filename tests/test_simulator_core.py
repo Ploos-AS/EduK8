@@ -439,3 +439,22 @@ def test_jmp_indirect_reads_little_endian_target_and_wraps_pointer():
         sim.release_reset()
         sim.instruction_step()
         assert sim.datapath.pc.value == 0x5678
+
+
+def test_jsr_pushes_next_pc_and_rts_returns_exactly_to_it():
+    sim = K8Simulator()
+    sim.load_image(0x8000, bytes([0x82, 0x00, 0x90]))
+    sim.load_image(0x9000, bytes([0x04]))
+    sim.datapath.sp.load(0xFF)
+    sim.datapath.pc.load(0x8000)
+    sim.release_reset()
+
+    sim.instruction_step()
+    assert sim.datapath.pc.value == 0x9000
+    assert sim.datapath.sp.value == 0xFD
+    assert sim.memory.read(0x01FF) == 0x80
+    assert sim.memory.read(0x01FE) == 0x03
+
+    sim.instruction_step()
+    assert sim.datapath.pc.value == 0x8003
+    assert sim.datapath.sp.value == 0xFF
