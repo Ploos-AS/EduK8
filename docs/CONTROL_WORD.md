@@ -73,6 +73,8 @@ The logical microaddress is:
 - microstep: 5 bits (T0-T31)
 - condition: 2 bits
 
+The condition encoding is `00` unconditional/default, `01` branch-false, `10` branch-true, and `11` reserved. Branch flag selection and polarity are decoded from the opcode as frozen in `BRANCH_ARCHITECTURE.md`.
+
 This is a 15-bit address space containing 32,768 control words. The canonical logical address is:
 
 `(opcode << 7) | (microstep << 2) | condition`
