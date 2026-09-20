@@ -2507,7 +2507,7 @@
         "step": 5,
         "signals": [
           "MDR_OUT",
-          "MAR_LOAD_LO"
+          "TMP_LOAD"
         ]
       },
       {
@@ -2534,19 +2534,26 @@
       {
         "step": 9,
         "signals": [
+          "TMP_OUT",
+          "MAR_LOAD_LO"
+        ]
+      },
+      {
+        "step": 10,
+        "signals": [
           "MEM_READ",
           "MDR_LOAD"
         ]
       },
       {
-        "step": 10,
+        "step": 11,
         "signals": [
           "MDR_OUT",
           "TMP_LOAD"
         ]
       },
       {
-        "step": 11,
+        "step": 12,
         "signals": [
           "FLAGS_LATCH",
           "MEM_WRITE",
@@ -4144,7 +4151,7 @@
         "step": 5,
         "signals": [
           "MDR_OUT",
-          "MAR_LOAD_LO"
+          "TMP_LOAD"
         ]
       },
       {
@@ -4171,19 +4178,26 @@
       {
         "step": 9,
         "signals": [
+          "TMP_OUT",
+          "MAR_LOAD_LO"
+        ]
+      },
+      {
+        "step": 10,
+        "signals": [
           "MEM_READ",
           "MDR_LOAD"
         ]
       },
       {
-        "step": 10,
+        "step": 11,
         "signals": [
           "MDR_OUT",
           "TMP_LOAD"
         ]
       },
       {
-        "step": 11,
+        "step": 12,
         "signals": [
           "FLAGS_LATCH",
           "MEM_WRITE",
