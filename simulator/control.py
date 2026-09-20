@@ -74,7 +74,12 @@ def apply_controls(dp: Datapath, signals) -> None:
     if "SP_DEC" in signals:
         dp.sp.load(dp.sp.value - 1)
 
-    bus_loads = set(LOADS) | {"PC_LOAD_LO", "PC_LOAD_HI", "MAR_LOAD_LO", "MAR_LOAD_HI"}\n    # PC_TO_MAR/SP_TO_MAR are direct 16-bit transfers; accompanying MAR_LOAD\n    # strobes do not require an 8-bit DB source.\n    direct_mar = "PC_TO_MAR" in signals or "SP_TO_MAR" in signals\n    if direct_mar:\n        bus_loads -= {"MAR_LOAD_LO", "MAR_LOAD_HI"}
+    bus_loads = set(LOADS) | {"PC_LOAD_LO", "PC_LOAD_HI", "MAR_LOAD_LO", "MAR_LOAD_HI"}
+    # PC_TO_MAR/SP_TO_MAR are direct 16-bit transfers; accompanying MAR_LOAD
+    # strobes do not require an 8-bit DB source.
+    direct_mar = "PC_TO_MAR" in signals or "SP_TO_MAR" in signals
+    if direct_mar:
+        bus_loads -= {"MAR_LOAD_LO", "MAR_LOAD_HI"}
     if signals and any(s in signals for s in bus_loads) and dp.data_bus.value is None:
         # MDR_LOAD may later be sourced by the memory component rather than DB.
         if not (set(signals) & bus_loads == {"MDR_LOAD"} and "MEM_READ" in signals):
