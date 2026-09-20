@@ -916,6 +916,56 @@
           "STEP_RESET"
         ]
       }
+    ],
+    "05": [
+      {
+        "step": 3,
+        "signals": [
+          "C_CLEAR",
+          "INSTR_DONE",
+          "STEP_RESET"
+        ]
+      }
+    ],
+    "06": [
+      {
+        "step": 3,
+        "signals": [
+          "C_SET",
+          "INSTR_DONE",
+          "STEP_RESET"
+        ]
+      }
+    ],
+    "07": [
+      {
+        "step": 3,
+        "signals": [
+          "I_CLEAR",
+          "INSTR_DONE",
+          "STEP_RESET"
+        ]
+      }
+    ],
+    "08": [
+      {
+        "step": 3,
+        "signals": [
+          "I_SET",
+          "INSTR_DONE",
+          "STEP_RESET"
+        ]
+      }
+    ],
+    "09": [
+      {
+        "step": 3,
+        "signals": [
+          "V_CLEAR",
+          "INSTR_DONE",
+          "STEP_RESET"
+        ]
+      }
     ]
   }
 }
