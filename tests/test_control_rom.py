@@ -10,12 +10,12 @@ def test_image_size():
 
 def test_nop_fetch_and_finish():
     image=build_image()
-    assert word(image,0x00,0) == bytes_le(encode(["PC_TO_MAR","MAR_LOAD_LO","MAR_LOAD_HI"]))
-    assert word(image,0x00,3) == bytes_le(encode(["INSTR_DONE"]))
+    assert word(image,0x00,0) == bytes_le(encode(["PC_TO_MAR"]))
+    assert word(image,0x00,3) == bytes_le(encode(["INSTR_DONE","STEP_RESET"]))
 
 def test_lda_immediate_execution():
     image=build_image()
-    expected=encode(["MDR_OUT","A_LOAD","PC_INC","FLAGS_LATCH","INSTR_DONE"])
+    expected=encode(["MDR_OUT","A_LOAD","PC_INC","FLAGS_LATCH","INSTR_DONE","STEP_RESET"])
     assert word(image,0x10,5) == bytes_le(expected)
 
 def test_undefined_opcode_is_zero():
