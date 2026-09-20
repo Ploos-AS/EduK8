@@ -40,4 +40,8 @@ VECTORS = [
     {"name": "and_imm", "image": [0x50, 0x0F], "initial": {"a": 0xA5}, "expected": {"a": 0x05, "pc": 0x8002}},
     {"name": "or_imm", "image": [0x54, 0x0F], "initial": {"a": 0xA0}, "expected": {"a": 0xAF, "pc": 0x8002}},
     {"name": "xor_imm", "image": [0x58, 0xFF], "initial": {"a": 0xAA}, "expected": {"a": 0x55, "pc": 0x8002}},
+    {"name": "add_carry_zero", "image": [0x40, 0x01], "initial": {"a": 0xFF}, "expected": {"a": 0x00, "f": 0x03, "pc": 0x8002}},
+    {"name": "add_negative_overflow", "image": [0x40, 0x01], "initial": {"a": 0x7F}, "expected": {"a": 0x80, "f": 0x0C, "pc": 0x8002}},
+    {"name": "sub_borrow_negative", "image": [0x48, 0x01], "initial": {"a": 0x00, "f": 0x01}, "expected": {"a": 0xFF, "f": 0x04, "pc": 0x8002}},
+    {"name": "sub_zero_no_borrow", "image": [0x48, 0x01], "initial": {"a": 0x01, "f": 0x01}, "expected": {"a": 0x00, "f": 0x03, "pc": 0x8002}},
 ]
