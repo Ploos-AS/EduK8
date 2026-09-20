@@ -53,6 +53,8 @@ Status flags:
 
 The stack occupies page $0100-$01FF. SP contains the low byte of the stack position. The stack grows downward. Reset initializes SP to $FF.
 
+Subroutine calls use the same stack. JSR pushes the address of the next instruction (high byte first, then low byte), decrementing SP after each byte, then loads the absolute target into PC. RTS increments SP, pulls the low byte, increments SP again, pulls the high byte, and resumes exactly at that reconstructed address. This deliberately avoids a hidden +1 convention and makes the stacked return address directly inspectable. JMP abs loads the encoded 16-bit target directly; JMP (abs) reads a little-endian 16-bit target pointer from memory, with the high byte read from pointer+1 modulo 65536.
+
 ## Reset and vectors
 
 - $FFFC-$FFFD = reset vector
