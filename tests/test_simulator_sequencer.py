@@ -4,7 +4,8 @@ from simulator.sequencer import ControlStore, Sequencer, MAX_STEPS
 
 def test_control_store_exposes_shared_fetch():
     store = ControlStore.from_spec()
-    assert store.signals(0x10, 0) == ("PC_TO_MAR",)\n    assert store.signals(0x10, 1) == ("MEM_READ", "MDR_LOAD")
+    assert store.signals(0x10, 0) == ("PC_TO_MAR",)
+    assert store.signals(0x10, 1) == ("MEM_READ", "MDR_LOAD")
 
 
 def test_opcode_microstep_lookup():
