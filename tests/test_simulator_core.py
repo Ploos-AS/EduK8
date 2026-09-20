@@ -195,3 +195,25 @@ def test_relative_branch_wraparound_forward_and_backward():
     assert sim.datapath.pc.value == 0x0001
     sim, _ = _run_branch(0x8B, 0x80, 0x00, start=0x0000)
     assert sim.datapath.pc.value == 0xFF82
+
+
+def test_load_zero_page_and_absolute_addressing():
+    cases = [
+        (0x11, [0x42], 0x0042, "a", 0xA5),
+        (0x19, [0x43], 0x0043, "x", 0x80),
+        (0x21, [0x44], 0x0044, "y", 0x00),
+        (0x12, [0x34, 0x12], 0x1234, "a", 0x5A),
+        (0x1A, [0x35, 0x12], 0x1235, "x", 0x7E),
+        (0x22, [0x36, 0x12], 0x1236, "y", 0x81),
+    ]
+    for opcode, operand, address, register, value in cases:
+        sim = K8Simulator()
+        sim.load_image(0x8000, bytes([opcode, *operand]))
+        sim.load_image(address, bytes([value]))
+        sim.datapath.pc.load(0x8000)
+        sim.release_reset()
+        sim.instruction_step()
+        assert getattr(sim.datapath, register).value == value
+        assert sim.datapath.pc.value == 0x8000 + 1 + len(operand)
+        assert bool(sim.datapath.flags.value & 0x02) == (value == 0)
+        assert bool(sim.datapath.flags.value & 0x04) == bool(value & 0x80)
