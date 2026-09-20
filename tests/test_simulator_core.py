@@ -217,3 +217,21 @@ def test_load_zero_page_and_absolute_addressing():
         assert sim.datapath.pc.value == 0x8000 + 1 + len(operand)
         assert bool(sim.datapath.flags.value & 0x02) == (value == 0)
         assert bool(sim.datapath.flags.value & 0x04) == bool(value & 0x80)
+
+
+def test_absolute_indexed_loads_use_frozen_agu():
+    cases = [
+        (0x1B, 0x12F0, 0x20, "y", "x", 0xA6, 0x1310),
+        (0x23, 0x1230, 0x0F, "x", "y", 0x5B, 0x123F),
+    ]
+    for opcode, base, index, index_reg, target_reg, value, effective in cases:
+        sim = K8Simulator()
+        sim.load_image(0x8000, bytes([opcode, base & 0xFF, base >> 8]))
+        sim.load_image(effective, bytes([value]))
+        getattr(sim.datapath, index_reg).load(index)
+        sim.datapath.pc.load(0x8000)
+        sim.release_reset()
+        sim.instruction_step()
+        assert getattr(sim.datapath, target_reg).value == value
+        assert sim.datapath.pc.value == 0x8003
+        assert sim.datapath.mar.value == effective
