@@ -235,7 +235,8 @@
       {
         "step": 11,
         "signals": [
-          "AGU_ADD_HI"
+          "AGU_ADD_HI",
+          "AGUC_CLEAR"
         ]
       },
       {
@@ -316,7 +317,8 @@
       {
         "step": 11,
         "signals": [
-          "AGU_ADD_HI"
+          "AGU_ADD_HI",
+          "AGUC_CLEAR"
         ]
       },
       {
