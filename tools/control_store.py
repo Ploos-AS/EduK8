@@ -58,6 +58,12 @@ def build(source):
         seen.add(a); words[a]=validate(row.get("signals",[]),f"opcode={op:#04x} T{step} C{cond}")
     return words
 
+def slices(words):
+    """Return the six physical 8-bit ROM images for 48-bit control words."""
+    if len(words) != DEPTH:
+        raise ValueError(f"expected {DEPTH} control words, got {len(words)}")
+    return tuple(bytes((w >> (8 * sl)) & 0xff for w in words) for sl in range(6))
+
 def main():
     ap=argparse.ArgumentParser(); ap.add_argument("source",type=Path); ap.add_argument("-o","--output",type=Path,default=ROOT/"build/control-store")
     ns=ap.parse_args(); src=json.loads(ns.source.read_text()); words=build(src)
