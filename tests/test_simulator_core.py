@@ -418,3 +418,24 @@ def test_memory_inc_dec_zero_page_and_absolute_read_modify_write():
         assert sim.datapath.flags.value & 0x19 == 0x19
         assert bool(sim.datapath.flags.value & 0x02) == (expected == 0)
         assert bool(sim.datapath.flags.value & 0x04) == bool(expected & 0x80)
+
+
+def test_jmp_absolute_loads_encoded_target():
+    sim = K8Simulator()
+    sim.load_image(0x8000, bytes([0x80, 0x34, 0x12]))
+    sim.datapath.pc.load(0x8000)
+    sim.release_reset()
+    sim.instruction_step()
+    assert sim.datapath.pc.value == 0x1234
+
+
+def test_jmp_indirect_reads_little_endian_target_and_wraps_pointer():
+    for pointer, low_address, high_address in [(0x2345, 0x2345, 0x2346), (0xFFFF, 0xFFFF, 0x0000)]:
+        sim = K8Simulator()
+        sim.load_image(0x8000, bytes([0x81, pointer & 0xFF, pointer >> 8]))
+        sim.load_image(low_address, bytes([0x78]))
+        sim.load_image(high_address, bytes([0x56]))
+        sim.datapath.pc.load(0x8000)
+        sim.release_reset()
+        sim.instruction_step()
+        assert sim.datapath.pc.value == 0x5678
