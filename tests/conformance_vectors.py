@@ -24,7 +24,7 @@ VECTORS = [
         "image": [0x10, 0x42],
         "initial": {},
         "expected": {"a": 0x42, "pc": 0x8002},
-    },,
+    },
     {"name":"tax","image":[0x94],"initial":{"a":0x42},"expected":{"x":0x42,"pc":0x8001}},
     {"name":"tay","image":[0x95],"initial":{"a":0x31},"expected":{"y":0x31,"pc":0x8001}},
     {"name":"txa","image":[0x96],"initial":{"x":0x77},"expected":{"a":0x77,"pc":0x8001}},
