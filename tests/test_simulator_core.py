@@ -344,3 +344,30 @@ def test_indexed_add_sub_use_agu_with_page_crossing():
         assert sim.datapath.mar.value == effective
         assert sim.datapath.pc.value == 0x8003
         assert sim.datapath.aguc == 0
+
+
+def test_compare_family_all_addressing_modes_preserves_registers_and_vi():
+    cases = [
+        (0x68, "a", 0x40, bytes([0x40]), None, 0x0B),
+        (0x69, "a", 0x20, bytes([0x42]), (0x0042, 0x30), 0x0C),
+        (0x6A, "a", 0x30, bytes([0x34, 0x12]), (0x1234, 0x10), 0x09),
+        (0x6C, "x", 0x55, bytes([0x55]), None, 0x0B),
+        (0x6D, "x", 0x10, bytes([0x43]), (0x0043, 0x20), 0x0C),
+        (0x6E, "x", 0x40, bytes([0x35, 0x12]), (0x1235, 0x20), 0x09),
+        (0x70, "y", 0x01, bytes([0x01]), None, 0x0B),
+        (0x71, "y", 0x80, bytes([0x44]), (0x0044, 0x01), 0x09),
+        (0x72, "y", 0x00, bytes([0x36, 0x12]), (0x1236, 0x01), 0x0C),
+    ]
+    for opcode, reg, value, operand, memory, expected_cznv in cases:
+        sim = K8Simulator()
+        sim.load_image(0x8000, bytes([opcode]) + operand)
+        if memory:
+            sim.load_image(memory[0], bytes([memory[1]]))
+        getattr(sim.datapath, reg).load(value)
+        sim.datapath.flags.load(0x18)
+        sim.datapath.pc.load(0x8000)
+        sim.release_reset()
+        sim.instruction_step()
+        assert getattr(sim.datapath, reg).value == value
+        assert sim.datapath.flags.value == (0x10 | expected_cznv)
+        assert sim.datapath.pc.value == 0x8001 + len(operand)
