@@ -46,7 +46,7 @@
 - [x] Support clock-cycle and microstep execution
 - [ ] Support interactive switches, LEDs, keyboard, display and GPIO
 - [ ] Load K8 binaries and ROM images
-- [ ] Cross-check simulator state against reference emulator
+- [x] Cross-check simulator state against reference emulator
 - [ ] Run shared architectural conformance vectors
 - [ ] Add deterministic simulator tests
 - [ ] Document simulator architecture and educational use
