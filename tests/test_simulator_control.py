@@ -61,3 +61,30 @@ def test_alu_result_can_drive_bus_and_load_register():
     apply_controls(dp, ["ALU_ADD", "ALU_OUT_ENABLE", "Y_LOAD"])
     assert dp.y.value == 5
     assert dp.data_bus.driver == "ALU_OUT_ENABLE"
+
+
+def test_flags_latch_sets_zero_and_preserves_other_flags():
+    dp = Datapath()
+    dp.flags.load(0x11)
+    dp.a.load(0x00)
+    apply_controls(dp, ("A_OUT", "FLAGS_LATCH"))
+    assert dp.flags.value == 0x13
+
+
+def test_flags_latch_sets_negative():
+    dp = Datapath()
+    dp.a.load(0x80)
+    apply_controls(dp, ("A_OUT", "FLAGS_LATCH"))
+    assert dp.flags.value & 0x04
+    assert not (dp.flags.value & 0x02)
+
+
+def test_alu_flags_latch_carry_and_overflow():
+    dp = Datapath()
+    dp.a.load(0x7F)
+    dp.tmp.load(0x01)
+    apply_controls(dp, ("ALU_ADD", "ALU_OUT_ENABLE", "A_LOAD", "FLAGS_LATCH"))
+    assert dp.a.value == 0x80
+    assert dp.flags.value & 0x04
+    assert dp.flags.value & 0x08
+    assert not (dp.flags.value & 0x01)
