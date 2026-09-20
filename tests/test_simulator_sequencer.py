@@ -1,5 +1,5 @@
 from simulator.datapath import Datapath
-from simulator.sequencer import ControlStore, Sequencer, MAX_STEPS
+from simulator.sequencer import ControlStore, Sequencer, MAX_STEPS, decode_condition
 
 
 def test_control_store_exposes_shared_fetch():
@@ -60,3 +60,22 @@ def test_clock_is_explicit_and_deterministic():
     assert dp.clock == 0
     assert seq.tick_clock() == 1
     assert seq.tick_clock() == 0
+
+
+def test_branch_condition_decode_all_flag_polarities():
+    cases = [
+        (0x88, 0x02, 2), (0x88, 0x00, 1),
+        (0x89, 0x00, 2), (0x89, 0x02, 1),
+        (0x8A, 0x01, 2), (0x8A, 0x00, 1),
+        (0x8B, 0x00, 2), (0x8B, 0x01, 1),
+        (0x8C, 0x04, 2), (0x8C, 0x00, 1),
+        (0x8D, 0x00, 2), (0x8D, 0x04, 1),
+        (0x8E, 0x08, 2), (0x8E, 0x00, 1),
+        (0x8F, 0x00, 2), (0x8F, 0x08, 1),
+    ]
+    for opcode, flags, expected in cases:
+        assert decode_condition(opcode, flags) == expected
+
+
+def test_non_branch_condition_is_unconditional():
+    assert decode_condition(0x10, 0xFF) == 0
