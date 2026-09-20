@@ -236,3 +236,23 @@ def test_absolute_indexed_loads_use_frozen_agu():
         assert getattr(sim.datapath, target_reg).value == value
         assert sim.datapath.pc.value == 0x8003
         assert sim.datapath.mar.value == effective
+
+
+def test_zero_page_indexed_loads_wrap_within_page_zero():
+    cases = [
+        (0x16, 0xF0, 0x20, "x", "a", 0xA1, 0x10),
+        (0x1C, 0xF8, 0x10, "y", "x", 0xB2, 0x08),
+        (0x24, 0x40, 0x05, "x", "y", 0xC3, 0x45),
+    ]
+    for opcode, base, index, index_reg, target_reg, value, effective in cases:
+        sim = K8Simulator()
+        sim.load_image(0x8000, bytes([opcode, base]))
+        sim.load_image(effective, bytes([value]))
+        getattr(sim.datapath, index_reg).load(index)
+        sim.datapath.pc.load(0x8000)
+        sim.release_reset()
+        sim.instruction_step()
+        assert getattr(sim.datapath, target_reg).value == value
+        assert sim.datapath.pc.value == 0x8002
+        assert sim.datapath.mar.value == effective
+        assert sim.datapath.aguc == 0
