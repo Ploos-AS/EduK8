@@ -786,6 +786,12 @@
         "step": 8,
         "signals": [
           "A_OUT",
+          "MDR_LOAD"
+        ]
+      },
+      {
+        "step": 9,
+        "signals": [
           "MEM_WRITE",
           "INSTR_DONE",
           "STEP_RESET"
@@ -846,6 +852,12 @@
         "step": 10,
         "signals": [
           "A_OUT",
+          "MDR_LOAD"
+        ]
+      },
+      {
+        "step": 11,
+        "signals": [
           "MEM_WRITE",
           "INSTR_DONE",
           "STEP_RESET"
@@ -893,6 +905,12 @@
         "step": 8,
         "signals": [
           "X_OUT",
+          "MDR_LOAD"
+        ]
+      },
+      {
+        "step": 9,
+        "signals": [
           "MEM_WRITE",
           "INSTR_DONE",
           "STEP_RESET"
@@ -953,6 +971,12 @@
         "step": 10,
         "signals": [
           "X_OUT",
+          "MDR_LOAD"
+        ]
+      },
+      {
+        "step": 11,
+        "signals": [
           "MEM_WRITE",
           "INSTR_DONE",
           "STEP_RESET"
@@ -1000,6 +1024,12 @@
         "step": 8,
         "signals": [
           "Y_OUT",
+          "MDR_LOAD"
+        ]
+      },
+      {
+        "step": 9,
+        "signals": [
           "MEM_WRITE",
           "INSTR_DONE",
           "STEP_RESET"
@@ -1060,6 +1090,12 @@
         "step": 10,
         "signals": [
           "Y_OUT",
+          "MDR_LOAD"
+        ]
+      },
+      {
+        "step": 11,
+        "signals": [
           "MEM_WRITE",
           "INSTR_DONE",
           "STEP_RESET"
