@@ -71,3 +71,29 @@ def test_complete_lda_immediate_instruction():
     assert sim.datapath.a.value == 0x42
     assert sim.datapath.pc.value == 0x8002
     assert sim.datapath.microstep == 0
+
+
+def test_core_decodes_x_index_source_from_opcode():
+    sim = K8Simulator()
+    sim.datapath.ir.load(0x13)  # LDA abs,X
+    sim.datapath.x.load(0x21)
+    sim.datapath.mar.load(0x12F0)
+    from simulator.control import apply_controls
+    from simulator.core import INDEX_SELECT
+    apply_controls(
+        sim.datapath,
+        ("AGU_ADD_LO", "AGUC_LOAD"),
+        agu_index_select=INDEX_SELECT[sim.datapath.ir.value],
+    )
+    assert sim.datapath.agu_index_select == 1
+    assert sim.datapath.agu_index_value == 0x21
+    assert sim.datapath.mar.value == 0x1211
+    assert sim.datapath.aguc == 1
+
+
+def test_isa_index_decoder_covers_x_y_and_nonindexed_modes():
+    from simulator.core import INDEX_SELECT
+    assert INDEX_SELECT[0x13] == 1  # LDA abs,X
+    assert INDEX_SELECT[0x14] == 2  # LDA abs,Y
+    assert INDEX_SELECT[0x10] == 0  # LDA immediate
+    assert INDEX_SELECT[0x1B] == 2  # LDX abs,Y
