@@ -144,6 +144,10 @@ class Datapath:
     agu_low_input: int = 0
     agu_low_result: int = 0
     aguc: int = 0
+    branch_taken: bool = False
+    branch_displacement: int = 0
+    branch_pc_before: int = 0
+    branch_pc_after: int = 0
     microstep: int = 0
     clock: int = 0
     reset: bool = False
@@ -181,6 +185,12 @@ class Datapath:
                 "low_input": self.agu_low_input,
                 "low_result": self.agu_low_result,
                 "carry": self.aguc,
+            },
+            "branch": {
+                "taken": self.branch_taken,
+                "displacement": self.branch_displacement,
+                "pc_before": self.branch_pc_before,
+                "pc_after": self.branch_pc_after,
             },
             "microstep": self.microstep,
             "clock": self.clock,
