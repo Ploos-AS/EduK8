@@ -120,6 +120,11 @@ class Datapath:
     mar: Register16 = field(default_factory=lambda: Register16("MAR"))
     data_bus: Bus8 = field(default_factory=lambda: Bus8("DB"))
     alu: ALU = field(default_factory=ALU)
+    agu_index_select: int = 0
+    agu_index_value: int = 0
+    agu_low_input: int = 0
+    agu_low_result: int = 0
+    aguc: int = 0
     microstep: int = 0
     clock: int = 0
     reset: bool = False
@@ -150,6 +155,13 @@ class Datapath:
                 "result": self.alu.result,
                 "carry_out": self.alu.carry_out,
                 "overflow": self.alu.overflow,
+            },
+            "agu": {
+                "index_select": self.agu_index_select,
+                "index_value": self.agu_index_value,
+                "low_input": self.agu_low_input,
+                "low_result": self.agu_low_result,
+                "carry": self.aguc,
             },
             "microstep": self.microstep,
             "clock": self.clock,
