@@ -93,7 +93,7 @@ def apply_controls(dp: Datapath, signals) -> None:
         if "MAR_LOAD_HI" in signals:
             dp.mar.load_high(dp.data_bus.value)
 
-    # Direct architectural flag-latch controls.
+    # FLAGS_LATCH updates Z/N from the value visible on DB. For ALU operations\n    # it also latches the ALU carry/overflow result. Other flag bits survive.\n    if "FLAGS_LATCH" in signals and dp.data_bus.value is not None:\n        value = dp.data_bus.value & 0xFF\n        flags = dp.flags.value & ~(0x02 | 0x04)\n        if value == 0:\n            flags |= 0x02\n        if value & 0x80:\n            flags |= 0x04\n        if alu_signals:\n            flags &= ~(0x01 | 0x08)\n            if dp.alu.carry_out:\n                flags |= 0x01\n            if dp.alu.overflow:\n                flags |= 0x08\n        dp.flags.load(flags)\n\n    # Direct architectural flag-latch controls.
     if "C_SET" in signals:
         dp.flags.load(dp.flags.value | 0x01)
     if "C_CLEAR" in signals:
