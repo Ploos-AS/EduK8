@@ -57,6 +57,19 @@ class K8Simulator:
             agu_index_select=(INDEX_SELECT.get(self.datapath.ir.value, 0) if any(s.startswith("AGU_") or s.startswith("AGUC_") for s in signals) else 0),
         )
         apply_memory_cycle(self.datapath, self.memory, signals)
+        # Register INC/DEC uses the ALU physically, but its architectural
+        # operand is the selected X/Y register plus or minus one. Decode that
+        # source from the opcode; the result is still latched by the control word.
+        if self.datapath.ir.value in (0x7C, 0x7D, 0x7E, 0x7F) and "FLAGS_LATCH" in signals:
+            reg = self.datapath.x if self.datapath.ir.value in (0x7C, 0x7D) else self.datapath.y
+            result = (reg.value + 1) & 0xFF if self.datapath.ir.value in (0x7C, 0x7E) else (reg.value - 1) & 0xFF
+            reg.load(result)
+            flags = self.datapath.flags.value & ~(0x02 | 0x04)
+            if result == 0:
+                flags |= 0x02
+            if result & 0x80:
+                flags |= 0x04
+            self.datapath.flags.load(flags)
         # Compare reuses the subtractor but discards the result.
         # The register source is opcode-decoded, so no extra control-word bit is consumed.
         if self.datapath.ir.value in COMPARE_SOURCE and "ALU_SUB" in signals and "FLAGS_LATCH" in signals:
