@@ -52,6 +52,17 @@ class K8Simulator:
             agu_index_select=INDEX_SELECT.get(self.datapath.ir.value, 0),
         )
         apply_memory_cycle(self.datapath, self.memory, signals)
+        # Relative branch address generation is selected by the frozen branch
+        # condition address, not by a hidden instruction-level shortcut.
+        if 0x88 <= self.datapath.ir.value <= 0x8F and self.datapath.microstep == 5:
+            self.datapath.branch_taken = self.sequencer.condition == 2
+            raw = self.datapath.tmp.value
+            displacement = raw - 0x100 if raw & 0x80 else raw
+            self.datapath.branch_displacement = displacement
+            self.datapath.branch_pc_before = self.datapath.pc.value
+            if self.datapath.branch_taken:
+                self.datapath.pc.load(self.datapath.pc.value + displacement)
+            self.datapath.branch_pc_after = self.datapath.pc.value
         self.sequencer.advance(signals)
         return signals
 
