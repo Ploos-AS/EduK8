@@ -2693,6 +2693,85 @@
         ]
       }
     ],
+    "82": [
+      {
+        "step": 3,
+        "signals": [
+          "PC_TO_MAR"
+        ]
+      },
+      {
+        "step": 4,
+        "signals": [
+          "MEM_READ",
+          "MDR_LOAD",
+          "PC_INC"
+        ]
+      },
+      {
+        "step": 5,
+        "signals": [
+          "MDR_OUT",
+          "TMP_LOAD"
+        ]
+      },
+      {
+        "step": 6,
+        "signals": [
+          "PC_TO_MAR"
+        ]
+      },
+      {
+        "step": 7,
+        "signals": [
+          "MEM_READ",
+          "MDR_LOAD",
+          "PC_INC"
+        ]
+      },
+      {
+        "step": 8,
+        "signals": [
+          "SP_TO_MAR"
+        ]
+      },
+      {
+        "step": 9,
+        "signals": [
+          "MEM_WRITE",
+          "SP_DEC"
+        ]
+      },
+      {
+        "step": 10,
+        "signals": [
+          "SP_TO_MAR"
+        ]
+      },
+      {
+        "step": 11,
+        "signals": [
+          "MEM_WRITE",
+          "SP_DEC"
+        ]
+      },
+      {
+        "step": 12,
+        "signals": [
+          "TMP_OUT",
+          "PC_LOAD_LO"
+        ]
+      },
+      {
+        "step": 13,
+        "signals": [
+          "MDR_OUT",
+          "PC_LOAD_HI",
+          "INSTR_DONE",
+          "STEP_RESET"
+        ]
+      }
+    ],
     "88": [
       {
         "step": 3,
@@ -4332,6 +4411,69 @@
         "signals": [
           "FLAGS_LATCH",
           "MEM_WRITE",
+          "INSTR_DONE",
+          "STEP_RESET"
+        ]
+      }
+    ],
+    "04": [
+      {
+        "step": 3,
+        "signals": [
+          "SP_INC"
+        ]
+      },
+      {
+        "step": 4,
+        "signals": [
+          "SP_TO_MAR"
+        ]
+      },
+      {
+        "step": 5,
+        "signals": [
+          "MEM_READ",
+          "MDR_LOAD"
+        ]
+      },
+      {
+        "step": 6,
+        "signals": [
+          "MDR_OUT",
+          "TMP_LOAD"
+        ]
+      },
+      {
+        "step": 7,
+        "signals": [
+          "SP_INC"
+        ]
+      },
+      {
+        "step": 8,
+        "signals": [
+          "SP_TO_MAR"
+        ]
+      },
+      {
+        "step": 9,
+        "signals": [
+          "MEM_READ",
+          "MDR_LOAD"
+        ]
+      },
+      {
+        "step": 10,
+        "signals": [
+          "TMP_OUT",
+          "PC_LOAD_LO"
+        ]
+      },
+      {
+        "step": 11,
+        "signals": [
+          "MDR_OUT",
+          "PC_LOAD_HI",
           "INSTR_DONE",
           "STEP_RESET"
         ]
