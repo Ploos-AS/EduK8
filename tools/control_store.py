@@ -36,12 +36,19 @@ def source_entries(microcode):
     for opcode_hex, execution in microcode.get("opcodes",{}).items():
         opcode=int(opcode_hex,16)
         seen=set()
+        grouped={}
         for entry in microcode.get("fetch",[]) + execution:
             step=entry["step"]
-            if step in seen: raise ValueError(f"duplicate step {step} for opcode {opcode_hex}")
-            seen.add(step)
+            grouped.setdefault(step,[]).append(entry)
+        for step, entries in grouped.items():
+            shared=[e for e in entries if "condition" not in e]
+            specific={e["condition"]:e for e in entries if "condition" in e}
+            if len(shared)>1 or len(specific) != len([e for e in entries if "condition" in e]):
+                raise ValueError(f"duplicate step/condition for opcode {opcode_hex} T{step}")
             for cond in range(4):
-                rows.append({"opcode":opcode,"step":step,"condition":cond,"signals":entry.get("signals",[])})
+                entry=specific.get(cond, shared[0] if shared else None)
+                if entry is not None:
+                    rows.append({"opcode":opcode,"step":step,"condition":cond,"signals":entry.get("signals",[])})
     return {"entries":rows}
 
 def build_microcode(microcode):
