@@ -34,4 +34,10 @@ VECTORS = [
     {"name": "shr_carry", "image": [0x61], "initial": {"a": 0x81}, "expected": {"a": 0x40, "pc": 0x8001}},
     {"name": "rol_through_carry", "image": [0x62], "initial": {"a": 0x80, "f": 0x01}, "expected": {"a": 0x01, "pc": 0x8001}},
     {"name": "ror_through_carry", "image": [0x63], "initial": {"a": 0x01, "f": 0x01}, "expected": {"a": 0x80, "pc": 0x8001}},
+    {"name": "add_imm", "image": [0x40, 0x22], "initial": {"a": 0x20}, "expected": {"a": 0x42, "pc": 0x8002}},
+    {"name": "add_overflow", "image": [0x40, 0x01], "initial": {"a": 0x7F}, "expected": {"a": 0x80, "pc": 0x8002}},
+    {"name": "sub_imm", "image": [0x48, 0x10], "initial": {"a": 0x30, "f": 0x01}, "expected": {"a": 0x20, "pc": 0x8002}},
+    {"name": "and_imm", "image": [0x50, 0x0F], "initial": {"a": 0xA5}, "expected": {"a": 0x05, "pc": 0x8002}},
+    {"name": "or_imm", "image": [0x54, 0x0F], "initial": {"a": 0xA0}, "expected": {"a": 0xAF, "pc": 0x8002}},
+    {"name": "xor_imm", "image": [0x58, 0xFF], "initial": {"a": 0xAA}, "expected": {"a": 0x55, "pc": 0x8002}},
 ]
