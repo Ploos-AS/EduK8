@@ -74,7 +74,7 @@ def apply_controls(dp: Datapath, signals) -> None:
     if "SP_DEC" in signals:
         dp.sp.load(dp.sp.value - 1)
 
-    bus_loads = set(LOADS) | {"PC_LOAD_LO", "PC_LOAD_HI", "MAR_LOAD_LO", "MAR_LOAD_HI"}
+    bus_loads = set(LOADS) | {"PC_LOAD_LO", "PC_LOAD_HI", "MAR_LOAD_LO", "MAR_LOAD_HI"}\n    # PC_TO_MAR/SP_TO_MAR are direct 16-bit transfers; accompanying MAR_LOAD\n    # strobes do not require an 8-bit DB source.\n    direct_mar = "PC_TO_MAR" in signals or "SP_TO_MAR" in signals\n    if direct_mar:\n        bus_loads -= {"MAR_LOAD_LO", "MAR_LOAD_HI"}
     if signals and any(s in signals for s in bus_loads) and dp.data_bus.value is None:
         # MDR_LOAD may later be sourced by the memory component rather than DB.
         if not (set(signals) & bus_loads == {"MDR_LOAD"} and "MEM_READ" in signals):
@@ -93,7 +93,24 @@ def apply_controls(dp: Datapath, signals) -> None:
         if "MAR_LOAD_HI" in signals:
             dp.mar.load_high(dp.data_bus.value)
 
-    # FLAGS_LATCH updates Z/N from the value visible on DB. For ALU operations\n    # it also latches the ALU carry/overflow result. Other flag bits survive.\n    if "FLAGS_LATCH" in signals and dp.data_bus.value is not None:\n        value = dp.data_bus.value & 0xFF\n        flags = dp.flags.value & ~(0x02 | 0x04)\n        if value == 0:\n            flags |= 0x02\n        if value & 0x80:\n            flags |= 0x04\n        if alu_signals:\n            flags &= ~(0x01 | 0x08)\n            if dp.alu.carry_out:\n                flags |= 0x01\n            if dp.alu.overflow:\n                flags |= 0x08\n        dp.flags.load(flags)\n\n    # Direct architectural flag-latch controls.
+    # FLAGS_LATCH updates Z/N from the value visible on DB. For ALU operations
+    # it also latches the ALU carry/overflow result. Other flag bits survive.
+    if "FLAGS_LATCH" in signals and dp.data_bus.value is not None:
+        value = dp.data_bus.value & 0xFF
+        flags = dp.flags.value & ~(0x02 | 0x04)
+        if value == 0:
+            flags |= 0x02
+        if value & 0x80:
+            flags |= 0x04
+        if alu_signals:
+            flags &= ~(0x01 | 0x08)
+            if dp.alu.carry_out:
+                flags |= 0x01
+            if dp.alu.overflow:
+                flags |= 0x08
+        dp.flags.load(flags)
+
+    # Direct architectural flag-latch controls.
     if "C_SET" in signals:
         dp.flags.load(dp.flags.value | 0x01)
     if "C_CLEAR" in signals:
