@@ -6,9 +6,7 @@
     {
       "step": 0,
       "signals": [
-        "PC_TO_MAR",
-        "MAR_LOAD_LO",
-        "MAR_LOAD_HI"
+        "PC_TO_MAR"
       ]
     },
     {
@@ -51,7 +49,8 @@
           "A_LOAD",
           "PC_INC",
           "FLAGS_LATCH",
-          "INSTR_DONE"
+          "INSTR_DONE",
+          "STEP_RESET"
         ]
       }
     ],
@@ -112,7 +111,7 @@
       {
         "step": 10,
         "signals": [
-            "AGU_ADD_LO",
+          "AGU_ADD_LO",
           "AGUC_LOAD"
         ]
       },
@@ -135,7 +134,8 @@
           "MDR_OUT",
           "A_LOAD",
           "FLAGS_LATCH",
-          "INSTR_DONE"
+          "INSTR_DONE",
+          "STEP_RESET"
         ]
       }
     ],
@@ -196,7 +196,7 @@
       {
         "step": 10,
         "signals": [
-            "AGU_ADD_LO",
+          "AGU_ADD_LO",
           "AGUC_LOAD"
         ]
       },
@@ -219,7 +219,8 @@
           "MDR_OUT",
           "A_LOAD",
           "FLAGS_LATCH",
-          "INSTR_DONE"
+          "INSTR_DONE",
+          "STEP_RESET"
         ]
       }
     ],
@@ -246,7 +247,8 @@
           "X_LOAD",
           "PC_INC",
           "FLAGS_LATCH",
-          "INSTR_DONE"
+          "INSTR_DONE",
+          "STEP_RESET"
         ]
       }
     ],
@@ -273,7 +275,8 @@
           "Y_LOAD",
           "PC_INC",
           "FLAGS_LATCH",
-          "INSTR_DONE"
+          "INSTR_DONE",
+          "STEP_RESET"
         ]
       }
     ],
@@ -302,7 +305,8 @@
           "FLAGS_LATCH",
           "FLAGS_LATCH",
           "PC_INC",
-          "INSTR_DONE"
+          "INSTR_DONE",
+          "STEP_RESET"
         ]
       }
     ],
@@ -326,7 +330,8 @@
         "signals": [
           "MEM_WRITE",
           "SP_DEC",
-          "INSTR_DONE"
+          "INSTR_DONE",
+          "STEP_RESET"
         ]
       }
     ],
@@ -357,7 +362,8 @@
           "MDR_OUT",
           "A_LOAD",
           "FLAGS_LATCH",
-          "INSTR_DONE"
+          "INSTR_DONE",
+          "STEP_RESET"
         ]
       }
     ],
@@ -365,7 +371,8 @@
       {
         "step": 3,
         "signals": [
-          "INSTR_DONE"
+          "INSTR_DONE",
+          "STEP_RESET"
         ]
       }
     ],
