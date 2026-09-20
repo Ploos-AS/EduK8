@@ -278,3 +278,25 @@ def test_direct_store_family_zero_page_and_absolute():
         assert sim.memory.read(address) == value
         assert sim.datapath.pc.value == 0x8000 + 1 + len(operand)
         assert sim.datapath.mar.value == address
+
+
+def test_indexed_store_family_uses_agu_and_zero_page_wrap():
+    cases = [
+        (0x2A, "a", 0xD1, "x", 0x20, bytes([0xF0, 0x12]), 0x1310),
+        (0x2B, "a", 0xD2, "y", 0x0F, bytes([0x30, 0x12]), 0x123F),
+        (0x2C, "a", 0xD3, "x", 0x20, bytes([0xF0]), 0x0010),
+        (0x32, "x", 0xD4, "y", 0x10, bytes([0xF8]), 0x0008),
+        (0x36, "y", 0xD5, "x", 0x05, bytes([0x40]), 0x0045),
+    ]
+    for opcode, source, value, index_reg, index, operand, address in cases:
+        sim = K8Simulator()
+        sim.load_image(0x8000, bytes([opcode]) + operand)
+        getattr(sim.datapath, source).load(value)
+        getattr(sim.datapath, index_reg).load(index)
+        sim.datapath.pc.load(0x8000)
+        sim.release_reset()
+        sim.instruction_step()
+        assert sim.memory.read(address) == value
+        assert sim.datapath.pc.value == 0x8001 + len(operand)
+        assert sim.datapath.mar.value == address
+        assert sim.datapath.aguc == 0
