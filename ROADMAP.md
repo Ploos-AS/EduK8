@@ -41,7 +41,7 @@
 - [x] Model CPU datapath components and buses
 - [x] Apply frozen control signals to the datapath
 - [x] Model clock, reset and microstep/control-store sequencing
-- [ ] Simulate memory decode and memory-mapped I/O
+- [x] Simulate memory decode and memory-mapped I/O
 - [ ] Visualize registers, ALU, buses, flags and active control lines
 - [ ] Support clock-cycle and microstep execution
 - [ ] Support interactive switches, LEDs, keyboard, display and GPIO
