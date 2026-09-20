@@ -88,3 +88,31 @@ def test_alu_flags_latch_carry_and_overflow():
     assert dp.flags.value & 0x04
     assert dp.flags.value & 0x08
     assert not (dp.flags.value & 0x01)
+
+
+def test_agu_x_index_without_page_cross():
+    dp = Datapath()
+    dp.mar.load(0x1230)
+    dp.x.load(0x0F)
+    apply_controls(dp, ("AGU_ADD_LO", "AGUC_LOAD"), agu_index_select=1)
+    assert dp.mar.value == 0x123F
+    assert dp.aguc == 0
+    apply_controls(dp, ("AGU_ADD_HI",), agu_index_select=1)
+    assert dp.mar.value == 0x123F
+
+
+def test_agu_y_index_page_cross_propagates_carry():
+    dp = Datapath()
+    dp.mar.load(0x12F0)
+    dp.y.load(0x30)
+    apply_controls(dp, ("AGU_ADD_LO", "AGUC_LOAD"), agu_index_select=2)
+    assert dp.mar.value == 0x1220
+    assert dp.aguc == 1
+    apply_controls(dp, ("AGU_ADD_HI",), agu_index_select=2)
+    assert dp.mar.value == 0x1320
+
+
+def test_agu_reserved_selector_is_rejected():
+    dp = Datapath()
+    with pytest.raises(ControlError, match="reserved AGU index selector"):
+        apply_controls(dp, ("AGU_ADD_LO",), agu_index_select=3)
