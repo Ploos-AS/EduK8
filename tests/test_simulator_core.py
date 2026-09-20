@@ -322,3 +322,25 @@ def test_alu_zero_page_and_absolute_addressing():
         assert sim.datapath.a.value == expected
         assert sim.datapath.pc.value == 0x8001 + len(operand)
         assert sim.datapath.mar.value == address
+
+
+def test_indexed_add_sub_use_agu_with_page_crossing():
+    cases = [
+        (0x43, "x", 0x20, 0x12F0, 0x1310, 0x20, 0x22, 0x42),
+        (0x44, "y", 0x0F, 0x1230, 0x123F, 0x10, 0x05, 0x15),
+        (0x4B, "x", 0x20, 0x12F0, 0x1310, 0x30, 0x10, 0x1F),
+        (0x4C, "y", 0x0F, 0x1230, 0x123F, 0x20, 0x05, 0x1A),
+    ]
+    for opcode, index_reg, index, base, effective, initial_a, rhs, expected in cases:
+        sim = K8Simulator()
+        sim.load_image(0x8000, bytes([opcode, base & 0xFF, base >> 8]))
+        sim.load_image(effective, bytes([rhs]))
+        sim.datapath.a.load(initial_a)
+        getattr(sim.datapath, index_reg).load(index)
+        sim.datapath.pc.load(0x8000)
+        sim.release_reset()
+        sim.instruction_step()
+        assert sim.datapath.a.value == expected
+        assert sim.datapath.mar.value == effective
+        assert sim.datapath.pc.value == 0x8003
+        assert sim.datapath.aguc == 0
