@@ -30,6 +30,23 @@ def addr(opcode, step, cond):
     if not 0<=opcode<256 or not 0<=step<32 or not 0<=cond<4: raise ValueError("microaddress field out of range")
     return (opcode << 7) | (step << 2) | cond
 
+def source_entries(microcode):
+    """Expand shared fetch + opcode execution into condition-specific rows."""
+    rows=[]
+    for opcode_hex, execution in microcode.get("opcodes",{}).items():
+        opcode=int(opcode_hex,16)
+        seen=set()
+        for entry in microcode.get("fetch",[]) + execution:
+            step=entry["step"]
+            if step in seen: raise ValueError(f"duplicate step {step} for opcode {opcode_hex}")
+            seen.add(step)
+            for cond in range(4):
+                rows.append({"opcode":opcode,"step":step,"condition":cond,"signals":entry.get("signals",[])})
+    return {"entries":rows}
+
+def build_microcode(microcode):
+    return build(source_entries(microcode))
+
 def build(source):
     words=[SAFE]*DEPTH
     seen=set()
