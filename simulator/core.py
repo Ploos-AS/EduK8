@@ -67,7 +67,7 @@ class K8Simulator:
             elif "MEM_WRITE" in signals and self.datapath.microstep == 11:
                 self.datapath.mdr.load(self.datapath.pc.value & 0xFF)
             elif self.datapath.microstep == 13:
-                self.datapath.mdr.load(self.datapath.branch_pc_after)
+                self.datapath.pc.load(self.datapath.tmp.value | (self.datapath.branch_pc_after << 8))
         # Indirect JMP resolves the little-endian target through memory. The
         # pointer address is already assembled in MAR by the control sequence.
         if self.datapath.ir.value == 0x81 and self.datapath.microstep == 12:
