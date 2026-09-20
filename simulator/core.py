@@ -13,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 ISA = json.loads((ROOT / "spec/isa.json").read_text())
 INDEX_SELECT = {}
 ZERO_PAGE_INDEXED = set()
+COMPARE_SOURCE = {0x68: "a", 0x69: "a", 0x6A: "a", 0x6C: "x", 0x6D: "x", 0x6E: "x", 0x70: "y", 0x71: "y", 0x72: "y"}
 for opcode_hex, _mnemonic, mode, _size in ISA["instructions"]:
     opcode = int(opcode_hex, 16)
     INDEX_SELECT[opcode] = 1 if mode.endswith(",X") else (2 if mode.endswith(",Y") else 0)
@@ -56,7 +57,7 @@ class K8Simulator:
             agu_index_select=(INDEX_SELECT.get(self.datapath.ir.value, 0) if any(s.startswith("AGU_") or s.startswith("AGUC_") for s in signals) else 0),
         )
         apply_memory_cycle(self.datapath, self.memory, signals)
-        # Zero-page indexed addressing wraps within page zero. The low-byte AGU
+        # Compare reuses the subtractor but discards the result. The register\n        # source is opcode-decoded, so no extra control-word bit is consumed.\n        if self.datapath.ir.value in COMPARE_SOURCE and "ALU_SUB" in signals and "FLAGS_LATCH" in signals:\n            lhs = getattr(self.datapath, COMPARE_SOURCE[self.datapath.ir.value]).value\n            rhs = self.datapath.tmp.value\n            result = (lhs - rhs) & 0xFF\n            flags = self.datapath.flags.value & ~(0x01 | 0x02 | 0x04)\n            if lhs >= rhs:\n                flags |= 0x01\n            if result == 0:\n                flags |= 0x02\n            if result & 0x80:\n                flags |= 0x04\n            self.datapath.flags.load(flags)\n        # Zero-page indexed addressing wraps within page zero. The low-byte AGU
         # still exposes carry, but page zero deliberately discards it.
         if self.datapath.ir.value in ZERO_PAGE_INDEXED and "AGU_ADD_LO" in signals:
             self.datapath.mar.load_high(0)
