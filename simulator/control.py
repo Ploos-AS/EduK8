@@ -105,7 +105,8 @@ def apply_controls(dp: Datapath, signals, *, agu_index_select: int = 0) -> None:
 
     # FLAGS_LATCH updates Z/N from the value visible on DB. For ALU operations
     # it also latches the ALU carry/overflow result. Other flag bits survive.
-    if "FLAGS_LATCH" in signals and dp.data_bus.value is not None:
+    compare_opcode = dp.ir.value in {0x68, 0x69, 0x6A, 0x6C, 0x6D, 0x6E, 0x70, 0x71, 0x72}
+    if "FLAGS_LATCH" in signals and dp.data_bus.value is not None and not compare_opcode:
         value = dp.data_bus.value & 0xFF
         flags = dp.flags.value & ~(0x02 | 0x04)
         if value == 0:
