@@ -44,4 +44,13 @@ VECTORS = [
     {"name": "add_negative_overflow", "image": [0x40, 0x01], "initial": {"a": 0x7F}, "expected": {"a": 0x80, "f": 0x0C, "pc": 0x8002}},
     {"name": "sub_borrow_negative", "image": [0x48, 0x01], "initial": {"a": 0x00, "f": 0x01}, "expected": {"a": 0xFF, "f": 0x04, "pc": 0x8002}},
     {"name": "sub_zero_no_borrow", "image": [0x48, 0x01], "initial": {"a": 0x01, "f": 0x01}, "expected": {"a": 0x00, "f": 0x03, "pc": 0x8002}},
+    {"name": "beq_taken_forward", "image": [0x88, 0x05], "initial": {"f": 0x02}, "expected": {"pc": 0x8007}},
+    {"name": "beq_not_taken", "image": [0x88, 0x05], "initial": {"f": 0x00}, "expected": {"pc": 0x8002}},
+    {"name": "bne_taken_backward", "image": [0x89, 0xFC], "initial": {"f": 0x00}, "expected": {"pc": 0x7FFE}},
+    {"name": "bcs_taken", "image": [0x8A, 0x03], "initial": {"f": 0x01}, "expected": {"pc": 0x8005}},
+    {"name": "bcc_taken", "image": [0x8B, 0x03], "initial": {"f": 0x00}, "expected": {"pc": 0x8005}},
+    {"name": "bmi_taken", "image": [0x8C, 0x03], "initial": {"f": 0x04}, "expected": {"pc": 0x8005}},
+    {"name": "bpl_taken", "image": [0x8D, 0x03], "initial": {"f": 0x00}, "expected": {"pc": 0x8005}},
+    {"name": "bvs_taken", "image": [0x8E, 0x03], "initial": {"f": 0x08}, "expected": {"pc": 0x8005}},
+    {"name": "bvc_taken", "image": [0x8F, 0x03], "initial": {"f": 0x00}, "expected": {"pc": 0x8005}},
 ]
