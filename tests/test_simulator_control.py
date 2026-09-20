@@ -116,3 +116,24 @@ def test_agu_reserved_selector_is_rejected():
     dp = Datapath()
     with pytest.raises(ControlError, match="reserved AGU index selector"):
         apply_controls(dp, ("AGU_ADD_LO",), agu_index_select=3)
+
+
+@pytest.mark.parametrize(
+    "signal,a,carry,result,carry_out",
+    [
+        ("ALU_NOT", 0x55, 0, 0xAA, 0),
+        ("ALU_SHL", 0x81, 0, 0x02, 1),
+        ("ALU_SHR", 0x81, 0, 0x40, 1),
+        ("ALU_ROL", 0x80, 1, 0x01, 1),
+        ("ALU_ROR", 0x01, 1, 0x80, 1),
+    ],
+)
+def test_complete_unary_shift_alu_controls(signal, a, carry, result, carry_out):
+    dp = Datapath()
+    dp.a.load(a)
+    dp.flags.load(carry)
+    apply_controls(dp, (signal, "ALU_OUT_ENABLE", "A_LOAD", "FLAGS_LATCH"))
+    assert dp.a.value == result
+    assert dp.alu.carry_out == carry_out
+    if signal != "ALU_NOT":
+        assert (dp.flags.value & 0x01) == carry_out
