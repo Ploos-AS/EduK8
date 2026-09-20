@@ -300,3 +300,25 @@ def test_indexed_store_family_uses_agu_and_zero_page_wrap():
         assert sim.datapath.pc.value == 0x8001 + len(operand)
         assert sim.datapath.mar.value == address
         assert sim.datapath.aguc == 0
+
+
+def test_alu_zero_page_and_absolute_addressing():
+    cases = [
+        (0x41, bytes([0x42]), 0x0042, 0x20, 0x22, 0x42),
+        (0x49, bytes([0x43]), 0x0043, 0x30, 0x10, 0x20),
+        (0x51, bytes([0x44]), 0x0044, 0xA5, 0x0F, 0x05),
+        (0x56, bytes([0x34, 0x12]), 0x1234, 0xA0, 0x0F, 0xAF),
+        (0x5A, bytes([0x35, 0x12]), 0x1235, 0xAA, 0xFF, 0x55),
+        (0x42, bytes([0x36, 0x12]), 0x1236, 0x7F, 0x01, 0x80),
+    ]
+    for opcode, operand, address, initial_a, rhs, expected in cases:
+        sim = K8Simulator()
+        sim.load_image(0x8000, bytes([opcode]) + operand)
+        sim.load_image(address, bytes([rhs]))
+        sim.datapath.a.load(initial_a)
+        sim.datapath.pc.load(0x8000)
+        sim.release_reset()
+        sim.instruction_step()
+        assert sim.datapath.a.value == expected
+        assert sim.datapath.pc.value == 0x8001 + len(operand)
+        assert sim.datapath.mar.value == address
