@@ -43,7 +43,7 @@
 - [x] Model clock, reset and microstep/control-store sequencing
 - [x] Simulate memory decode and memory-mapped I/O
 - [ ] Visualize registers, ALU, buses, flags and active control lines
-- [ ] Support clock-cycle and microstep execution
+- [x] Support clock-cycle and microstep execution
 - [ ] Support interactive switches, LEDs, keyboard, display and GPIO
 - [ ] Load K8 binaries and ROM images
 - [ ] Cross-check simulator state against reference emulator
