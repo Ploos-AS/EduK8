@@ -2765,8 +2765,6 @@
       {
         "step": 13,
         "signals": [
-          "MDR_OUT",
-          "PC_LOAD_HI",
           "INSTR_DONE",
           "STEP_RESET"
         ]
