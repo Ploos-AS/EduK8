@@ -56,6 +56,13 @@ class K8Simulator:
             signals,
             agu_index_select=(INDEX_SELECT.get(self.datapath.ir.value, 0) if any(s.startswith("AGU_") or s.startswith("AGUC_") for s in signals) else 0),
         )
+        # Indirect JMP resolves the little-endian target through memory. The
+        # pointer address is already assembled in MAR by the control sequence.
+        if self.datapath.ir.value == 0x81 and self.datapath.microstep == 12:
+            pointer = self.datapath.mar.value
+            low = self.datapath.tmp.value
+            high = self.memory.read((pointer + 1) & 0xFFFF)
+            self.datapath.pc.load(low | (high << 8))
         # Memory INC/DEC is a decoded read-modify-write datapath operation.
         # The fetched byte is held in TMP; the modified value is driven through MDR
         # immediately before the memory write, preserving A/X/Y and C/V/I.
