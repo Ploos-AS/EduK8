@@ -6,7 +6,7 @@ def test_real_fetch_t0_t1_t2_through_integrated_core():
     sim.datapath.pc.load(0x8000)
     sim.load_image(0x8000, bytes([0x10]), force=True)
 
-    assert sim.microstep() == ("PC_TO_MAR", "MAR_LOAD_LO", "MAR_LOAD_HI")
+    assert sim.microstep() == ("PC_TO_MAR",)
     assert sim.datapath.mar.value == 0x8000
     assert sim.datapath.microstep == 1
 
@@ -48,3 +48,26 @@ def test_snapshot_exposes_integrated_machine_state():
     assert snap["microstep"] == 0
     assert snap["halted"] is False
     assert snap["condition"] == 0
+
+
+def test_complete_nop_instruction_returns_to_fetch():
+    sim = K8Simulator()
+    sim.datapath.pc.load(0x8000)
+    sim.load_image(0x8000, bytes([0x00]), force=True)
+    used = sim.instruction_step()
+    assert used == 4
+    assert sim.datapath.ir.value == 0x00
+    assert sim.datapath.pc.value == 0x8001
+    assert sim.datapath.microstep == 0
+    assert sim.sequencer.halted is False
+
+
+def test_complete_lda_immediate_instruction():
+    sim = K8Simulator()
+    sim.datapath.pc.load(0x8000)
+    sim.load_image(0x8000, bytes([0x10, 0x42]), force=True)
+    used = sim.instruction_step()
+    assert used == 6
+    assert sim.datapath.a.value == 0x42
+    assert sim.datapath.pc.value == 0x8002
+    assert sim.datapath.microstep == 0
