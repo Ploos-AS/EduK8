@@ -367,6 +367,54 @@
         ]
       }
     ],
+    "94": [
+      {
+        "step": 3,
+        "signals": [
+          "A_OUT",
+          "X_LOAD",
+          "FLAGS_LATCH",
+          "INSTR_DONE",
+          "STEP_RESET"
+        ]
+      }
+    ],
+    "95": [
+      {
+        "step": 3,
+        "signals": [
+          "A_OUT",
+          "Y_LOAD",
+          "FLAGS_LATCH",
+          "INSTR_DONE",
+          "STEP_RESET"
+        ]
+      }
+    ],
+    "96": [
+      {
+        "step": 3,
+        "signals": [
+          "X_OUT",
+          "A_LOAD",
+          "FLAGS_LATCH",
+          "INSTR_DONE",
+          "STEP_RESET"
+        ]
+      }
+    ],
+    "97": [
+      {
+        "step": 3,
+        "signals": [
+          "Y_OUT",
+          "A_LOAD",
+          "FLAGS_LATCH",
+          "INSTR_DONE",
+          "STEP_RESET"
+        ]
+      }
+    ],
     "00": [
       {
         "step": 3,
