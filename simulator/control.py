@@ -125,4 +125,4 @@ def apply_controls(dp: Datapath, signals) -> None:
     if "I_CLEAR" in signals:
         dp.flags.load(dp.flags.value & ~0x10)
     if "V_CLEAR" in signals:
-        dp.flags.load(dp.flags.value & ~0x40)
+        dp.flags.load(dp.flags.value & ~0x08)
