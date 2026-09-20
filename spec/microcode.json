@@ -2459,7 +2459,6 @@
       {
         "step": 7,
         "signals": [
-          "A_OUT",
           "ALU_XOR",
           "ALU_OUT_ENABLE",
           "MAR_LOAD_HI"
@@ -4097,7 +4096,6 @@
       {
         "step": 7,
         "signals": [
-          "A_OUT",
           "ALU_XOR",
           "ALU_OUT_ENABLE",
           "MAR_LOAD_HI"
