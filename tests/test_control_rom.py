@@ -6,7 +6,7 @@ def word(image, opcode, step, condition=0):
     return image[p:p+WORD_BYTES]
 
 def test_image_size():
-    assert len(build_image()) == IMAGE_SIZE == 98304
+    assert len(build_image()) == IMAGE_SIZE == 196608
 
 def test_nop_fetch_and_finish():
     image=build_image()
