@@ -298,8 +298,7 @@
       {
         "step": 3,
         "signals": [
-          "SP_OUT",
-          "MAR_LOAD_LO"
+          "SP_TO_MAR"
         ]
       },
       {
@@ -329,8 +328,7 @@
       {
         "step": 4,
         "signals": [
-          "SP_OUT",
-          "MAR_LOAD_LO"
+          "SP_TO_MAR"
         ]
       },
       {
