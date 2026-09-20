@@ -2427,71 +2427,6 @@
         ]
       }
     ],
-    "73": [
-      {
-        "step": 3,
-        "signals": [
-          "ALU_ADD",
-          "ALU_OUT_ENABLE",
-          "A_LOAD",
-          "FLAGS_LATCH",
-          "INSTR_DONE",
-          "STEP_RESET"
-        ]
-      }
-    ],
-    "74": [
-      {
-        "step": 3,
-        "signals": [
-          "ALU_SUB",
-          "ALU_OUT_ENABLE",
-          "A_LOAD",
-          "FLAGS_LATCH",
-          "INSTR_DONE",
-          "STEP_RESET"
-        ]
-      }
-    ],
-    "75": [
-      {
-        "step": 3,
-        "signals": [
-          "ALU_ADD",
-          "ALU_OUT_ENABLE",
-          "X_LOAD",
-          "FLAGS_LATCH",
-          "INSTR_DONE",
-          "STEP_RESET"
-        ]
-      }
-    ],
-    "76": [
-      {
-        "step": 3,
-        "signals": [
-          "ALU_SUB",
-          "ALU_OUT_ENABLE",
-          "X_LOAD",
-          "FLAGS_LATCH",
-          "INSTR_DONE",
-          "STEP_RESET"
-        ]
-      }
-    ],
-    "77": [
-      {
-        "step": 3,
-        "signals": [
-          "ALU_ADD",
-          "ALU_OUT_ENABLE",
-          "Y_LOAD",
-          "FLAGS_LATCH",
-          "INSTR_DONE",
-          "STEP_RESET"
-        ]
-      }
-    ],
     "78": [
       {
         "step": 3,
@@ -3968,6 +3903,114 @@
         "step": 12,
         "signals": [
           "ALU_SUB",
+          "FLAGS_LATCH",
+          "INSTR_DONE",
+          "STEP_RESET"
+        ]
+      }
+    ],
+    "7C": [
+      {
+        "step": 3,
+        "signals": [
+          "X_OUT",
+          "TMP_LOAD"
+        ]
+      },
+      {
+        "step": 4,
+        "signals": [
+          "A_OUT",
+          "MDR_LOAD"
+        ]
+      },
+      {
+        "step": 5,
+        "signals": [
+          "ALU_ADD",
+          "ALU_OUT_ENABLE",
+          "X_LOAD",
+          "FLAGS_LATCH",
+          "INSTR_DONE",
+          "STEP_RESET"
+        ]
+      }
+    ],
+    "7D": [
+      {
+        "step": 3,
+        "signals": [
+          "X_OUT",
+          "TMP_LOAD"
+        ]
+      },
+      {
+        "step": 4,
+        "signals": [
+          "A_OUT",
+          "MDR_LOAD"
+        ]
+      },
+      {
+        "step": 5,
+        "signals": [
+          "ALU_SUB",
+          "ALU_OUT_ENABLE",
+          "X_LOAD",
+          "FLAGS_LATCH",
+          "INSTR_DONE",
+          "STEP_RESET"
+        ]
+      }
+    ],
+    "7E": [
+      {
+        "step": 3,
+        "signals": [
+          "Y_OUT",
+          "TMP_LOAD"
+        ]
+      },
+      {
+        "step": 4,
+        "signals": [
+          "A_OUT",
+          "MDR_LOAD"
+        ]
+      },
+      {
+        "step": 5,
+        "signals": [
+          "ALU_ADD",
+          "ALU_OUT_ENABLE",
+          "Y_LOAD",
+          "FLAGS_LATCH",
+          "INSTR_DONE",
+          "STEP_RESET"
+        ]
+      }
+    ],
+    "7F": [
+      {
+        "step": 3,
+        "signals": [
+          "Y_OUT",
+          "TMP_LOAD"
+        ]
+      },
+      {
+        "step": 4,
+        "signals": [
+          "A_OUT",
+          "MDR_LOAD"
+        ]
+      },
+      {
+        "step": 5,
+        "signals": [
+          "ALU_SUB",
+          "ALU_OUT_ENABLE",
+          "Y_LOAD",
           "FLAGS_LATCH",
           "INSTR_DONE",
           "STEP_RESET"
