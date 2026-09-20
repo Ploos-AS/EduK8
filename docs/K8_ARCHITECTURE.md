@@ -104,6 +104,8 @@ CMP, CPX, CPY
 
 Compare is defined as an ALU subtraction whose result is discarded. The selected register (A, X, or Y) is the left operand and the fetched operand is the right operand. Compare updates C/Z/N exactly as unsigned subtraction (`C=1` when register >= operand), preserves V/I and the compared register, and does not write the subtraction result back. The compare register source is decoded from the opcode, analogous to the encoded AGU index selector; it is not a new 48-bit control signal.
 
+INC/DEC is defined as a decoded read-modify-write datapath operation. Memory INC/DEC fetches the addressed byte, applies +1/-1 modulo 256, updates Z/N only, and writes the result back to the same address; C/V/I are preserved. INX/DEX/INY/DEY use the same increment/decrement function on the selected register. The operation and register selection are decoded from the opcode and do not consume additional bits in the frozen 48-bit control word.
+
 ### Branch/control flow
 JMP, JSR, RTS, BEQ, BNE, BCS, BCC, BMI, BPL, BVS, BVC
 
