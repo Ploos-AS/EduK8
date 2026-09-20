@@ -294,6 +294,58 @@
         ]
       }
     ],
+    "60": [
+      {
+        "step": 3,
+        "signals": [
+          "ALU_SHL",
+          "ALU_OUT_ENABLE",
+          "A_LOAD",
+          "FLAGS_LATCH",
+          "INSTR_DONE",
+          "STEP_RESET"
+        ]
+      }
+    ],
+    "61": [
+      {
+        "step": 3,
+        "signals": [
+          "ALU_SHR",
+          "ALU_OUT_ENABLE",
+          "A_LOAD",
+          "FLAGS_LATCH",
+          "INSTR_DONE",
+          "STEP_RESET"
+        ]
+      }
+    ],
+    "62": [
+      {
+        "step": 3,
+        "signals": [
+          "ALU_ROL",
+          "ALU_OUT_ENABLE",
+          "A_LOAD",
+          "FLAGS_LATCH",
+          "INSTR_DONE",
+          "STEP_RESET"
+        ]
+      }
+    ],
+    "63": [
+      {
+        "step": 3,
+        "signals": [
+          "ALU_ROR",
+          "ALU_OUT_ENABLE",
+          "A_LOAD",
+          "FLAGS_LATCH",
+          "INSTR_DONE",
+          "STEP_RESET"
+        ]
+      }
+    ],
     "90": [
       {
         "step": 3,
@@ -411,6 +463,19 @@
         "step": 3,
         "signals": [
           "HALT"
+        ]
+      }
+    ],
+    "5C": [
+      {
+        "step": 3,
+        "signals": [
+          "ALU_NOT",
+          "ALU_OUT_ENABLE",
+          "A_LOAD",
+          "FLAGS_LATCH",
+          "INSTR_DONE",
+          "STEP_RESET"
         ]
       }
     ]
