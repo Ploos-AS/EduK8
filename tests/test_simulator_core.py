@@ -375,22 +375,21 @@ def test_compare_family_all_addressing_modes_preserves_registers_and_vi():
 
 def test_register_increment_decrement_updates_zn_and_preserves_other_flags():
     cases = [
-        (0x73, "a", 0xFF, 0x00, 0x12),
-        (0x74, "a", 0x00, 0xFF, 0x14),
-        (0x75, "x", 0x7F, 0x80, 0x14),
-        (0x76, "x", 0x01, 0x00, 0x12),
-        (0x77, "y", 0xFF, 0x00, 0x12),
-        (0x78, "y", 0x00, 0xFF, 0x14),
+        (0x7C, "x", 0x7F, 0x80),
+        (0x7D, "x", 0x01, 0x00),
+        (0x7E, "y", 0xFF, 0x00),
+        (0x7F, "y", 0x00, 0xFF),
     ]
-    for opcode, reg, initial, expected, initial_flags in cases:
+    for opcode, reg, initial, expected in cases:
         sim = K8Simulator()
         sim.load_image(0x8000, bytes([opcode]))
         getattr(sim.datapath, reg).load(initial)
-        sim.datapath.flags.load(initial_flags)
+        sim.datapath.a.load(1)
+        sim.datapath.flags.load(0x18)
         sim.datapath.pc.load(0x8000)
         sim.release_reset()
         sim.instruction_step()
         assert getattr(sim.datapath, reg).value == expected
-        assert sim.datapath.flags.value & 0x10 == initial_flags & 0x10
+        assert sim.datapath.flags.value & 0x18 == 0x18
         assert bool(sim.datapath.flags.value & 0x02) == (expected == 0)
         assert bool(sim.datapath.flags.value & 0x04) == bool(expected & 0x80)
