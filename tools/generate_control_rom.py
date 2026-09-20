@@ -23,4 +23,11 @@ def address(opcode, step, condition=0):
     logical = (opcode << 7) | (step << 2) | condition
     return logical * WORD_BYTES
 
-def build_image():\n    words = build_microcode(MICROCODE)\n    image = bytearray(IMAGE_SIZE)\n    for logical, value in enumerate(words):\n        pos = logical * WORD_BYTES\n        image[pos:pos+WORD_BYTES] = bytes_le(value)\n    return image\n
+def build_image():
+    words = build_microcode(MICROCODE)
+    image = bytearray(IMAGE_SIZE)
+    for logical, value in enumerate(words):
+        pos = logical * WORD_BYTES
+        image[pos:pos+WORD_BYTES] = bytes_le(value)
+    return image
+
