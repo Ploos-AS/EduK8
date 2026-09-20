@@ -393,3 +393,28 @@ def test_register_increment_decrement_updates_zn_and_preserves_other_flags():
         assert sim.datapath.flags.value & 0x18 == 0x18
         assert bool(sim.datapath.flags.value & 0x02) == (expected == 0)
         assert bool(sim.datapath.flags.value & 0x04) == bool(expected & 0x80)
+
+
+def test_memory_inc_dec_zero_page_and_absolute_read_modify_write():
+    cases = [
+        (0x78, bytes([0x42]), 0x0042, 0xFF, 0x00),
+        (0x79, bytes([0x34, 0x12]), 0x1234, 0x7F, 0x80),
+        (0x7A, bytes([0x43]), 0x0043, 0x00, 0xFF),
+        (0x7B, bytes([0x35, 0x12]), 0x1235, 0x01, 0x00),
+    ]
+    for opcode, operand, address, initial, expected in cases:
+        sim = K8Simulator()
+        sim.load_image(0x8000, bytes([opcode]) + operand)
+        sim.load_image(address, bytes([initial]))
+        sim.datapath.a.load(0x55)
+        sim.datapath.x.load(0x66)
+        sim.datapath.y.load(0x77)
+        sim.datapath.flags.load(0x19)
+        sim.datapath.pc.load(0x8000)
+        sim.release_reset()
+        sim.instruction_step()
+        assert sim.memory.read(address) == expected
+        assert (sim.datapath.a.value, sim.datapath.x.value, sim.datapath.y.value) == (0x55, 0x66, 0x77)
+        assert sim.datapath.flags.value & 0x19 == 0x19
+        assert bool(sim.datapath.flags.value & 0x02) == (expected == 0)
+        assert bool(sim.datapath.flags.value & 0x04) == bool(expected & 0x80)
