@@ -889,7 +889,7 @@
       {
         "step": 6,
         "signals": [
-          "X_OUT",
+          "A_OUT",
           "TMP_LOAD"
         ]
       },
@@ -1008,7 +1008,7 @@
       {
         "step": 6,
         "signals": [
-          "Y_OUT",
+          "A_OUT",
           "TMP_LOAD"
         ]
       },
