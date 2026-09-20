@@ -28,9 +28,16 @@ class ControlStore:
         opcodes = {}
         for opcode_text, rows in source.get("opcodes", {}).items():
             opcode = int(opcode_text, 16)
-            opcodes[opcode] = {
-                row["step"]: tuple(row.get("signals", ())) for row in rows
-            }
+            table = {}
+            for row in rows:
+                step = row["step"]
+                cond = row.get("condition")
+                if cond is None:
+                    for value in range(4):
+                        table[(step, value)] = tuple(row.get("signals", ()))
+                else:
+                    table[(step, cond)] = tuple(row.get("signals", ()))
+            opcodes[opcode] = table
         return cls(fetch=fetch, opcodes=opcodes)
 
     def signals(self, opcode: int, step: int, condition: int = 0) -> tuple[str, ...]:
@@ -44,7 +51,7 @@ class ControlStore:
         # the frozen control-store address and is retained here for expansion.
         if step in self.fetch:
             return self.fetch[step]
-        return self.opcodes.get(opcode, {}).get(step, ())
+        return self.opcodes.get(opcode, {}).get((step, condition), ())
 
 
 @dataclass
