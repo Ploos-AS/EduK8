@@ -57,7 +57,21 @@ class K8Simulator:
             agu_index_select=(INDEX_SELECT.get(self.datapath.ir.value, 0) if any(s.startswith("AGU_") or s.startswith("AGUC_") for s in signals) else 0),
         )
         apply_memory_cycle(self.datapath, self.memory, signals)
-        # Compare reuses the subtractor but discards the result. The register\n        # source is opcode-decoded, so no extra control-word bit is consumed.\n        if self.datapath.ir.value in COMPARE_SOURCE and "ALU_SUB" in signals and "FLAGS_LATCH" in signals:\n            lhs = getattr(self.datapath, COMPARE_SOURCE[self.datapath.ir.value]).value\n            rhs = self.datapath.tmp.value\n            result = (lhs - rhs) & 0xFF\n            flags = self.datapath.flags.value & ~(0x01 | 0x02 | 0x04)\n            if lhs >= rhs:\n                flags |= 0x01\n            if result == 0:\n                flags |= 0x02\n            if result & 0x80:\n                flags |= 0x04\n            self.datapath.flags.load(flags)\n        # Zero-page indexed addressing wraps within page zero. The low-byte AGU
+        # Compare reuses the subtractor but discards the result.
+        # The register source is opcode-decoded, so no extra control-word bit is consumed.
+        if self.datapath.ir.value in COMPARE_SOURCE and "ALU_SUB" in signals and "FLAGS_LATCH" in signals:
+            lhs = getattr(self.datapath, COMPARE_SOURCE[self.datapath.ir.value]).value
+            rhs = self.datapath.tmp.value
+            result = (lhs - rhs) & 0xFF
+            flags = self.datapath.flags.value & ~(0x01 | 0x02 | 0x04)
+            if lhs >= rhs:
+                flags |= 0x01
+            if result == 0:
+                flags |= 0x02
+            if result & 0x80:
+                flags |= 0x04
+            self.datapath.flags.load(flags)
+        # Zero-page indexed addressing wraps within page zero. The low-byte AGU
         # still exposes carry, but page zero deliberately discards it.
         if self.datapath.ir.value in ZERO_PAGE_INDEXED and "AGU_ADD_LO" in signals:
             self.datapath.mar.load_high(0)
