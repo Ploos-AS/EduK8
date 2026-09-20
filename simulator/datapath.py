@@ -91,11 +91,30 @@ class ALU:
             raw = a | b
         elif operation == "XOR":
             raw = a ^ b
+        elif operation == "NOT":
+            raw = ~a
+        elif operation == "SHL":
+            raw = a << 1
+        elif operation == "SHR":
+            raw = a >> 1
+        elif operation == "ROL":
+            raw = (a << 1) | (carry_in & 1)
+        elif operation == "ROR":
+            raw = (a >> 1) | ((carry_in & 1) << 7)
         else:
             raise ValueError(f"unsupported ALU operation: {operation}")
 
         self.result = u8(raw)
-        self.carry_out = int(raw > 0xFF) if operation == "ADD" else int(raw >= 0)
+        if operation == "ADD":
+            self.carry_out = int(raw > 0xFF)
+        elif operation == "SUB":
+            self.carry_out = int(raw >= 0)
+        elif operation in {"SHL", "ROL"}:
+            self.carry_out = int(bool(a & 0x80))
+        elif operation in {"SHR", "ROR"}:
+            self.carry_out = int(bool(a & 0x01))
+        else:
+            self.carry_out = 0
         if operation in {"ADD", "SUB"}:
             b_eff = b if operation == "ADD" else u8(~b)
             self.overflow = int((~(a ^ b_eff) & (a ^ self.result) & 0x80) != 0)
