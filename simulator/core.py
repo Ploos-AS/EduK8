@@ -57,12 +57,17 @@ class K8Simulator:
             agu_index_select=(INDEX_SELECT.get(self.datapath.ir.value, 0) if any(s.startswith("AGU_") or s.startswith("AGUC_") for s in signals) else 0),
         )
         # JSR stack writes use the already advanced PC as the return address.
-        # High byte is written first, then low byte, matching the frozen stack ABI.
-        if self.datapath.ir.value == 0x82 and "MEM_WRITE" in signals:
-            if self.datapath.microstep == 9:
+        # Preserve the fetched target high byte before MDR is reused for stack data.
+        if self.datapath.ir.value == 0x82:
+            if self.datapath.microstep == 8:
+                self.datapath.tmp.load(self.datapath.tmp.value)
+                self.datapath.branch_pc_after = self.datapath.mdr.value
+            elif "MEM_WRITE" in signals and self.datapath.microstep == 9:
                 self.datapath.mdr.load((self.datapath.pc.value >> 8) & 0xFF)
-            elif self.datapath.microstep == 11:
+            elif "MEM_WRITE" in signals and self.datapath.microstep == 11:
                 self.datapath.mdr.load(self.datapath.pc.value & 0xFF)
+            elif self.datapath.microstep == 13:
+                self.datapath.mdr.load(self.datapath.branch_pc_after)
         # Indirect JMP resolves the little-endian target through memory. The
         # pointer address is already assembled in MAR by the control sequence.
         if self.datapath.ir.value == 0x81 and self.datapath.microstep == 12:
