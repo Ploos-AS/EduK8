@@ -12,8 +12,12 @@ from simulator.sequencer import ControlStore, Sequencer
 ROOT = Path(__file__).resolve().parents[1]
 ISA = json.loads((ROOT / "spec/isa.json").read_text())
 INDEX_SELECT = {}
+ZERO_PAGE_INDEXED = set()
 for opcode_hex, _mnemonic, mode, _size in ISA["instructions"]:
-    INDEX_SELECT[int(opcode_hex, 16)] = 1 if mode.endswith(",X") else (2 if mode.endswith(",Y") else 0)
+    opcode = int(opcode_hex, 16)
+    INDEX_SELECT[opcode] = 1 if mode.endswith(",X") else (2 if mode.endswith(",Y") else 0)
+    if mode in ("zp,X", "zp,Y"):
+        ZERO_PAGE_INDEXED.add(opcode)
 
 
 @dataclass
@@ -52,6 +56,11 @@ class K8Simulator:
             agu_index_select=(INDEX_SELECT.get(self.datapath.ir.value, 0) if any(s.startswith("AGU_") or s.startswith("AGUC_") for s in signals) else 0),
         )
         apply_memory_cycle(self.datapath, self.memory, signals)
+        # Zero-page indexed addressing wraps within page zero. The low-byte AGU
+        # still exposes carry, but page zero deliberately discards it.
+        if self.datapath.ir.value in ZERO_PAGE_INDEXED and "AGU_ADD_LO" in signals:
+            self.datapath.mar.load_high(0)
+            self.datapath.aguc = 0
         # Relative branch address generation is selected by the frozen branch
         # condition address, not by a hidden instruction-level shortcut.
         if 0x88 <= self.datapath.ir.value <= 0x8F and self.datapath.microstep == 5:
