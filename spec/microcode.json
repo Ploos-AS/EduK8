@@ -284,9 +284,151 @@
         "step": 5,
         "signals": [
           "MDR_OUT",
+          "TMP_LOAD"
+        ]
+      },
+      {
+        "step": 6,
+        "signals": [
           "ALU_ADD",
+          "ALU_OUT_ENABLE",
           "A_LOAD",
           "FLAGS_LATCH",
+          "PC_INC",
+          "INSTR_DONE",
+          "STEP_RESET"
+        ]
+      }
+    ],
+    "48": [
+      {
+        "step": 3,
+        "signals": [
+          "PC_TO_MAR"
+        ]
+      },
+      {
+        "step": 4,
+        "signals": [
+          "MEM_READ",
+          "MDR_LOAD"
+        ]
+      },
+      {
+        "step": 5,
+        "signals": [
+          "MDR_OUT",
+          "TMP_LOAD"
+        ]
+      },
+      {
+        "step": 6,
+        "signals": [
+          "ALU_SUB",
+          "ALU_OUT_ENABLE",
+          "A_LOAD",
+          "FLAGS_LATCH",
+          "PC_INC",
+          "INSTR_DONE",
+          "STEP_RESET"
+        ]
+      }
+    ],
+    "50": [
+      {
+        "step": 3,
+        "signals": [
+          "PC_TO_MAR"
+        ]
+      },
+      {
+        "step": 4,
+        "signals": [
+          "MEM_READ",
+          "MDR_LOAD"
+        ]
+      },
+      {
+        "step": 5,
+        "signals": [
+          "MDR_OUT",
+          "TMP_LOAD"
+        ]
+      },
+      {
+        "step": 6,
+        "signals": [
+          "ALU_AND",
+          "ALU_OUT_ENABLE",
+          "A_LOAD",
+          "FLAGS_LATCH",
+          "PC_INC",
+          "INSTR_DONE",
+          "STEP_RESET"
+        ]
+      }
+    ],
+    "54": [
+      {
+        "step": 3,
+        "signals": [
+          "PC_TO_MAR"
+        ]
+      },
+      {
+        "step": 4,
+        "signals": [
+          "MEM_READ",
+          "MDR_LOAD"
+        ]
+      },
+      {
+        "step": 5,
+        "signals": [
+          "MDR_OUT",
+          "TMP_LOAD"
+        ]
+      },
+      {
+        "step": 6,
+        "signals": [
+          "ALU_OR",
+          "ALU_OUT_ENABLE",
+          "A_LOAD",
+          "FLAGS_LATCH",
+          "PC_INC",
+          "INSTR_DONE",
+          "STEP_RESET"
+        ]
+      }
+    ],
+    "58": [
+      {
+        "step": 3,
+        "signals": [
+          "PC_TO_MAR"
+        ]
+      },
+      {
+        "step": 4,
+        "signals": [
+          "MEM_READ",
+          "MDR_LOAD"
+        ]
+      },
+      {
+        "step": 5,
+        "signals": [
+          "MDR_OUT",
+          "TMP_LOAD"
+        ]
+      },
+      {
+        "step": 6,
+        "signals": [
+          "ALU_XOR",
+          "ALU_OUT_ENABLE",
+          "A_LOAD",
           "FLAGS_LATCH",
           "PC_INC",
           "INSTR_DONE",
