@@ -110,8 +110,9 @@ def test_complete_lda_absolute_x_with_page_cross():
     assert sim.datapath.a.value == 0xA5
     assert sim.datapath.pc.value == 0x8003
     assert sim.datapath.mar.value == 0x1310
-    assert sim.datapath.agu_index_select == 1
-    assert sim.datapath.aguc == 1
+    assert sim.datapath.agu_index_select == 0
+    assert sim.datapath.agu_index_value == 0
+    assert sim.datapath.aguc == 0
     assert sim.datapath.microstep == 0
 
 
