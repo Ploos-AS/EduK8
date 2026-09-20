@@ -256,3 +256,25 @@ def test_zero_page_indexed_loads_wrap_within_page_zero():
         assert sim.datapath.pc.value == 0x8002
         assert sim.datapath.mar.value == effective
         assert sim.datapath.aguc == 0
+
+
+def test_direct_store_family_zero_page_and_absolute():
+    cases = [
+        (0x28, "a", 0x42, 0x0042, 0xA1),
+        (0x30, "x", 0x43, 0x0043, 0xB2),
+        (0x34, "y", 0x44, 0x0044, 0xC3),
+        (0x29, "a", 0x34, 0x1234, 0xD4),
+        (0x31, "x", 0x35, 0x1235, 0xE5),
+        (0x35, "y", 0x36, 0x1236, 0xF6),
+    ]
+    for opcode, reg, low, address, value in cases:
+        sim = K8Simulator()
+        operand = bytes([low]) if address < 0x100 else bytes([low, address >> 8])
+        sim.load_image(0x8000, bytes([opcode]) + operand)
+        getattr(sim.datapath, reg).load(value)
+        sim.datapath.pc.load(0x8000)
+        sim.release_reset()
+        sim.instruction_step()
+        assert sim.memory.read(address) == value
+        assert sim.datapath.pc.value == 0x8000 + 1 + len(operand)
+        assert sim.datapath.mar.value == address
