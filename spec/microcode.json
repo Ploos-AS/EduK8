@@ -77,18 +77,27 @@
       {
         "step": 6,
         "signals": [
-          "MAR_LOAD_HI"
+          "A_OUT",
+          "TMP_LOAD"
         ]
       },
       {
         "step": 7,
+        "signals": [
+          "ALU_XOR",
+          "ALU_OUT_ENABLE",
+          "MAR_LOAD_HI"
+        ]
+      },
+      {
+        "step": 8,
         "signals": [
           "MEM_READ",
           "MDR_LOAD"
         ]
       },
       {
-        "step": 8,
+        "step": 9,
         "signals": [
           "MDR_OUT",
           "A_LOAD",
@@ -379,18 +388,27 @@
       {
         "step": 6,
         "signals": [
-          "MAR_LOAD_HI"
+          "A_OUT",
+          "TMP_LOAD"
         ]
       },
       {
         "step": 7,
+        "signals": [
+          "ALU_XOR",
+          "ALU_OUT_ENABLE",
+          "MAR_LOAD_HI"
+        ]
+      },
+      {
+        "step": 8,
         "signals": [
           "MEM_READ",
           "MDR_LOAD"
         ]
       },
       {
-        "step": 8,
+        "step": 9,
         "signals": [
           "MDR_OUT",
           "X_LOAD",
@@ -451,18 +469,27 @@
       {
         "step": 6,
         "signals": [
-          "MAR_LOAD_HI"
+          "A_OUT",
+          "TMP_LOAD"
         ]
       },
       {
         "step": 7,
+        "signals": [
+          "ALU_XOR",
+          "ALU_OUT_ENABLE",
+          "MAR_LOAD_HI"
+        ]
+      },
+      {
+        "step": 8,
         "signals": [
           "MEM_READ",
           "MDR_LOAD"
         ]
       },
       {
-        "step": 8,
+        "step": 9,
         "signals": [
           "MDR_OUT",
           "Y_LOAD",
