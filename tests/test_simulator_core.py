@@ -156,3 +156,42 @@ def test_unary_shift_instructions_end_to_end(opcode, a, carry, result, expected_
     assert sim.datapath.microstep == 0
     if opcode != 0x5C:
         assert (sim.datapath.flags.value & 0x01) == expected_carry
+
+
+def _run_branch(opcode, offset, flags, start=0x8000):
+    sim = K8Simulator()
+    sim.load_image(start, bytes([opcode, offset]))
+    sim.datapath.pc.load(start)
+    sim.datapath.flags.load(flags)
+    sim.release_reset()
+    steps = sim.instruction_step()
+    return sim, steps
+
+
+def test_relative_branch_taken_positive_and_observable():
+    sim, steps = _run_branch(0x88, 0x05, 0x02)
+    assert sim.datapath.pc.value == 0x8007
+    assert sim.datapath.branch_taken is True
+    assert sim.datapath.branch_displacement == 5
+    assert sim.datapath.branch_pc_before == 0x8002
+    assert sim.datapath.branch_pc_after == 0x8007
+    assert steps == 6
+
+
+def test_relative_branch_not_taken():
+    sim, _ = _run_branch(0x88, 0x05, 0x00)
+    assert sim.datapath.pc.value == 0x8002
+    assert sim.datapath.branch_taken is False
+
+
+def test_relative_branch_taken_negative():
+    sim, _ = _run_branch(0x89, 0xFC, 0x00)
+    assert sim.datapath.pc.value == 0x7FFE
+    assert sim.datapath.branch_displacement == -4
+
+
+def test_relative_branch_wraparound_forward_and_backward():
+    sim, _ = _run_branch(0x8A, 0x7F, 0x01, start=0xFF80)
+    assert sim.datapath.pc.value == 0x0001
+    sim, _ = _run_branch(0x8B, 0x80, 0x00, start=0x0000)
+    assert sim.datapath.pc.value == 0xFF82
