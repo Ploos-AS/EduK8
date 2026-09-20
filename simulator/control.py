@@ -128,8 +128,7 @@ def apply_controls(dp: Datapath, signals, *, agu_index_select: int = 0) -> None:
     dp.agu_index_value = 0 if agu_index_select == 0 else (
         dp.x.value if agu_index_select == 1 else dp.y.value
     )
-    if "AGUC_CLEAR" in signals:
-        dp.aguc = 0
+    clear_aguc_after = "AGUC_CLEAR" in signals
     if "AGU_ADD_LO" in signals:
         low = dp.mar.value & 0xFF
         raw = low + dp.agu_index_value
@@ -142,6 +141,8 @@ def apply_controls(dp: Datapath, signals, *, agu_index_select: int = 0) -> None:
         raise ControlError("AGUC_LOAD requires AGU_ADD_LO")
     if "AGU_ADD_HI" in signals:
         dp.mar.load_high(((dp.mar.value >> 8) + dp.aguc) & 0xFF)
+    if clear_aguc_after:
+        dp.aguc = 0
 
     # Direct architectural flag-latch controls.
     if "C_SET" in signals:
