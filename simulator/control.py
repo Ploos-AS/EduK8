@@ -28,6 +28,11 @@ ALU_OPS = {
     "ALU_AND": "AND",
     "ALU_OR": "OR",
     "ALU_XOR": "XOR",
+    "ALU_NOT": "NOT",
+    "ALU_SHL": "SHL",
+    "ALU_SHR": "SHR",
+    "ALU_ROL": "ROL",
+    "ALU_ROR": "ROR",
 }
 
 
