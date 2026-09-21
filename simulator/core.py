@@ -56,6 +56,11 @@ class K8Simulator:
             signals,
             agu_index_select=(INDEX_SELECT.get(self.datapath.ir.value, 0) if any(s.startswith("AGU_") or s.startswith("AGUC_") for s in signals) else 0),
         )
+        # PHP/PLP move the architecturally live C/Z/N/V/I flag image through MDR.
+        if self.datapath.ir.value == 0x92 and "MEM_WRITE" in signals:
+            self.datapath.mdr.load(self.datapath.flags.value & 0x1F)
+        elif self.datapath.ir.value == 0x93 and self.datapath.microstep == 6:
+            self.datapath.flags.load(self.datapath.mdr.value & 0x1F)
         # JSR stack writes use the already advanced PC as the return address.
         # Preserve the fetched target high byte before MDR is reused for stack data.
         if self.datapath.ir.value == 0x82:
