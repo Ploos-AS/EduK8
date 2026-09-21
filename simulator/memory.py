@@ -20,7 +20,15 @@ class MMIO:
     decode and visible register storage for simulator bus cycles.
     """
 
-    registers: dict[int, int] = field(default_factory=dict)\n    key_data: int | None = None\n    key_overrun: bool = False\n\n    def inject_key(self, value: int) -> None:\n        if self.key_data is not None:\n            self.key_overrun = True\n            return\n        self.key_data = value & 0xFF
+    registers: dict[int, int] = field(default_factory=dict)
+    key_data: int | None = None
+    key_overrun: bool = False
+
+    def inject_key(self, value: int) -> None:
+        if self.key_data is not None:
+            self.key_overrun = True
+            return
+        self.key_data = value & 0xFF
 
     def read(self, address: int) -> int:
         return self.registers.get(address & 0xFFFF, 0)
