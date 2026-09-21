@@ -59,6 +59,11 @@ def parse_line(source: str, line_number: int) -> Statement | None:
         if not text:
             return Statement(line_number, label=label)
 
+    # NAME .equ expression is the one directive whose symbol precedes it.
+    equ = re.match(r"^([A-Za-z_][A-Za-z0-9_]*)\\s+(\\.equ)\\s+(.+)$", text, re.IGNORECASE)
+    if equ:
+        return Statement(line_number, label=equ.group(1), operation=".equ", operand=equ.group(3).strip(), directive=True)
+
     parts = text.split(None, 1)
     operation = parts[0]
     operand = parts[1].strip() if len(parts) == 2 else None
