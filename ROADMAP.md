@@ -45,11 +45,11 @@
 - [ ] Visualize registers, ALU, buses, flags and active control lines
 - [x] Support clock-cycle and microstep execution
 - [ ] Support interactive switches, LEDs, keyboard, display and GPIO
-- [ ] Load K8 binaries and ROM images
+- [x] Load K8 binaries and ROM images
 - [x] Cross-check simulator state against reference emulator
 - [ ] Run shared architectural conformance vectors
-- [ ] Add deterministic simulator tests
-- [ ] Document simulator architecture and educational use
+- [x] Add deterministic simulator tests
+- [x] Document simulator architecture and educational use
 - [ ] Qualify simulator against the frozen K8 v1 architecture
 
 ## M3 — Assembler
