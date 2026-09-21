@@ -4,26 +4,26 @@ from simulator.core import K8Simulator
 from simulator.view import render_text
 
 
-HELP = """Commands: show, micro, clock, instruction, reset, release, quit"""
+HELP = """Commands: show, micro, clock, instruction, reset, release, mem <addr> [len], load <addr> <hex-bytes>, quit"""
 
 
 def execute(sim: K8Simulator, command: str) -> bool:
     command = command.strip().lower()
-    if command in {"quit", "q", "exit"}:
+    if op in {"quit", "q", "exit"}:
         return False
-    if command in {"show", "s", ""}:
+    if op in {"show", "s", ""}:
         return True
-    if command in {"micro", "m"}:
+    if op in {"micro", "m"}:
         sim.microstep()
-    elif command in {"clock", "c"}:
+    elif op in {"clock", "c"}:
         sim.clock_step()
-    elif command in {"instruction", "i", "step"}:
+    elif op in {"instruction", "i", "step"}:
         sim.instruction_step()
-    elif command == "reset":
+    elif op == "reset":
         sim.assert_reset()
-    elif command == "release":
+    elif op == "release":
         sim.release_reset()
-    elif command in {"help", "h", "?"}:
+    elif op == "mem":\n        if len(parts) not in (2, 3):\n            raise ValueError("usage: mem <addr> [len]")\n        address = int(parts[1], 0)\n        length = int(parts[2], 0) if len(parts) == 3 else 16\n        data = [sim.memory.read((address + i) & 0xFFFF) for i in range(length)]\n        print(f"{address & 0xFFFF:04X}: " + " ".join(f"{b:02X}" for b in data))\n    elif op == "load":\n        if len(parts) < 3:\n            raise ValueError("usage: load <addr> <hex-bytes>")\n        address = int(parts[1], 0)\n        data = bytes(int(x, 16) for x in parts[2:])\n        sim.load_image(address, data, force=True)\n    elif op in {"help", "h", "?"}:
         pass
     else:
         raise ValueError(f"unknown command: {command}")
