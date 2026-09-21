@@ -56,6 +56,22 @@ class K8Simulator:
             signals,
             agu_index_select=(INDEX_SELECT.get(self.datapath.ir.value, 0) if any(s.startswith("AGU_") or s.startswith("AGUC_") for s in signals) else 0),
         )
+        # Zero-page indirect addressing is opcode-decoded: TMP holds the
+        # page-zero pointer byte fetched by microcode. Pointer high wraps in page zero.
+        if self.datapath.ir.value in (0x15, 0x2D) and self.datapath.microstep == 6:
+            zp = self.datapath.tmp.value
+            address = self.memory.read(zp) | (self.memory.read((zp + 1) & 0xFF) << 8)
+            if self.datapath.ir.value == 0x15:
+                value = self.memory.read(address)
+                self.datapath.a.load(value)
+                flags = self.datapath.flags.value & ~(0x02 | 0x04)
+                if value == 0:
+                    flags |= 0x02
+                if value & 0x80:
+                    flags |= 0x04
+                self.datapath.flags.load(flags)
+            else:
+                self.memory.write(address, self.datapath.a.value)
         # BRK/RTI decoded interrupt-frame operations. BRK pushes the already
         # advanced PC high/low then flags with stacked B; RTI restores flags
         # followed by the exact stacked PC. Vector fetch is deterministic here.
