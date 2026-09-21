@@ -184,9 +184,27 @@ class K8Simulator:
             self.microstep()
         return level
 
+    def _service_irq(self) -> bool:
+        """Enter the frozen K8 maskable IRQ vector between instructions."""
+        if not self.memory.mmio.irq_pending() or (self.datapath.flags.value & 0x10):
+            return False
+        pc = self.datapath.pc.value
+        sp = self.datapath.sp.value
+        self.memory.write(0x0100 | sp, (pc >> 8) & 0xFF)
+        sp = (sp - 1) & 0xFF
+        self.memory.write(0x0100 | sp, pc & 0xFF)
+        sp = (sp - 1) & 0xFF
+        self.memory.write(0x0100 | sp, self.datapath.flags.value & 0x1F)
+        self.datapath.sp.load((sp - 1) & 0xFF)
+        self.datapath.flags.load((self.datapath.flags.value | 0x10) & 0x1F)
+        self.datapath.pc.load(self.memory.read(0xFFFE) | (self.memory.read(0xFFFF) << 8))
+        return True
+
     def instruction_step(self, max_microsteps: int = 32) -> int:
         """Run one instruction, returning the number of microsteps used."""
         if self.datapath.reset or self.sequencer.halted:
+            return 0
+        if self._service_irq():
             return 0
 
         count = 0
