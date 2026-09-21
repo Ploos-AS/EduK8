@@ -339,6 +339,36 @@
         ]
       }
     ],
+    "15": [
+      {
+        "step": 3,
+        "signals": [
+          "PC_TO_MAR"
+        ]
+      },
+      {
+        "step": 4,
+        "signals": [
+          "MEM_READ",
+          "MDR_LOAD",
+          "PC_INC"
+        ]
+      },
+      {
+        "step": 5,
+        "signals": [
+          "MDR_OUT",
+          "TMP_LOAD"
+        ]
+      },
+      {
+        "step": 6,
+        "signals": [
+          "INSTR_DONE",
+          "STEP_RESET"
+        ]
+      }
+    ],
     "16": [
       {
         "step": 3,
@@ -4648,6 +4678,36 @@
         "signals": [
           "MDR_OUT",
           "PC_LOAD_HI",
+          "INSTR_DONE",
+          "STEP_RESET"
+        ]
+      }
+    ],
+    "2D": [
+      {
+        "step": 3,
+        "signals": [
+          "PC_TO_MAR"
+        ]
+      },
+      {
+        "step": 4,
+        "signals": [
+          "MEM_READ",
+          "MDR_LOAD",
+          "PC_INC"
+        ]
+      },
+      {
+        "step": 5,
+        "signals": [
+          "MDR_OUT",
+          "TMP_LOAD"
+        ]
+      },
+      {
+        "step": 6,
+        "signals": [
           "INSTR_DONE",
           "STEP_RESET"
         ]
