@@ -1,6 +1,6 @@
 # M2.5 — K8 Simulator Qualification
 
-Status: **PASS candidate — awaiting CI qualification of this record**
+Status: **PASS / QUALIFIED**
 
 The K8 hardware-level educational simulator is qualified against the frozen K8 v1 architectural contracts by deterministic CI tests.
 
@@ -19,6 +19,6 @@ The K8 hardware-level educational simulator is qualified against the frozen K8 v
 
 ## Qualification rule
 
-M2.5 becomes **PASS / QUALIFIED** only when the GitHub Actions workflow for this qualification record and the full test suite completes successfully.
+The qualification record and full test suite completed successfully in GitHub Actions run #388 (head `be0095855ba918c6a7aebb9af1e185a409c747a9`).
 
 This qualification covers the K8 v1 architectural simulator. It does not claim that the future discrete-logic or FPGA physical implementations have been electrically qualified.
