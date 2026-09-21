@@ -22,7 +22,10 @@ class MMIO:
 
     registers: dict[int, int] = field(default_factory=dict)
     key_data: int | None = None
-    key_overrun: bool = False\n    timer_counter: int = 0\n    timer_reload: int = 0\n    timer_expired: bool = False
+    key_overrun: bool = False
+    timer_counter: int = 0
+    timer_reload: int = 0
+    timer_expired: bool = False
 
     def inject_key(self, value: int) -> None:
         if self.key_data is not None:
