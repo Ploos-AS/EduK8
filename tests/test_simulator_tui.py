@@ -102,3 +102,15 @@ def test_tui_timer_one_shot_and_periodic(capsys):
 
     execute(sim, "timer")
     assert "TIMER COUNT=0001" in capsys.readouterr().out
+
+
+def test_tui_switches_and_leds(capsys):
+    sim = K8Simulator()
+    execute(sim, "switches 0xA5")
+    execute(sim, "switches")
+    assert "SWITCHES=A5" in capsys.readouterr().out
+
+    execute(sim, "gpio dir 0xF0")
+    execute(sim, "gpio data 0xAC")
+    execute(sim, "leds")
+    assert "LEDS=A0" in capsys.readouterr().out
