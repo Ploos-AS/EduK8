@@ -42,9 +42,9 @@
 - [x] Apply frozen control signals to the datapath
 - [x] Model clock, reset and microstep/control-store sequencing
 - [x] Simulate memory decode and memory-mapped I/O
-- [ ] Visualize registers, ALU, buses, flags and active control lines
+- [x] Visualize registers, ALU, buses, flags and active control lines
 - [x] Support clock-cycle and microstep execution
-- [ ] Support interactive switches, LEDs, keyboard, display and GPIO
+- [x] Support interactive switches, LEDs, keyboard, display and GPIO
 - [x] Load K8 binaries and ROM images
 - [x] Cross-check simulator state against reference emulator
 - [x] Run shared architectural conformance vectors
