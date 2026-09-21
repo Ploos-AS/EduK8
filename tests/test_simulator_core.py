@@ -589,3 +589,34 @@ def test_keyboard_irq_handler_rti_round_trip():
     assert sim.datapath.pc.value == interrupted_pc
     assert sim.datapath.sp.value == 0xFF
     assert sim.datapath.flags.value == 0x05
+
+
+def test_timer_irq_handler_rti_round_trip():
+    sim = K8Simulator()
+    interrupted_pc = 0x3456
+    sim.datapath.pc.load(interrupted_pc)
+    sim.datapath.sp.load(0xFF)
+    sim.datapath.flags.load(0x09)
+    sim.load_image(0xFFFE, bytes([0x00, 0x90]))
+    sim.load_image(0x9000, bytes([0x03]))  # RTI
+
+    sim.memory.write(0xC001, 0x02)
+    sim.memory.write(0xC030, 0x01)
+    sim.memory.write(0xC031, 0x00)
+    sim.memory.write(0xC032, 0x05)  # enable + IRQ enable
+    sim.memory.mmio.tick_timer()
+
+    assert sim.memory.read(0xC000) & 0x02
+    assert sim.memory.mmio.irq_pending()
+    assert sim.instruction_step() == 0
+    assert sim.datapath.pc.value == 0x9000
+    assert sim.datapath.sp.value == 0xFC
+
+    # Handler acknowledges the timer before returning.
+    sim.memory.write(0xC033, 0x00)
+    assert not sim.memory.mmio.irq_pending()
+
+    sim.instruction_step()
+    assert sim.datapath.pc.value == interrupted_pc
+    assert sim.datapath.sp.value == 0xFF
+    assert sim.datapath.flags.value == 0x09
