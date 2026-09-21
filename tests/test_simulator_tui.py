@@ -80,3 +80,25 @@ def test_tui_keyboard_injection_and_one_byte_overrun():
 def test_tui_key_requires_one_byte():
     with pytest.raises(ValueError):
         execute(K8Simulator(), "key")
+
+
+def test_tui_timer_one_shot_and_periodic(capsys):
+    sim = K8Simulator()
+    execute(sim, "timer set 2")
+    sim.memory.write(0xC032, 0x01)
+    execute(sim, "timer tick")
+    assert sim.memory.mmio.timer_counter == 1
+    execute(sim, "timer tick")
+    assert sim.memory.mmio.timer_counter == 0
+    assert sim.memory.read(0xC033) == 1
+    assert sim.memory.read(0xC032) & 1 == 0
+
+    execute(sim, "timer set 1")
+    sim.memory.mmio.timer_expired = False
+    sim.memory.write(0xC032, 0x03)
+    execute(sim, "timer tick")
+    assert sim.memory.mmio.timer_counter == 1
+    assert sim.memory.read(0xC033) == 1
+
+    execute(sim, "timer")
+    assert "TIMER COUNT=0001" in capsys.readouterr().out
