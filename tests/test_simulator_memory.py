@@ -57,3 +57,29 @@ def test_memory_write_cycle_uses_mdr():
     dp.mdr.load(0x66)
     apply_memory_cycle(dp, mem, ("MEM_WRITE",))
     assert mem.read(0x0200) == 0x66
+
+
+def test_peripheral_irq_controller():
+    mem = Memory()
+
+    # Keyboard source requires device IRQ enable and controller mask.
+    mem.write(0xC001, 0x01)
+    mem.write(0xC012, 0x01)
+    mem.mmio.inject_key(0x1C)
+    assert mem.read(0xC000) & 0x01
+    assert mem.mmio.irq_pending()
+    assert mem.read(0xC010) == 0x1C
+    assert not (mem.read(0xC000) & 0x01)
+
+    # Timer source is bit 1 and likewise respects the global mask.
+    mem.write(0xC030, 0x01)
+    mem.write(0xC031, 0x00)
+    mem.write(0xC032, 0x05)
+    mem.write(0xC001, 0x02)
+    mem.mmio.tick_timer()
+    assert mem.read(0xC000) & 0x02
+    assert mem.mmio.irq_pending()
+
+    mem.write(0xC001, 0x00)
+    assert mem.read(0xC000) & 0x02
+    assert not mem.mmio.irq_pending()
