@@ -50,7 +50,7 @@
 - [x] Run shared architectural conformance vectors
 - [x] Add deterministic simulator tests
 - [x] Document simulator architecture and educational use
-- [ ] Qualify simulator against the frozen K8 v1 architecture
+- [x] Qualify simulator against the frozen K8 v1 architecture
 
 ## M3 — Assembler
 - [ ] Define K8 assembly syntax
