@@ -62,3 +62,21 @@ def test_tui_gpio_switches_and_register_view(capsys):
 def test_tui_gpio_rejects_bad_form():
     with pytest.raises(ValueError):
         execute(K8Simulator(), "gpio banana 1")
+
+
+def test_tui_keyboard_injection_and_one_byte_overrun():
+    sim = K8Simulator()
+    assert execute(sim, "key 0x1C")
+    assert sim.memory.read(0xC011) == 0x01
+    assert sim.memory.read(0xC010) == 0x1C
+    assert sim.memory.read(0xC011) == 0x00
+
+    execute(sim, "key 0x1D")
+    execute(sim, "key 0x1E")
+    assert sim.memory.read(0xC011) == 0x03
+    assert sim.memory.read(0xC010) == 0x1D
+
+
+def test_tui_key_requires_one_byte():
+    with pytest.raises(ValueError):
+        execute(K8Simulator(), "key")
