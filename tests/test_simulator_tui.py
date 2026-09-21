@@ -27,3 +27,20 @@ def test_tui_reset_and_release():
 def test_tui_rejects_unknown_command():
     with pytest.raises(ValueError):
         execute(K8Simulator(), "banana")
+
+
+def test_tui_loads_hex_bytes_and_inspects_memory(capsys):
+    sim = K8Simulator()
+    assert execute(sim, "load 0x8000 10 42 00")
+    assert [sim.memory.read(0x8000 + i) for i in range(3)] == [0x10, 0x42, 0x00]
+
+    assert execute(sim, "mem 0x8000 3")
+    assert capsys.readouterr().out == "8000: 10 42 00\n"
+
+
+def test_tui_memory_commands_validate_arguments():
+    sim = K8Simulator()
+    with pytest.raises(ValueError):
+        execute(sim, "mem")
+    with pytest.raises(ValueError):
+        execute(sim, "load 0x8000")
