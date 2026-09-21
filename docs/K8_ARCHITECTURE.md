@@ -185,3 +185,8 @@ Until then, PCB implementation remains provisional.
 ## I/O architecture
 
 K8 v1 includes a self-contained PS/2 keyboard interface, 40x25 text display with dedicated video RAM and VGA output, timer and 8-bit GPIO. The normative register map is defined in `docs/IO_ARCHITECTURE.md` and `spec/io-map.json`.
+
+
+### Zero-page indirect addressing
+
+LDA (zp) and STA (zp) fetch an 8-bit pointer address from the instruction stream. The effective 16-bit address is read little-endian from page zero: low byte at zp and high byte at (zp + 1) & $FF. Thus a pointer at $FF wraps its high-byte fetch to $00. The resulting effective address accesses the full 64 KiB address space.
