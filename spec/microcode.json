@@ -2899,6 +2899,51 @@
         ]
       }
     ],
+    "92": [
+      {
+        "step": 3,
+        "signals": [
+          "SP_TO_MAR"
+        ]
+      },
+      {
+        "step": 4,
+        "signals": [
+          "MEM_WRITE",
+          "SP_DEC",
+          "INSTR_DONE",
+          "STEP_RESET"
+        ]
+      }
+    ],
+    "93": [
+      {
+        "step": 3,
+        "signals": [
+          "SP_INC"
+        ]
+      },
+      {
+        "step": 4,
+        "signals": [
+          "SP_TO_MAR"
+        ]
+      },
+      {
+        "step": 5,
+        "signals": [
+          "MEM_READ",
+          "MDR_LOAD"
+        ]
+      },
+      {
+        "step": 6,
+        "signals": [
+          "INSTR_DONE",
+          "STEP_RESET"
+        ]
+      }
+    ],
     "94": [
       {
         "step": 3,
