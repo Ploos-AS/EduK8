@@ -560,3 +560,32 @@ def test_maskable_irq_entry_and_i_mask():
     before_sp = sim.datapath.sp.value
     sim.instruction_step()
     assert sim.datapath.sp.value == before_sp
+
+
+def test_keyboard_irq_handler_rti_round_trip():
+    sim = K8Simulator()
+    interrupted_pc = 0x2345
+    sim.datapath.pc.load(interrupted_pc)
+    sim.datapath.sp.load(0xFF)
+    sim.datapath.flags.load(0x05)
+    sim.load_image(0xFFFE, bytes([0x00, 0x90]))
+    sim.load_image(0x9000, bytes([0x03]))  # RTI
+
+    sim.memory.write(0xC001, 0x01)
+    sim.memory.write(0xC012, 0x01)
+    sim.memory.mmio.inject_key(0x1C)
+
+    # IRQ entry happens at the instruction boundary.
+    assert sim.instruction_step() == 0
+    assert sim.datapath.pc.value == 0x9000
+    assert sim.datapath.sp.value == 0xFC
+    assert sim.datapath.flags.value & 0x10
+
+    # Consuming KEY_DATA deasserts the peripheral IRQ source before RTI.
+    assert sim.memory.read(0xC010) == 0x1C
+    assert not sim.memory.mmio.irq_pending()
+
+    sim.instruction_step()
+    assert sim.datapath.pc.value == interrupted_pc
+    assert sim.datapath.sp.value == 0xFF
+    assert sim.datapath.flags.value == 0x05
