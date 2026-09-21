@@ -513,3 +513,23 @@ def test_brk_rti_round_trip_interrupt_frame():
     assert sim.datapath.pc.value == 0x8001
     assert sim.datapath.sp.value == 0xFF
     assert sim.datapath.flags.value == 0x09
+
+
+def test_zero_page_indirect_load_store_and_pointer_wrap():
+    sim = K8Simulator()
+    sim.load_image(0x8000, bytes([0x15, 0xFF, 0x2D, 0x20]))
+    sim.load_image(0x00FF, bytes([0x34]))
+    sim.load_image(0x0000, bytes([0x12]))
+    sim.load_image(0x1234, bytes([0x80]))
+    sim.load_image(0x0020, bytes([0x78, 0x56]))
+    sim.datapath.flags.load(0x11)
+    sim.datapath.pc.load(0x8000)
+    sim.release_reset()
+
+    sim.instruction_step()
+    assert sim.datapath.a.value == 0x80
+    assert sim.datapath.flags.value & 0x04
+    assert sim.datapath.flags.value & 0x11 == 0x11
+
+    sim.instruction_step()
+    assert sim.memory.read(0x5678) == 0x80
