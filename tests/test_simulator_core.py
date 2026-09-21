@@ -478,6 +478,9 @@ def test_stack_push_pull_accumulator_and_flags():
     assert sim.datapath.a.value == 0xA5
     assert sim.datapath.sp.value == 0xFF
 
+    # PLA updates Z/N from the pulled accumulator; restore the intended
+    # flag image before testing PHP/PLP themselves.
+    sim.datapath.flags.load(0x19)
     sim.instruction_step()
     assert sim.memory.read(0x01FF) == 0x19
     assert sim.datapath.sp.value == 0xFE
