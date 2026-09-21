@@ -31,7 +31,14 @@ class MMIO:
         self.key_data = value & 0xFF
 
     def read(self, address: int) -> int:
-        return self.registers.get(address & 0xFFFF, 0)
+        address &= 0xFFFF
+        if address == 0xC010:
+            value = self.key_data if self.key_data is not None else 0
+            self.key_data = None
+            return value
+        if address == 0xC011:
+            return (1 if self.key_data is not None else 0) | (2 if self.key_overrun else 0)
+        return self.registers.get(address, 0)
 
     def write(self, address: int, value: int) -> None:
         self.registers[address & 0xFFFF] = value & 0xFF
