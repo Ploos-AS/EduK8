@@ -458,3 +458,31 @@ def test_jsr_pushes_next_pc_and_rts_returns_exactly_to_it():
     sim.instruction_step()
     assert sim.datapath.pc.value == 0x8003
     assert sim.datapath.sp.value == 0xFF
+
+
+def test_stack_push_pull_accumulator_and_flags():
+    sim = K8Simulator()
+    sim.load_image(0x8000, bytes([0x90, 0x91, 0x92, 0x93]))
+    sim.datapath.a.load(0xA5)
+    sim.datapath.flags.load(0x19)
+    sim.datapath.sp.load(0xFF)
+    sim.datapath.pc.load(0x8000)
+    sim.release_reset()
+
+    sim.instruction_step()
+    assert sim.memory.read(0x01FF) == 0xA5
+    assert sim.datapath.sp.value == 0xFE
+
+    sim.datapath.a.load(0)
+    sim.instruction_step()
+    assert sim.datapath.a.value == 0xA5
+    assert sim.datapath.sp.value == 0xFF
+
+    sim.instruction_step()
+    assert sim.memory.read(0x01FF) == 0x19
+    assert sim.datapath.sp.value == 0xFE
+
+    sim.datapath.flags.load(0)
+    sim.instruction_step()
+    assert sim.datapath.flags.value == 0x19
+    assert sim.datapath.sp.value == 0xFF
