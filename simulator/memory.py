@@ -22,13 +22,26 @@ class MMIO:
 
     registers: dict[int, int] = field(default_factory=dict)
     key_data: int | None = None
-    key_overrun: bool = False
+    key_overrun: bool = False\n    timer_counter: int = 0\n    timer_reload: int = 0\n    timer_expired: bool = False
 
     def inject_key(self, value: int) -> None:
         if self.key_data is not None:
             self.key_overrun = True
             return
         self.key_data = value & 0xFF
+
+    def tick_timer(self) -> None:
+        control = self.registers.get(0xC032, 0)
+        if not (control & 0x01):
+            return
+        if self.timer_counter > 0:
+            self.timer_counter -= 1
+        if self.timer_counter == 0:
+            self.timer_expired = True
+            if control & 0x02:
+                self.timer_counter = self.timer_reload
+            else:
+                self.registers[0xC032] = control & ~0x01
 
     def read(self, address: int) -> int:
         address &= 0xFFFF
