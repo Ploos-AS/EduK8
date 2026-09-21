@@ -38,7 +38,7 @@ def first_pass(source: str, origin: int = 0) -> tuple[list[Statement], dict[str,
     pc = origin & 0xFFFF
 
     for stmt in statements:
-        if stmt.label:
+        if stmt.label and stmt.operation != ".equ":
             _define(symbols, stmt.label, pc, stmt.line)
 
         if stmt.operation is None:
@@ -56,9 +56,13 @@ def first_pass(source: str, origin: int = 0) -> tuple[list[Statement], dict[str,
                 if not 0 <= pc <= 0xFFFF:
                     raise ParseError(stmt.line, ".org address out of range")
             elif op == ".equ":
-                if stmt.label is not None:
-                    raise ParseError(stmt.line, "use 'NAME .equ value', not a label")
-                raise ParseError(stmt.line, ".equ requires a symbol name before the directive")
+                if stmt.label is None or stmt.operand is None:
+                    raise ParseError(stmt.line, ".equ requires NAME .equ value")
+                try:
+                    value = evaluate(stmt.operand, symbols)
+                except ExpressionError as exc:
+                    raise ParseError(stmt.line, str(exc)) from exc
+                _define(symbols, stmt.label, value, stmt.line)
             elif op == ".byte":
                 if stmt.operand is None:
                     raise ParseError(stmt.line, ".byte requires data")
