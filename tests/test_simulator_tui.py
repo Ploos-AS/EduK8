@@ -44,3 +44,21 @@ def test_tui_memory_commands_validate_arguments():
         execute(sim, "mem")
     with pytest.raises(ValueError):
         execute(sim, "load 0x8000")
+
+
+def test_tui_gpio_switches_and_register_view(capsys):
+    sim = K8Simulator()
+    assert execute(sim, "gpio input 0xA5")
+    assert execute(sim, "gpio dir 0xF0")
+    assert execute(sim, "gpio data 0x3C")
+    assert sim.memory.read(0xC042) == 0xA5
+    assert sim.memory.read(0xC041) == 0xF0
+    assert sim.memory.read(0xC040) == 0x3C
+
+    assert execute(sim, "gpio")
+    assert capsys.readouterr().out == "GPIO DATA=3C DIR=F0 INPUT=A5\n"
+
+
+def test_tui_gpio_rejects_bad_form():
+    with pytest.raises(ValueError):
+        execute(K8Simulator(), "gpio banana 1")
