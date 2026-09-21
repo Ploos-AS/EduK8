@@ -489,3 +489,27 @@ def test_stack_push_pull_accumulator_and_flags():
     sim.instruction_step()
     assert sim.datapath.flags.value == 0x19
     assert sim.datapath.sp.value == 0xFF
+
+
+def test_brk_rti_round_trip_interrupt_frame():
+    sim = K8Simulator()
+    sim.load_image(0x8000, bytes([0x02]))
+    sim.load_image(0x9000, bytes([0x03]))
+    sim.load_image(0xFFFE, bytes([0x00, 0x90]), force=True)
+    sim.datapath.flags.load(0x09)
+    sim.datapath.sp.load(0xFF)
+    sim.datapath.pc.load(0x8000)
+    sim.release_reset()
+
+    sim.instruction_step()
+    assert sim.datapath.pc.value == 0x9000
+    assert sim.datapath.sp.value == 0xFC
+    assert sim.memory.read(0x01FF) == 0x80
+    assert sim.memory.read(0x01FE) == 0x01
+    assert sim.memory.read(0x01FD) == 0x29
+    assert sim.datapath.flags.value == 0x19
+
+    sim.instruction_step()
+    assert sim.datapath.pc.value == 0x8001
+    assert sim.datapath.sp.value == 0xFF
+    assert sim.datapath.flags.value == 0x09
