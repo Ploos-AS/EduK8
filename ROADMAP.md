@@ -47,7 +47,7 @@
 - [ ] Support interactive switches, LEDs, keyboard, display and GPIO
 - [x] Load K8 binaries and ROM images
 - [x] Cross-check simulator state against reference emulator
-- [ ] Run shared architectural conformance vectors
+- [x] Run shared architectural conformance vectors
 - [x] Add deterministic simulator tests
 - [x] Document simulator architecture and educational use
 - [ ] Qualify simulator against the frozen K8 v1 architecture
