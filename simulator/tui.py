@@ -5,7 +5,7 @@ from simulator.view import render_text
 from simulator.display import render_text as render_display, render_status as render_video_status
 
 
-HELP = """Commands: show, micro, clock, instruction, reset, release, mem <addr> [len], load <addr> <hex-bytes>, gpio [input|dir|data] [value], key <byte>, display, timer [tick|set] [value], quit"""
+HELP = """Commands: show, micro, clock, instruction, reset, release, mem <addr> [len], load <addr> <hex-bytes>, gpio [input|dir|data] [value], switches [value], leds, key <byte>, display, timer [tick|set] [value], quit"""
 
 
 def execute(sim: K8Simulator, command: str) -> bool:
@@ -47,6 +47,19 @@ def execute(sim: K8Simulator, command: str) -> bool:
             sim.memory.mmio.write(regs[parts[1]], value)
         else:
             raise ValueError("usage: gpio [input|dir|data] [value]")
+    elif op == "switches":
+        if len(parts) == 1:
+            print(f"SWITCHES={sim.memory.read(0xC042):02X}")
+        elif len(parts) == 2:
+            sim.memory.mmio.write(0xC042, int(parts[1], 0) & 0xFF)
+        else:
+            raise ValueError("usage: switches [value]")
+    elif op == "leds":
+        if len(parts) != 1:
+            raise ValueError("usage: leds")
+        direction = sim.memory.read(0xC041)
+        data = sim.memory.read(0xC040)
+        print(f"LEDS={(data & direction):02X}")
     elif op == "key":
         if len(parts) != 2:
             raise ValueError("usage: key <byte>")
