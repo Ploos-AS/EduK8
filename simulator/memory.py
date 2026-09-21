@@ -14,11 +14,7 @@ def _n(value):
 
 @dataclass
 class MMIO:
-    """Deterministic register-level MMIO model.
-
-    Device behaviour is added separately; this layer establishes address
-    decode and visible register storage for simulator bus cycles.
-    """
+    """Deterministic K8 peripheral and interrupt-controller model."""
 
     registers: dict[int, int] = field(default_factory=dict)
     key_data: int | None = None
@@ -32,6 +28,17 @@ class MMIO:
             self.key_overrun = True
             return
         self.key_data = value & 0xFF
+
+    def irq_status(self) -> int:
+        status = 0
+        if self.key_data is not None and (self.registers.get(0xC012, 0) & 0x01):
+            status |= 0x01
+        if self.timer_expired and (self.registers.get(0xC032, 0) & 0x04):
+            status |= 0x02
+        return status
+
+    def irq_pending(self) -> bool:
+        return bool(self.irq_status() & self.registers.get(0xC001, 0))
 
     def tick_timer(self) -> None:
         control = self.registers.get(0xC032, 0)
@@ -48,16 +55,32 @@ class MMIO:
 
     def read(self, address: int) -> int:
         address &= 0xFFFF
+        if address == 0xC000:
+            return self.irq_status()
         if address == 0xC010:
             value = self.key_data if self.key_data is not None else 0
             self.key_data = None
             return value
         if address == 0xC011:
             return (1 if self.key_data is not None else 0) | (2 if self.key_overrun else 0)
+        if address == 0xC030:
+            return self.timer_counter & 0xFF
+        if address == 0xC031:
+            return (self.timer_counter >> 8) & 0xFF
+        if address == 0xC033:
+            return 1 if self.timer_expired else 0
         return self.registers.get(address, 0)
 
     def write(self, address: int, value: int) -> None:
-        self.registers[address & 0xFFFF] = value & 0xFF
+        address &= 0xFFFF
+        value &= 0xFF
+        self.registers[address] = value
+        if address in (0xC030, 0xC031):
+            lo = self.registers.get(0xC030, 0)
+            hi = self.registers.get(0xC031, 0)
+            self.timer_reload = self.timer_counter = lo | (hi << 8)
+        elif address == 0xC033:
+            self.timer_expired = bool(value & 0x01)
 
 
 @dataclass
