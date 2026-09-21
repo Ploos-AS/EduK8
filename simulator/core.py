@@ -56,6 +56,21 @@ class K8Simulator:
             signals,
             agu_index_select=(INDEX_SELECT.get(self.datapath.ir.value, 0) if any(s.startswith("AGU_") or s.startswith("AGUC_") for s in signals) else 0),
         )
+        # BRK/RTI decoded interrupt-frame operations. BRK pushes the already
+        # advanced PC high/low then flags with stacked B; RTI restores flags
+        # followed by the exact stacked PC. Vector fetch is deterministic here.
+        if self.datapath.ir.value == 0x02:
+            if "MEM_WRITE" in signals and self.datapath.microstep == 4:
+                self.datapath.mdr.load((self.datapath.pc.value >> 8) & 0xFF)
+            elif "MEM_WRITE" in signals and self.datapath.microstep == 6:
+                self.datapath.mdr.load(self.datapath.pc.value & 0xFF)
+            elif "MEM_WRITE" in signals and self.datapath.microstep == 8:
+                self.datapath.mdr.load((self.datapath.flags.value & 0x1F) | 0x20)
+            elif self.datapath.microstep == 9:
+                self.datapath.pc.load(self.memory.read(0xFFFE) | (self.memory.read(0xFFFF) << 8))
+        elif self.datapath.ir.value == 0x03:
+            if self.datapath.microstep == 6:
+                self.datapath.flags.load(self.datapath.mdr.value & 0x1F)
         # PHP/PLP move the architecturally live C/Z/N/V/I flag image through MDR.
         if self.datapath.ir.value == 0x92 and "MEM_WRITE" in signals:
             self.datapath.mdr.load(self.datapath.flags.value & 0x1F)
