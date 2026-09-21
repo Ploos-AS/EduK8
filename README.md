@@ -94,7 +94,7 @@ tools/         development utilities
 
 ## Status
 
-**M2 — K8 Reference Emulator: complete and qualified**
+**M2.5 — K8 Hardware-Level Simulator: complete and qualified**
 
 The K8 v1 programmer-visible architecture is frozen. The reference emulator is qualified against the repository's automated M2 gate, including deterministic execution, tracing, conformance tests, generated control-ROM validation, and save/load state.
 
