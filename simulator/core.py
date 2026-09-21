@@ -65,7 +65,9 @@ class K8Simulator:
             elif "MEM_WRITE" in signals and self.datapath.microstep == 6:
                 self.datapath.mdr.load(self.datapath.pc.value & 0xFF)
             elif "MEM_WRITE" in signals and self.datapath.microstep == 8:
-                self.datapath.mdr.load((self.datapath.flags.value & 0x1F) | 0x20)
+                # I_SET is applied by the control layer in this same microstep,
+                # but the stacked image represents the pre-interrupt flags.
+                self.datapath.mdr.load(((self.datapath.flags.value & ~0x10) & 0x1F) | 0x20)
             elif self.datapath.microstep == 9:
                 self.datapath.pc.load(self.memory.read(0xFFFE) | (self.memory.read(0xFFFF) << 8))
         elif self.datapath.ir.value == 0x03:
