@@ -53,12 +53,12 @@
 - [x] Qualify simulator against the frozen K8 v1 architecture
 
 ## M3 — Assembler
-- [ ] Define K8 assembly syntax
-- [ ] Implement lexer/parser
-- [ ] Implement symbols and labels
-- [ ] Implement binary generation
+- [x] Define K8 assembly syntax
+- [x] Implement lexer/parser
+- [x] Implement symbols and labels
+- [x] Implement binary generation
 - [ ] Add assembler diagnostics
-- [ ] Cross-test against emulator
+- [x] Cross-test against emulator
 
 ## M4 — Hardware Prototype
 - [ ] KiCad schematics
