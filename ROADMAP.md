@@ -57,7 +57,7 @@
 - [x] Implement lexer/parser
 - [x] Implement symbols and labels
 - [x] Implement binary generation
-- [ ] Add assembler diagnostics
+- [x] Add assembler diagnostics
 - [x] Cross-test against emulator
 
 ## M4 — Hardware Prototype
