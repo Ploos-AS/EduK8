@@ -2,7 +2,7 @@
 
 ## Status
 
-**Candidate: PASS**
+**PASS / QUALIFIED**
 
 M3 qualifies the K8 assembler against the frozen K8 v1 architecture and the M3 roadmap requirements.
 
@@ -31,8 +31,8 @@ The assembler-to-reference-emulator cross-test was qualified by GitHub Actions r
 
 ## Qualification rule
 
-This document is committed first as a PASS candidate. M3 becomes **PASS / QUALIFIED** only after CI for the qualification-document commit itself completes successfully.
+The qualification-document candidate commit was verified by GitHub Actions run **#410**, which completed successfully.
 
 ## Result
 
-**M3 — K8 Assembler: PASS candidate; awaiting qualification-commit CI.**
+**M3 — K8 Assembler: PASS / QUALIFIED.**
