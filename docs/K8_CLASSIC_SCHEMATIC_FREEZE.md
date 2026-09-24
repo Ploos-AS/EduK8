@@ -64,7 +64,7 @@ If a lower layer disagrees with a higher layer, the lower layer must be correcte
 - [x] GPIO hardware blocks defined
 - [x] text-video hardware blocks defined
 - [x] IRQ aggregation concept defined
-- [ ] reconcile keyboard depth/overrun semantics across spec, emulator and simulator
+- [x] reconcile keyboard depth/overrun semantics across spec, emulator and simulator
 - [ ] freeze exact video clock/arbitration implementation
 - [ ] verify all MMIO register side effects against canonical tests
 
@@ -135,7 +135,7 @@ The following items require explicit resolution before the schematic can be call
 
 1. **PC branch update control:** the logical control word has no generic BRANCH_LOAD_PC signal. The schematic must map branch PC update to the existing qualified sequencer/control behavior without inventing an incompatible architectural control bit.
 2. **MAR source selection:** PC_TO_MAR and SP_TO_MAR exist, while MAR_LOAD_LO/HI and AGU operations must be reconciled into one unambiguous physical input-selection network.
-3. **Keyboard model:** hardware target depth is one byte, while older emulator behavior may allow deeper buffering. Canonical behavior must be made identical before hardware freeze.
+3. **Keyboard model — RESOLVED:** canonical depth is one unread byte; a new byte while occupied sets overrun and preserves the unread byte. Emulator and simulator now use this contract.
 4. **Video arbitration:** the CPU-visible semantics are defined, but the exact physical VRAM sharing method is not yet frozen.
 5. **Memory population:** architectural regions are known, but actual SRAM/ROM devices and resulting chip-select equations must be selected.
 6. **Clock/control timing:** whether ROM outputs require registered control-byte stages depends on the final clock frequency and selected EEPROM access time.
