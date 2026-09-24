@@ -53,7 +53,7 @@ If a lower layer disagrees with a higher layer, the lower layer must be correcte
 - [x] MMIO page decode defined
 - [x] vector addresses defined
 - [x] VRAM region defined
-- [ ] freeze exact RAM/ROM chip capacities and address ranges
+- [x] freeze exact RAM/ROM chip capacities and address ranges
 - [ ] prove full 65536-address decode table
 
 ## Peripherals
@@ -90,9 +90,9 @@ If a lower layer disagrees with a higher layer, the lower layer must be correcte
 - [x] no hidden MCU in Classic datapath/control/peripherals
 - [ ] assign concrete IC reference designators
 - [ ] freeze connector families/pinouts
-- [ ] freeze ROM/EEPROM device
-- [ ] freeze SRAM device
-- [ ] freeze font ROM device
+- [x] freeze ROM/EEPROM device (AT28C256 baseline)
+- [x] freeze SRAM device (AS6C62256-55PCN baseline)
+- [x] freeze font ROM device (AT28C256-compatible baseline)
 - [ ] produce preliminary package-count/power estimate
 
 ## KiCad hierarchy
@@ -137,7 +137,7 @@ The following items require explicit resolution before the schematic can be call
 2. **MAR source selection:** PC_TO_MAR and SP_TO_MAR exist, while MAR_LOAD_LO/HI and AGU operations must be reconciled into one unambiguous physical input-selection network.
 3. **Keyboard model — RESOLVED:** canonical depth is one unread byte; a new byte while occupied sets overrun and preserves the unread byte. Emulator and simulator now use this contract.
 4. **Video arbitration — RESOLVED:** Classic v1 uses deterministic CPU/video time-slot arbitration over single-port asynchronous SRAM VRAM; see `docs/K8_CLASSIC_VIDEO_ARBITRATION.md`.
-5. **Memory population:** architectural regions are known, but actual SRAM/ROM devices and resulting chip-select equations must be selected.
+5. **Memory population — RESOLVED:** AS6C62256-55PCN is the main/VRAM SRAM baseline and AT28C256 is the program/font EEPROM baseline; architectural decode remains exact; see `docs/K8_CLASSIC_MEMORY_POPULATION.md`.
 6. **Clock/control timing:** whether ROM outputs require registered control-byte stages depends on the final clock frequency and selected EEPROM access time.
 
 These are engineering blockers, not reasons to reopen the frozen ISA.
