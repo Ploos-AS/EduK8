@@ -6,7 +6,7 @@ VRAM_START=0x7800; VRAM_VISIBLE=1000
 
 class IO:
     def __init__(self):
-        self.keyboard=[]
+        self.keyboard=[]  # canonical depth: one unread byte
         self.key_control=0
         self.key_overrun=False
         self.video_control=1
@@ -26,7 +26,10 @@ class IO:
         }
 
     def load_state(self, state):
-        self.keyboard = [int(v) & 0xFF for v in state["keyboard"]]
+        restored = [int(v) & 0xFF for v in state["keyboard"]]
+        self.keyboard = restored[:1]
+        if len(restored) > 1:
+            self.key_overrun = True
         self.key_control = int(state["key_control"]) & 0xFF
         self.key_overrun = bool(state["key_overrun"])
         self.video_control = int(state["video_control"]) & 0xFF
@@ -35,7 +38,7 @@ class IO:
         self.cursor_control = int(state["cursor_control"]) & 0xFF
 
     def inject_key(self, value):
-        if len(self.keyboard) >= 16:
+        if self.keyboard:
             self.key_overrun=True
             return
         self.keyboard.append(value & 0xFF)
