@@ -76,7 +76,7 @@ If a lower layer disagrees with a higher layer, the lower layer must be correcte
 - [x] manual microstep defined
 - [x] reset sources and write inhibit defined
 - [x] HALT recovery requirement defined
-- [ ] select exact oscillator/frequency
+- [x] freeze CPU timing baseline at 1 MHz (exact oscillator package remains BOM selection)
 - [ ] select exact power regulator/input arrangement
 - [ ] select exact power-on reset implementation
 - [ ] complete worst-case timing budget from chosen parts
@@ -138,7 +138,7 @@ The following items require explicit resolution before the schematic can be call
 3. **Keyboard model — RESOLVED:** canonical depth is one unread byte; a new byte while occupied sets overrun and preserves the unread byte. Emulator and simulator now use this contract.
 4. **Video arbitration — RESOLVED:** Classic v1 uses deterministic CPU/video time-slot arbitration over single-port asynchronous SRAM VRAM; see `docs/K8_CLASSIC_VIDEO_ARBITRATION.md`.
 5. **Memory population — RESOLVED:** AS6C62256-55PCN is the main/VRAM SRAM baseline and AT28C256 is the program/font EEPROM baseline; architectural decode remains exact; see `docs/K8_CLASSIC_MEMORY_POPULATION.md`.
-6. **Clock/control timing:** whether ROM outputs require registered control-byte stages depends on the final clock frequency and selected EEPROM access time.
+6. **Clock/control timing — RESOLVED:** Classic v1 uses a 1 MHz CPU baseline and six registered 8-bit control-ROM outputs with explicit phased timing; see `docs/K8_CLASSIC_TIMING.md`.
 
 These are engineering blockers, not reasons to reopen the frozen ISA.
 
