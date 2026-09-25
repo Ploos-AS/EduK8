@@ -60,7 +60,7 @@ def setup_brk_e(c):
 
 def setup_brk_s(x):
     x.datapath.sp.load(0xFF); x.datapath.flags.load(0x05)
-    x.memory.write(0xFFFE, 0x00); x.memory.write(0xFFFF, 0x40)
+    x.memory.load(0xFFFE, bytes([0x00, 0x40]), force=True)
     x.memory.write(0x4000, 0x03)
 
 e = emu([0x02], 0x2345, setup_brk_e)
