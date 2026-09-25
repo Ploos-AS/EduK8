@@ -31,4 +31,6 @@ jobs:
         with:
           python-version: "3.12"
       - name: Validate Classic pre-freeze invariants
-        run: python hardware/classic/validate_prefreeze.py
+        run: |
+          python hardware/classic/validate_prefreeze.py
+          python hardware/classic/validate_vectors.py
