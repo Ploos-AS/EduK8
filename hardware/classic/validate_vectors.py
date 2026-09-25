@@ -52,7 +52,32 @@ s = sim([0x13, 0xF0, 0x12], 0x2000, lambda x: (x.datapath.x.load(0x30), x.memory
 assert e.a == 0x6B and e.mar == 0x1320
 assert s.datapath.a.value == 0x6B and s.datapath.mar.value == 0x1320
 
+# BRK/RTI round-trip: frame is PC high, PC low, flags|B; live B stays clear.
+def setup_brk_e(c):
+    c.sp = 0xFF; c.f = 0x05
+    c.memory[0xFFFE] = 0x00; c.memory[0xFFFF] = 0x40
+    c.memory[0x4000] = 0x03
+
+def setup_brk_s(x):
+    x.datapath.sp.load(0xFF); x.datapath.flags.load(0x05)
+    x.memory.write(0xFFFE, 0x00); x.memory.write(0xFFFF, 0x40)
+    x.memory.write(0x4000, 0x03)
+
+e = emu([0x02], 0x2345, setup_brk_e)
+s = sim([0x02], 0x2345, setup_brk_s)
+assert e.pc == s.datapath.pc.value == 0x4000
+assert e.sp == s.datapath.sp.value == 0xFC
+assert e.memory[0x01FF] == s.memory.read(0x01FF) == 0x23
+assert e.memory[0x01FE] == s.memory.read(0x01FE) == 0x46
+assert e.memory[0x01FD] == s.memory.read(0x01FD) == 0x25
+assert not (e.f & 0x20) and not (s.datapath.flags.value & 0x20)
+
+e.step(); s.instruction_step()
+assert e.pc == s.datapath.pc.value == 0x2346
+assert e.sp == s.datapath.sp.value == 0xFF
+assert e.f == s.datapath.flags.value == 0x05
+
 print("K8 Classic boundary vectors: PASS")
 print("branch extrema/page crossings: PASS")
-print("stack wrap: PASS")
+print("stack wrap and BRK/RTI frame: PASS")
 print("AGU zero-page/absolute page crossing: PASS")
