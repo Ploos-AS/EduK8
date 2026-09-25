@@ -8,6 +8,9 @@ ROOT = Path(__file__).resolve().parents[2]
 cw = json.loads((ROOT / "spec/control-word.json").read_text())
 mc = json.loads((ROOT / "spec/microcode.json").read_text())
 mm = json.loads((ROOT / "spec/memory-map.json").read_text())
+isa = json.loads((ROOT / "spec/isa.json").read_text())
+io = json.loads((ROOT / "spec/io-map.json").read_text())
+peripherals = json.loads((ROOT / "spec/peripherals.json").read_text())
 
 bits = set(cw["bits"])
 assert cw["width_bits"] == 48
@@ -77,3 +80,55 @@ print("control bits: 48/48")
 print("control store: 32768 words x 6 bytes")
 print("address decode: 65536/65536 unique")
 print("DB/MAR/ALU/memory conflict checks: PASS")
+
+
+# ISA/control-store coverage.
+isa_opcodes = {row[0].upper() for row in isa["instructions"]}
+microcoded = {key.upper() for key in mc["opcodes"]}
+missing = isa_opcodes - microcoded
+assert not missing, f"ISA opcodes without microcode: {sorted(missing)}"
+assert len(isa_opcodes) == 99, f"expected 99 defined opcodes, got {len(isa_opcodes)}"
+
+# Branch contract: all eight relative branches must be present and terminate.
+branches = {row[0].upper() for row in isa["instructions"] if row[2] == "rel"}
+assert branches == {"88","89","8A","8B","8C","8D","8E","8F"}
+for opcode in branches:
+    seq = mc["opcodes"][opcode]
+    assert any("INSTR_DONE" in s["signals"] for s in seq), f"{opcode}: branch never completes"
+
+# Stack-family coverage and required SP activity.
+for opcode in ("90","91","92","93","82","04","02","03"):
+    assert opcode in microcoded, f"{opcode}: stack/control-flow opcode lacks microcode"
+    signals = {sig for step in mc["opcodes"][opcode] for sig in step["signals"]}
+    assert signals & {"SP_TO_MAR","SP_INC","SP_DEC","SP_OUT","SP_LOAD"}, (
+        f"{opcode}: expected stack activity")
+
+# Indexed modes must have an AGU path.
+for row in isa["instructions"]:
+    opcode, mnemonic, mode, _ = row
+    if ",X" in mode or ",Y" in mode:
+        signals = {sig for step in mc["opcodes"][opcode] for sig in step["signals"]}
+        assert signals & {"AGU_ADD_LO","AGU_ADD_HI"}, f"{opcode}: indexed mode lacks AGU"
+
+# MMIO register addresses must be inside the frozen IO page and unique.
+io_start = int(io["io_page"]["start"], 16)
+io_end = int(io["io_page"]["end"], 16)
+regs = []
+for dev in io["devices"].values():
+    regs.extend(int(a, 16) for a in dev.get("registers", {}).values())
+assert len(regs) == len(set(regs)), "duplicate MMIO register address"
+assert all(io_start <= a <= io_end for a in regs), "MMIO register outside IO page"
+
+# Peripheral spec must agree with canonical IO map.
+assert int(peripherals["irq"]["status"],16) == int(io["devices"]["system"]["registers"]["IRQ_STATUS"],16)
+assert int(peripherals["irq"]["mask"],16) == int(io["devices"]["system"]["registers"]["IRQ_MASK"],16)
+for key, addr in peripherals["timer"]["registers"].items():
+    expected = {"lo":"TIMER_LO","hi":"TIMER_HI","control":"TIMER_CONTROL","status":"TIMER_STATUS"}[key]
+    assert int(addr,16) == int(io["devices"]["timer"]["registers"][expected],16)
+for key, addr in peripherals["gpio"]["registers"].items():
+    expected = {"data":"GPIO_DATA","dir":"GPIO_DIR","input":"GPIO_INPUT"}[key]
+    assert int(addr,16) == int(io["devices"]["gpio"]["registers"][expected],16)
+
+print("ISA/control-store coverage: 99/99")
+print("branch/stack/AGU structural vectors: PASS")
+print("peripheral MMIO consistency: PASS")
