@@ -33,4 +33,4 @@ jobs:
       - name: Validate Classic pre-freeze invariants
         run: |
           python hardware/classic/validate_prefreeze.py
-          python hardware/classic/validate_vectors.py
+          PYTHONPATH=. python hardware/classic/validate_vectors.py
