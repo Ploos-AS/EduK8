@@ -54,7 +54,7 @@ If a lower layer disagrees with a higher layer, the lower layer must be correcte
 - [x] vector addresses defined
 - [x] VRAM region defined
 - [x] freeze exact RAM/ROM chip capacities and address ranges
-- [ ] prove full 65536-address decode table
+- [x] prove full 65536-address decode table
 
 ## Peripherals
 
@@ -119,7 +119,7 @@ Before marking the Classic datapath schematic frozen:
 
 - [x] canonical control-store static validator passes
 - [x] six-slice ROM reconstruction passes for all 32768 words
-- [ ] all 99 defined opcodes retain microcode coverage
+- [x] all 99 defined opcodes retain microcode coverage
 - [x] full address decoder test passes for all 65536 addresses
 - [x] DB single-driver validation passes for every generated microstep
 - [x] illegal control-combination validation passes
