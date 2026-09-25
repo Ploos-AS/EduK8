@@ -117,12 +117,12 @@ Sheet boundaries may be adjusted only when doing so improves electrical clarity 
 
 Before marking the Classic datapath schematic frozen:
 
-- [ ] canonical control-store validator passes
-- [ ] six-slice ROM reconstruction passes for all 32768 words
+- [x] canonical control-store static validator passes
+- [x] six-slice ROM reconstruction passes for all 32768 words
 - [ ] all 99 defined opcodes retain microcode coverage
-- [ ] full address decoder test passes for all 65536 addresses
-- [ ] DB single-driver validation passes for every generated microstep
-- [ ] illegal control-combination validation passes
+- [x] full address decoder test passes for all 65536 addresses
+- [x] DB single-driver validation passes for every generated microstep
+- [x] illegal control-combination validation passes
 - [ ] branch vectors pass including +127/-128 and page crossings
 - [ ] stack vectors pass including wrap and BRK/RTI
 - [ ] AGU zero-page and absolute-index vectors pass
