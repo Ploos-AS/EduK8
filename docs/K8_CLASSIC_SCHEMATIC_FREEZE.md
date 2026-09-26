@@ -123,9 +123,9 @@ Before marking the Classic datapath schematic frozen:
 - [x] full address decoder test passes for all 65536 addresses
 - [x] DB single-driver validation passes for every generated microstep
 - [x] illegal control-combination validation passes
-- [ ] branch vectors pass including +127/-128 and page crossings
-- [ ] stack vectors pass including wrap and BRK/RTI
-- [ ] AGU zero-page and absolute-index vectors pass
+- [x] branch vectors pass including +127/-128 and page crossings
+- [x] stack vectors pass including wrap and BRK/RTI
+- [x] AGU zero-page and absolute-index vectors pass
 - [ ] peripheral MMIO side-effect vectors pass
 - [ ] reset sequence matches simulator state transitions
 
