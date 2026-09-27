@@ -118,4 +118,5 @@ assert g.read(0xC042) == 0x3C
 print("K8 Classic boundary vectors: PASS")
 print("branch extrema/page crossings: PASS")
 print("stack wrap and BRK/RTI frame: PASS")
-print("AGU zero-page/absolute page crossing: PASS")\nprint("peripheral MMIO side effects: PASS")
+print("AGU zero-page/absolute page crossing: PASS")
+print("peripheral MMIO side effects: PASS")
