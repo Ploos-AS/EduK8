@@ -4,6 +4,14 @@ on:
   push:
     paths:
       - "hardware/classic/**"
+      - "emulator/**"
+      - "simulator/**"
+      - "spec/io-map.json"
+      - "spec/peripherals.json"
+      - "emulator/**"
+      - "simulator/**"
+      - "spec/io-map.json"
+      - "spec/peripherals.json"
       - "spec/control-word.json"
       - "spec/microcode.json"
       - "spec/memory-map.json"
