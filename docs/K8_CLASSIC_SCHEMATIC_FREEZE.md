@@ -127,7 +127,7 @@ Before marking the Classic datapath schematic frozen:
 - [x] stack vectors pass including wrap and BRK/RTI
 - [x] AGU zero-page and absolute-index vectors pass
 - [x] peripheral MMIO side-effect vectors pass
-- [ ] reset sequence matches simulator state transitions
+- [x] reset sequence matches simulator state transitions
 
 ## Review blockers found before freeze
 
