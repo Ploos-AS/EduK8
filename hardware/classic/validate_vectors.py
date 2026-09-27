@@ -77,7 +77,45 @@ assert e.pc == s.datapath.pc.value == 0x2346
 assert e.sp == s.datapath.sp.value == 0xFF
 assert e.f == s.datapath.flags.value == 0x05
 
+# Canonical keyboard MMIO side effects in both models: depth one,
+# preserve unread byte on overrun, DATA read consumes only the unread byte.
+from emulator.io import IO
+from simulator.memory import MMIO
+eio = IO(); sio = MMIO()
+for dev in (eio, sio):
+    dev.inject_key(0x41); dev.inject_key(0x42)
+assert eio.read(0xC011) == sio.read(0xC011) == 0x03
+assert eio.read(0xC010) == sio.read(0xC010) == 0x41
+assert eio.read(0xC011) == sio.read(0xC011) == 0x02
+
+# KEY_CONTROL is readable/writable and bit 0 gates the simulator IRQ source.
+eio.write(0xC012, 1); sio.write(0xC012, 1)
+assert eio.read(0xC012) == sio.read(0xC012) == 1
+sio.inject_key(0x55); sio.write(0xC001, 0x01)
+assert sio.irq_status() & 0x01 and sio.irq_pending()
+
+# Timer side effects: reload/counter composition, expiry, periodic reload,
+# one-shot disable and IRQ masking.
+t = MMIO()
+t.write(0xC030, 0x02); t.write(0xC031, 0x00)
+t.write(0xC032, 0x05); t.write(0xC001, 0x02)
+t.tick_timer(); assert t.read(0xC030) == 1 and not t.timer_expired
+t.tick_timer(); assert t.timer_expired and not (t.registers[0xC032] & 1)
+assert t.irq_status() == 0x02 and t.irq_pending()
+t.write(0xC033, 0); assert not t.timer_expired
+
+t.write(0xC030, 0x02); t.write(0xC031, 0x00); t.write(0xC032, 0x03)
+t.tick_timer(); t.tick_timer()
+assert t.timer_expired and t.timer_counter == 2
+
+# GPIO direction/data/input registers retain independent canonical values.
+g = MMIO()
+g.write(0xC040, 0xA5); g.write(0xC041, 0xF0); g.write(0xC042, 0x3C)
+assert g.read(0xC040) == 0xA5
+assert g.read(0xC041) == 0xF0
+assert g.read(0xC042) == 0x3C
+
 print("K8 Classic boundary vectors: PASS")
 print("branch extrema/page crossings: PASS")
 print("stack wrap and BRK/RTI frame: PASS")
-print("AGU zero-page/absolute page crossing: PASS")
+print("AGU zero-page/absolute page crossing: PASS")\nprint("peripheral MMIO side effects: PASS")
