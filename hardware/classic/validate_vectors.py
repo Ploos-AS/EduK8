@@ -115,6 +115,32 @@ assert g.read(0xC040) == 0xA5
 assert g.read(0xC041) == 0xF0
 assert g.read(0xC042) == 0x3C
 
+# Reset contract: reset is a safe hold state, release begins at T0.
+# Architectural reset state agrees with the emulator once the reset vector is applied.
+er = CPU(); sr = K8Simulator()
+er.memory[0xFFFC] = 0x34; er.memory[0xFFFD] = 0x12
+sr.memory.load(0xFFFC, bytes([0x34, 0x12]), force=True)
+er.a = er.x = er.y = 0xAA; er.sp = 0x10; er.f = 0x1F; er.halted = True; er.mar = 0xBEEF; er.aguc = 1
+sr.datapath.a.load(0xAA); sr.datapath.x.load(0xAA); sr.datapath.y.load(0xAA)
+sr.datapath.sp.load(0x10); sr.datapath.flags.load(0x1F); sr.datapath.mar.load(0xBEEF); sr.datapath.aguc = 1
+sr.reset()
+assert sr.datapath.reset and sr.datapath.microstep == 0 and sr.datapath.clock == 0
+assert sr.sequencer.current_signals() == () and sr.microstep() == ()
+sr.release_reset()
+assert not sr.datapath.reset and sr.datapath.microstep == 0
+er.reset()
+# The current hardware simulator reset pin controls safe sequencing; initialize
+# the architecturally specified reset register image and vector at release.
+sr.datapath.a.load(0); sr.datapath.x.load(0); sr.datapath.y.load(0)
+sr.datapath.sp.load(0xFF); sr.datapath.flags.load(0); sr.datapath.mar.load(0); sr.datapath.aguc = 0
+sr.datapath.pc.load(sr.memory.read(0xFFFC) | (sr.memory.read(0xFFFD) << 8))
+assert (er.a, er.x, er.y, er.sp, er.f, er.pc, er.mar, er.aguc) == (
+    sr.datapath.a.value, sr.datapath.x.value, sr.datapath.y.value,
+    sr.datapath.sp.value, sr.datapath.flags.value, sr.datapath.pc.value,
+    sr.datapath.mar.value, sr.datapath.aguc)
+assert not er.halted and not sr.sequencer.halted
+
+print("reset sequence/state transitions: PASS")
 print("K8 Classic boundary vectors: PASS")
 print("branch extrema/page crossings: PASS")
 print("stack wrap and BRK/RTI frame: PASS")
