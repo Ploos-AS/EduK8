@@ -66,7 +66,7 @@ If a lower layer disagrees with a higher layer, the lower layer must be correcte
 - [x] IRQ aggregation concept defined
 - [x] reconcile keyboard depth/overrun semantics across spec, emulator and simulator
 - [x] freeze exact video arbitration implementation (deterministic time-slot arbitration; exact oscillator remains clock/BOM work)
-- [ ] verify all MMIO register side effects against canonical tests
+- [x] verify all MMIO register side effects against canonical tests
 
 ## Clock, reset and power
 
@@ -126,7 +126,7 @@ Before marking the Classic datapath schematic frozen:
 - [x] branch vectors pass including +127/-128 and page crossings
 - [x] stack vectors pass including wrap and BRK/RTI
 - [x] AGU zero-page and absolute-index vectors pass
-- [ ] peripheral MMIO side-effect vectors pass
+- [x] peripheral MMIO side-effect vectors pass
 - [ ] reset sequence matches simulator state transitions
 
 ## Review blockers found before freeze
