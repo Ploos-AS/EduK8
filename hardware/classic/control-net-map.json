@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "architecture": "K8 Classic",
+  "rule": "Every physical control net has exactly one canonical or explicitly derived source.",
+  "canonical_source": "six registered control-ROM output bytes",
+  "canonical_bits": "spec/control-word.json",
+  "derived": {
+    "PC_BRANCH_LOAD": {
+      "source": "qualified branch decode",
+      "inputs": ["IR", "MICROSTEP", "CONDITION", "CONTROL_STATE"]
+    },
+    "AGU_TO_MAR": {
+      "source": "qualified AGU sequencing",
+      "inputs": ["AGU_ADD_LO", "AGU_ADD_HI", "AGUC_LOAD", "AGUC_CLEAR", "MICROSTEP"]
+    },
+    "MARL_SELECT": {
+      "source": "MAR source decode",
+      "inputs": ["MAR_LOAD_LO", "PC_TO_MAR", "SP_TO_MAR", "AGU_TO_MAR"]
+    },
+    "MARH_SELECT": {
+      "source": "MAR source decode",
+      "inputs": ["MAR_LOAD_HI", "PC_TO_MAR", "SP_TO_MAR", "AGU_TO_MAR"]
+    },
+    "CONTROL_CAPTURE": {
+      "source": "clock/control timing",
+      "inputs": ["CPU_CLOCK_PHASE", "RESET"]
+    },
+    "MEM_WRITE_ENABLE": {
+      "source": "qualified memory-write gate",
+      "inputs": ["MEM_WRITE", "CPU_UPDATE_PHASE", "RESET"]
+    }
+  }
+}
