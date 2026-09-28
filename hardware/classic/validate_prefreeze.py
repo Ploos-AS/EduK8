@@ -11,6 +11,7 @@ mm = json.loads((ROOT / "spec/memory-map.json").read_text())
 isa = json.loads((ROOT / "spec/isa.json").read_text())
 io = json.loads((ROOT / "spec/io-map.json").read_text())
 peripherals = json.loads((ROOT / "spec/peripherals.json").read_text())
+netmap = json.loads((ROOT / "hardware/classic/control-net-map.json").read_text())
 
 bits = set(cw["bits"])
 assert cw["width_bits"] == 48
@@ -74,6 +75,20 @@ for word in range(cw["address"]["depth"]):
     slices = [(value >> (8 * i)) & 0xFF for i in range(6)]
     rebuilt = sum(byte << (8 * i) for i, byte in enumerate(slices))
     assert rebuilt == value, f"control-store slice reconstruction failed at {word:04X}"
+
+# Physical control-net source audit.
+canonical_names = set(cw["bits"])
+assert netmap["canonical_source"] == "six registered control-ROM output bytes"
+assert len(canonical_names) == 48
+for name, entry in netmap["derived"].items():
+    assert entry.get("source"), f"{name}: missing unique source"
+    inputs = entry.get("inputs", [])
+    assert inputs, f"{name}: derived net has no inputs"
+assert set(netmap["derived"]) == {
+    "PC_BRANCH_LOAD", "AGU_TO_MAR", "MARL_SELECT", "MARH_SELECT",
+    "CONTROL_CAPTURE", "MEM_WRITE_ENABLE"
+}
+print("physical control-net source audit: PASS (48 canonical + 6 derived)")
 
 print("K8 Classic pre-freeze static validation: PASS")
 print("control bits: 48/48")
