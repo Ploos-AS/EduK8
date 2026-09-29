@@ -7,27 +7,217 @@
   "derived": {
     "PC_BRANCH_LOAD": {
       "source": "qualified branch decode",
-      "inputs": ["IR", "MICROSTEP", "CONDITION", "CONTROL_STATE"]
+      "inputs": [
+        "IR",
+        "MICROSTEP",
+        "CONDITION",
+        "CONTROL_STATE"
+      ]
     },
     "AGU_TO_MAR": {
       "source": "qualified AGU sequencing",
-      "inputs": ["AGU_ADD_LO", "AGU_ADD_HI", "AGUC_LOAD", "AGUC_CLEAR", "MICROSTEP"]
+      "inputs": [
+        "AGU_ADD_LO",
+        "AGU_ADD_HI",
+        "AGUC_LOAD",
+        "AGUC_CLEAR",
+        "MICROSTEP"
+      ]
     },
     "MARL_SELECT": {
       "source": "MAR source decode",
-      "inputs": ["MAR_LOAD_LO", "PC_TO_MAR", "SP_TO_MAR", "AGU_TO_MAR"]
+      "inputs": [
+        "MAR_LOAD_LO",
+        "PC_TO_MAR",
+        "SP_TO_MAR",
+        "AGU_TO_MAR"
+      ]
     },
     "MARH_SELECT": {
       "source": "MAR source decode",
-      "inputs": ["MAR_LOAD_HI", "PC_TO_MAR", "SP_TO_MAR", "AGU_TO_MAR"]
+      "inputs": [
+        "MAR_LOAD_HI",
+        "PC_TO_MAR",
+        "SP_TO_MAR",
+        "AGU_TO_MAR"
+      ]
     },
     "CONTROL_CAPTURE": {
       "source": "clock/control timing",
-      "inputs": ["CPU_CLOCK_PHASE", "RESET"]
+      "inputs": [
+        "CPU_CLOCK_PHASE",
+        "RESET"
+      ]
     },
     "MEM_WRITE_ENABLE": {
       "source": "qualified memory-write gate",
-      "inputs": ["MEM_WRITE", "CPU_UPDATE_PHASE", "RESET"]
+      "inputs": [
+        "MEM_WRITE",
+        "CPU_UPDATE_PHASE",
+        "RESET"
+      ]
     }
+  },
+  "required_actions": {
+    "A_REGISTER_DRIVE": [
+      "A_OUT"
+    ],
+    "A_REGISTER_LOAD": [
+      "A_LOAD"
+    ],
+    "X_REGISTER_DRIVE": [
+      "X_OUT"
+    ],
+    "X_REGISTER_LOAD": [
+      "X_LOAD"
+    ],
+    "Y_REGISTER_DRIVE": [
+      "Y_OUT"
+    ],
+    "Y_REGISTER_LOAD": [
+      "Y_LOAD"
+    ],
+    "PC_INCREMENT": [
+      "PC_INC"
+    ],
+    "PC_LOAD_LOW": [
+      "PC_LOAD_LO"
+    ],
+    "PC_LOAD_HIGH": [
+      "PC_LOAD_HI"
+    ],
+    "PC_BRANCH_LOAD": [
+      "PC_BRANCH_LOAD"
+    ],
+    "PC_TO_MAR": [
+      "PC_TO_MAR"
+    ],
+    "SP_DRIVE": [
+      "SP_OUT"
+    ],
+    "SP_LOAD": [
+      "SP_LOAD"
+    ],
+    "SP_INCREMENT": [
+      "SP_INC"
+    ],
+    "SP_DECREMENT": [
+      "SP_DEC"
+    ],
+    "SP_TO_MAR": [
+      "SP_TO_MAR"
+    ],
+    "IR_LOAD": [
+      "IR_LOAD"
+    ],
+    "MAR_LOAD_LOW": [
+      "MAR_LOAD_LO"
+    ],
+    "MAR_LOAD_HIGH": [
+      "MAR_LOAD_HI"
+    ],
+    "MAR_AGU_LOAD": [
+      "AGU_TO_MAR"
+    ],
+    "MDR_DRIVE": [
+      "MDR_OUT"
+    ],
+    "MDR_LOAD": [
+      "MDR_LOAD"
+    ],
+    "TMP_DRIVE": [
+      "TMP_OUT"
+    ],
+    "TMP_LOAD": [
+      "TMP_LOAD"
+    ],
+    "FLAGS_LATCH": [
+      "FLAGS_LATCH"
+    ],
+    "MEMORY_READ": [
+      "MEM_READ"
+    ],
+    "MEMORY_WRITE": [
+      "MEM_WRITE",
+      "MEM_WRITE_ENABLE"
+    ],
+    "ALU_ADD": [
+      "ALU_ADD"
+    ],
+    "ALU_SUB": [
+      "ALU_SUB"
+    ],
+    "ALU_AND": [
+      "ALU_AND"
+    ],
+    "ALU_OR": [
+      "ALU_OR"
+    ],
+    "ALU_XOR": [
+      "ALU_XOR"
+    ],
+    "ALU_NOT": [
+      "ALU_NOT"
+    ],
+    "ALU_SHL": [
+      "ALU_SHL"
+    ],
+    "ALU_SHR": [
+      "ALU_SHR"
+    ],
+    "ALU_ROL": [
+      "ALU_ROL"
+    ],
+    "ALU_ROR": [
+      "ALU_ROR"
+    ],
+    "ALU_DRIVE": [
+      "ALU_OUT_ENABLE"
+    ],
+    "SEQUENCER_RESET": [
+      "STEP_RESET"
+    ],
+    "INSTRUCTION_DONE": [
+      "INSTR_DONE"
+    ],
+    "CPU_HALT": [
+      "HALT"
+    ],
+    "CARRY_SET": [
+      "C_SET"
+    ],
+    "CARRY_CLEAR": [
+      "C_CLEAR"
+    ],
+    "IRQ_MASK_SET": [
+      "I_SET"
+    ],
+    "IRQ_MASK_CLEAR": [
+      "I_CLEAR"
+    ],
+    "OVERFLOW_CLEAR": [
+      "V_CLEAR"
+    ],
+    "AGU_ADD_LOW": [
+      "AGU_ADD_LO"
+    ],
+    "AGU_ADD_HIGH": [
+      "AGU_ADD_HI"
+    ],
+    "AGU_CARRY_LOAD": [
+      "AGUC_LOAD"
+    ],
+    "AGU_CARRY_CLEAR": [
+      "AGUC_CLEAR"
+    ],
+    "MAR_LOW_SOURCE_SELECT": [
+      "MARL_SELECT"
+    ],
+    "MAR_HIGH_SOURCE_SELECT": [
+      "MARH_SELECT"
+    ],
+    "CONTROL_OUTPUT_CAPTURE": [
+      "CONTROL_CAPTURE"
+    ]
   }
 }
