@@ -90,6 +90,22 @@ assert set(netmap["derived"]) == {
 }
 print("physical control-net source audit: PASS (48 canonical + 6 derived)")
 
+# Required physical-action completeness: every listed hardware action must
+# resolve only through a canonical control bit or an explicitly reviewed derived net.
+available_paths = canonical_names | set(netmap["derived"])
+required_actions = netmap.get("required_actions", {})
+assert required_actions, "required physical-action map is empty"
+for action, paths in required_actions.items():
+    assert paths, f"{action}: no control path"
+    unknown = set(paths) - available_paths
+    assert not unknown, f"{action}: unknown control path(s) {sorted(unknown)}"
+# Every canonical control bit must remain physically useful; this also catches
+# orphaned ROM outputs when the schematic contract evolves.
+used_paths = {path for paths in required_actions.values() for path in paths}
+orphaned = canonical_names - used_paths
+assert not orphaned, f"canonical controls without physical action: {sorted(orphaned)}"
+print(f"physical control-path completeness: PASS ({len(required_actions)} required actions)")
+
 print("K8 Classic pre-freeze static validation: PASS")
 print("control bits: 48/48")
 print("control store: 32768 words x 6 bytes")
