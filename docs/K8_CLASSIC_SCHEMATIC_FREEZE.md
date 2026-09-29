@@ -39,7 +39,7 @@ If a lower layer disagrees with a higher layer, the lower layer must be correcte
 - [x] six-ROM physical slicing defined
 - [x] control output stabilization requirement defined
 - [x] reset/HALT safety requirements defined
-- [ ] verify every physical control net has exactly one canonical source
+- [x] verify every physical control net has exactly one canonical source
 - [ ] verify no required physical action lacks a canonical control path
 
 ## Memory and addressing
